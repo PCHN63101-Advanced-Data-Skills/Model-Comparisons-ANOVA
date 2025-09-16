@@ -1,0 +1,780 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>The Controversy of NHST &#8212; Linear Models II: Statistical Inference</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/test.css?v=90b7ad94" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '6.controversy';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Summary" href="summary.html" />
+    <link rel="prev" title="NHST III: Statistical Significance" href="5.null-hypothesis-testing-III.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="0.intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Linear Models II: Statistical Inference - Home"/>
+    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Linear Models II: Statistical Inference - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="0.intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1.purpose-of-inference.html">The Purpose of Statistical Inference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.estimation-uncertainty.html">Uncertainty in Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.null-hypothesis-testing-I.html">NHST I: The Null Hypothesis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.null-hypothesis-testing-II.html">NHST II: Test Statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.null-hypothesis-testing-III.html">NHST III: Statistical Significance</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">The Controversy of NHST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Inference-Linear-Model" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Inference-Linear-Model/issues/new?title=Issue%20on%20page%20%2F6.controversy.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/6.controversy.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>The Controversy of NHST</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problems-with-nhst">Problems with NHST</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nhst-is-not-answering-the-right-question">1. NHST is Not Answering the Right Question</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-null-hypothesis-is-implausible">2. The Null Hypothesis is Implausible</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions-from-nhst-are-logically-flawed">3. Conclusions From NHST are Logically Flawed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#despite-appearances-nhst-is-not-objective">4. Despite Appearances, NHST is <em>Not</em> Objective</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nhst-is-not-popperian-falsificationism">5. NHST is <em>Not</em> Popperian Falsificationism</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#should-we-abandon-nhst">Should We Abandon NHST?</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="the-controversy-of-nhst">
+<h1>The Controversy of NHST<a class="headerlink" href="#the-controversy-of-nhst" title="Link to this heading">#</a></h1>
+<p>In the previous part of this lesson, we explored the final element of the NHST machinery and came to a rather uncomfortable conclusion: the modern incarnation of NHST is actually an inconsistent mixture of two different philosophies of inference that were never designed to go together. Of course, this has not stopped researchers from calculating <span class="math notranslate nohighlight">\(p\)</span>-values, declaring significance and rejecting null hypotheses for many years. This can be justified on purely pragmatic grounds, especially as the practical conclusions from the two approach are often similar. However, this pragramtic argument implies that, as long as you put these differences aside, NHST is a meaningful and useful procedure. Unfortunately, there are several reasons why this claim appears doubtful. In this final part of the lesson, we will explore a number of key problems with NHST that raise doubts about whether the method can even be considered useful on pragmatic grounds.</p>
+<section id="problems-with-nhst">
+<h2>Problems with NHST<a class="headerlink" href="#problems-with-nhst" title="Link to this heading">#</a></h2>
+<p>We will start by examining some of the core issues with the practical application of NHST. Some of these issues are specifically with what NHST is doing, whereas others are issues with what researchers <em>think</em> NHST is doing. Although <em>misunderstanding</em> NHST may seem an unfair critique (after all, this is not the method’s fault), these issues are so widespread that they <em>are</em> a problem with the application of NHST in practice. Indeed, such misunderstandings are sometimes illuminating because they indicate what researchers <em>want</em> NHST to tell them, even if it does not. If our main tool for inference is <em>unintuitive</em> and does not tell us what we want, is it really the best tool?</p>
+<section id="nhst-is-not-answering-the-right-question">
+<h3>1. NHST is Not Answering the Right Question<a class="headerlink" href="#nhst-is-not-answering-the-right-question" title="Link to this heading">#</a></h3>
+<p>Perhaps the most fundamnetal issue with NHST, no matter whether you side with Fisher or Neyman-Pearson, is that it feels like we have spent a lot of time getting to a result that does not answer our question. Our conversation has gone:</p>
+<ul class="simple">
+<li><p>Researcher - “What value does this parameter have in the population?”</p></li>
+<li><p>NHST - “Well, if it was 0 then these data wouldn’t be very likely!”</p></li>
+<li><p>Researcher - “Ok…so there’s a low probability of it being 0?”</p></li>
+<li><p>NHST - “No, sorry, you can’t say that”.</p></li>
+</ul>
+<p>The problem is that what we <em>really</em> want to know is <span class="math notranslate nohighlight">\(P(\beta_{1}|\mathcal{D})\)</span>. In other words, what are the most probable values of the population parameter, given our data? Alternatively, if we want to think in terms of null hypotheses, what we really want is <span class="math notranslate nohighlight">\(P(\mathcal{H}_{0}|\mathcal{D})\)</span>. In other words, what is the probability of the null hypothesis, given the data? In both cases, we are using probability in a Bayesian fashion and asking how much we <em>believe</em> different values of <span class="math notranslate nohighlight">\(\beta_{1}\)</span> or <em>believe</em> the possibility of the null, given our current knowledge and the information added by the data. In other words, we say that we are <em>uncertain</em> about these quantities and have used probability to quantify this uncertainty. This feels natural and intuitive, but goes directly against the Frequentist view. Within the frequentist framework, parameters are <em>constants</em> and hypotheses are either <em>true</em> or <em>false</em>. We cannot assign probability to them and so the statements above are effectively <em>meaningless</em>.</p>
+<p>This is where the rigid framework of Frequentist statistics comes up against the more naturalistic Bayesian concept of probability. For Fisher and other Frequentists, calculating <span class="math notranslate nohighlight">\(P(\mathcal{D}|\beta_{1})\)</span> has meaning because the data are random and we can condition on some proposed value for <span class="math notranslate nohighlight">\(\beta_{1}\)</span>. However, <span class="math notranslate nohighlight">\(P(\beta_{1}|\mathcal{D})\)</span> is <em>not</em> meaningful, because <span class="math notranslate nohighlight">\(\beta_{1}\)</span> is a constant and has no probabilistic behaviour. There is no long-run frequency interpretation where <span class="math notranslate nohighlight">\(P(\beta_{1})\)</span> makes sense. However, if you think of probability as <em>degree of belief</em> rather than <em>long-run frequency</em>, then <span class="math notranslate nohighlight">\(P(\beta_{1})\)</span> <em>does</em> make sense. This is why so many classical statistical results feel backwards or convoluted, because this definition of probability restricts the values that are sensible to calculate<a class="footnote-reference brackets" href="#mlfoot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+<p>So, is NHST asking the right question? Arguably, the answer is <em>no</em>. What NHST is answering is the only question that it is allowed to answer. Data is random. Parameter <em>estimates</em> are random. The population parameters themseleves are constants. So we cannot talk about their probability, only the probability of the data or the probability of the estimates, conditional on assuming the population parameters have a certain fixed value. We cannot answer the question we want to using this framework.</p>
+<p>So why use Frequentist methods at all? For Fisher, Bayesian approaches were too <em>subjective</em> and his aim was to create a framework for inference that was <em>objective</em>. In doing so, he actively avoided quantities that require Bayesian methods, including <span class="math notranslate nohighlight">\(P(\beta_{1}|\mathcal{D})\)</span> or <span class="math notranslate nohighlight">\(P(\mathcal{H}_{0}|\mathcal{D})\)</span>. So, Frequentist methods were developed to <em>avoid</em> the questions that we would actually like to answer. This was done in the name of <em>objectivity</em><a class="footnote-reference brackets" href="#fiducialfoot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>, though we will discuss how successful this was further below. However, there is also a practical argument in favour of Frequentist methods. Bayesian approaches are often computationally demanding meaning that, in the past, computational limitations meant that many Bayesian methods were simply <em>impractical</em> to use by hand. Thanks to modern computing this is no longer true, but does explain why Frequentist methods were historically favoured. For both these reasons, NHST became <em>the</em> dominant paradigm used by scientists during the 20th Century.</p>
+</section>
+<section id="the-null-hypothesis-is-implausible">
+<h3>2. The Null Hypothesis is Implausible<a class="headerlink" href="#the-null-hypothesis-is-implausible" title="Link to this heading">#</a></h3>
+<p>Another problem is one that is somewhat context-specific, but is almost always a problem in fields such as Experimental Psychology: the use of 0 as a null hypothesis. This is referred to as the <em>nil-hypothesis</em> by <a class="reference external" href="https://www.sjsu.edu/faculty/gerstman/misc/Cohen1994.pdf">Cohen (1994)</a>, who goes into great detail deriding the idea that any psychological phenomena could ever be <em>exactly</em> 0. For instance, a population correlation coefficient of <em>exactly</em> 0, or a group different of <em>exactly</em> 0. In fact, beyond philosophical problems with idea of anything being exactly 0, the problem exists for any value we choose as our null, because it is incredibly unlikely that we will hit upon the <em>exact</em> value down to every decimal point. In a field such as Physics, where very precise predictions can be made of single values, such a situation is perhaps less of a concern. However, when dealing with <em>human beings</em>, we do not have the theoretical ability to make such specific predictions. As such, within the field of Experimental Psychologists, we can quite confidently say that a <em>point-null hypothesis</em> is <em>almost never going to be true</em>.</p>
+<p>Beyond wondering why we are testing a hypothesis that we can almost guarantee is false, this causes distinct issues for the behaviour of the <span class="math notranslate nohighlight">\(p\)</span>-value. Remembering that a <span class="math notranslate nohighlight">\(p\)</span>-value tells us how <em>consistent</em> our data are with the proposed null value, when the null is <em>not true</em> all that a non-significant <span class="math notranslate nohighlight">\(p\)</span>-value tells us is that we did not have enough data to see that it is not true. Even if the difference between the true value and our null is very slight, in principle we just need enough data. More data means a smaller standard error. All we need is the standard error to get slim enough that any true difference, no matter how miniscule, is detectable. We can easily demonstrate this using simulations in <code class="docutils literal notranslate"><span class="pre">R</span></code>. If the true correlation in the population was very small (say <span class="math notranslate nohighlight">\(r = 0.06\)</span>), how much data would be needed for the <span class="math notranslate nohighlight">\(p\)</span>-value to be significant at <span class="math notranslate nohighlight">\(p &lt; 0.05\)</span>?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">MASS</span><span class="p">)</span><span class="w">  </span><span class="c1"># for mvrnorm</span>
+
+<span class="nf">set.seed</span><span class="p">(</span><span class="m">123</span><span class="p">)</span>
+
+<span class="c1"># Parameters</span>
+<span class="n">rho</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.06</span>
+<span class="n">max_n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">4000</span>
+<span class="n">step</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">50</span>
+<span class="n">reps</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">500</span>
+
+<span class="c1"># Covariance matrix for bivariate normal</span>
+<span class="n">Sigma</span><span class="w">        </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">matrix</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="n">rho</span><span class="p">,</span><span class="n">rho</span><span class="p">,</span><span class="m">1</span><span class="p">),</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">)</span>
+<span class="n">sample_sizes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">seq</span><span class="p">(</span><span class="n">step</span><span class="p">,</span><span class="w"> </span><span class="n">max_n</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">step</span><span class="p">)</span>
+
+<span class="c1"># Store mean p-values</span>
+<span class="n">mean_pvals</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">numeric</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">sample_sizes</span><span class="p">))</span>
+
+<span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="nf">seq_along</span><span class="p">(</span><span class="n">sample_sizes</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sample_sizes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="n">pvals</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">numeric</span><span class="p">(</span><span class="n">reps</span><span class="p">)</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">reps</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">dat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mvrnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">mu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">),</span><span class="w"> </span><span class="n">Sigma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Sigma</span><span class="p">)</span>
+<span class="w">    </span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cor.test</span><span class="p">(</span><span class="n">dat</span><span class="p">[,</span><span class="w"> </span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="n">dat</span><span class="p">[,</span><span class="w"> </span><span class="m">2</span><span class="p">])</span>
+<span class="w">    </span><span class="n">pvals</span><span class="p">[</span><span class="n">r</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">test</span><span class="o">$</span><span class="n">p.value</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="n">mean_pvals</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">pvals</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span><span class="w"> </span><span class="c1"># plot scaling</span>
+
+<span class="c1"># Plot</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">sample_sizes</span><span class="p">,</span><span class="w"> </span><span class="n">mean_pvals</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="n">type</span><span class="o">=</span><span class="s">&quot;l&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1e-4</span><span class="p">,</span><span class="m">0.6</span><span class="p">),</span>
+<span class="w">     </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Sample Size (n)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;Average p-value&quot;</span><span class="p">,</span>
+<span class="w">     </span><span class="n">main</span><span class="o">=</span><span class="s">&quot;Mean p-value vs Sample Size for r = 0.06&quot;</span><span class="p">)</span>
+
+<span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="m">0.05</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/8579ae3705c291fd4f22729a98b5ed70b29e4dbb35a11cc2a916aa8b6ef4bb62.png"><img alt="_images/8579ae3705c291fd4f22729a98b5ed70b29e4dbb35a11cc2a916aa8b6ef4bb62.png" src="_images/8579ae3705c291fd4f22729a98b5ed70b29e4dbb35a11cc2a916aa8b6ef4bb62.png" style="width: 720px; height: 420px;" /></a>
+</div>
+</div>
+<p>Based on this graph, we would need around 2,000 subjects for this correlation to be significant. This might sounds like a lot, but considering how easily accessible big datasets are these days (such as the <a class="reference external" href="https://www.ukbiobank.ac.uk/">UK Biobank</a>, which has <span class="math notranslate nohighlight">\(n \approx 500,000\)</span>) and the ease of collecting questionnaire data online, <span class="math notranslate nohighlight">\(n = 2,000\)</span> is not really that unreasonable. Although you could argue that the necessary sample size alone should indicate a problem, this implies that there is some limit for <span class="math notranslate nohighlight">\(n\)</span>, above which we can no longer trust <span class="math notranslate nohighlight">\(p\)</span>-values. So what is this limit? The very fact that there is an implied limit suggests that there is something funamentally problematic with using <span class="math notranslate nohighlight">\(p\)</span>-values as evidence.</p>
+<p>It is important here to recognise that the <span class="math notranslate nohighlight">\(p\)</span>-value is <em>not wrong</em>. The null hypothesis is that <span class="math notranslate nohighlight">\(r = 0\)</span>, but we know that this incorrect because <span class="math notranslate nohighlight">\(r = 0.06\)</span>. So the test is doing excactly what it is supposed to. The issue is that <em>statistical significance</em> does not mean <em>practical significance</em>. If we know that the null hypothesis is always going to be false (i.e. a correlation is never really going to be <em>exactly</em> 0), then all a non-significant <span class="math notranslate nohighlight">\(p\)</span>-value tells us is that we do not have enough data. In this example, we do not have enough data until we reach <span class="math notranslate nohighlight">\(n \approx 2,000\)</span>. The problem is, if we already know that logically the null hypothesis is wrong, what is the point of testing it?</p>
+<p>To drive this home, consider what a correlation of <span class="math notranslate nohighlight">\(r = 0.06\)</span> actually looks like:</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">666</span><span class="p">)</span>
+<span class="n">corr.data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mvrnorm</span><span class="p">(</span><span class="m">1000</span><span class="p">,</span><span class="w"> </span><span class="n">mu</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">),</span><span class="w"> </span><span class="n">Sigma</span><span class="o">=</span><span class="n">Sigma</span><span class="p">)</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span><span class="w"> </span><span class="c1"># plot scaling</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">corr.data</span><span class="p">[,</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="n">corr.data</span><span class="p">[,</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;x1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;x2&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/9496dc25e22530e2fa9501c73f348a36fb3ae2876991543111a4a6cead36f037.png"><img alt="_images/9496dc25e22530e2fa9501c73f348a36fb3ae2876991543111a4a6cead36f037.png" src="_images/9496dc25e22530e2fa9501c73f348a36fb3ae2876991543111a4a6cead36f037.png" style="width: 720px; height: 420px;" /></a>
+</div>
+</div>
+<p>Now imagine that this was presented to you as evidence of some effect, because <span class="math notranslate nohighlight">\(p &lt; 0.05\)</span>. Would you be convinced? If not, then you are agreeing that the <span class="math notranslate nohighlight">\(p\)</span>-value is not very useful here. Of course, if you saw <span class="math notranslate nohighlight">\(r = 0.06\)</span> reported, you would immediately see that this is a vanishingly small correlation. But clearly you are not using the <span class="math notranslate nohighlight">\(p\)</span>-value here. Instead, you are admitting that the only useful measure is the <em>effect size</em>.</p>
+</section>
+<section id="conclusions-from-nhst-are-logically-flawed">
+<h3>3. Conclusions From NHST are Logically Flawed<a class="headerlink" href="#conclusions-from-nhst-are-logically-flawed" title="Link to this heading">#</a></h3>
+<p>Another problem with NHST is that the logic almost universally applied when reaching a conclusion from a <span class="math notranslate nohighlight">\(p\)</span>-value is flawed. To see this, let us first examine a valid application of syllogistic reasoning. Consider the following adapted example from <a class="reference external" href="https://www.sjsu.edu/faculty/gerstman/misc/Cohen1994.pdf">Cohen (1994)</a>:</p>
+<ol class="arabic simple">
+<li><p>If a person is a Martian then they are not a Member of Parliment.</p></li>
+<li><p>This person is a Member of Parliment.</p></li>
+<li><p>Therefore, this person is not a Martian.</p></li>
+</ol>
+<p>Putting aside any personal paranoia about aliens invading our political system, this is a perfectly valid application of a <em>modus tollens</em> argument, as we have seen previously. The conclusion logically and irrefutably follows from the premises. However, we can reach an <em>invalid</em> conclusion if any of the premises are faulty.</p>
+<ol class="arabic simple">
+<li><p>If a person is British then they are not a Member of Parliment.</p></li>
+<li><p>This person is a Member of Parliment.</p></li>
+<li><p>Therefore, this person is not British.</p></li>
+</ol>
+<p>This is a perfectly valid argument, but the conclusion is not sensible because the first premise is wrong. <em>Some</em> British people are Members of Parliment (650 of them, in fact). We can make the premise more correct by making it probabilistic.</p>
+<ol class="arabic simple">
+<li><p>If a person is British then it is unlikely that they are a Member of Parliment (given that we are talking 650 people out of a population of over 68 million).</p></li>
+<li><p>This person is a Member of Parliment.</p></li>
+<li><p>Therefore, this person is unlikely to be British.</p></li>
+</ol>
+<p>Unfortunately, the application of logic has now failed and has led to a conclusion that is not sensible. The reason is that applying probability in this way is fraught with issues. Probability quantifies <em>belief</em> or <em>uncertainty</em>, rather than absolute truth. In fact, probability does not preserve truth in the same way as formal logic. This is precisely because there are <em>always exceptions</em>. As such, we can easily reach false conclusions, as shown above.</p>
+<p>The error in assuming that someone is not British because they are a Member of Parliment should hopefully be clear. What is perhaps less immediately obvious is that the same error is made when we do the following:</p>
+<ol class="arabic simple">
+<li><p>If <span class="math notranslate nohighlight">\(H_{0}\)</span> is true, then it is unlikely we would have generated this result (i.e. the <span class="math notranslate nohighlight">\(p\)</span>-value will be small).</p></li>
+<li><p>This result has been generated (i.e. we have calculated a small <span class="math notranslate nohighlight">\(p\)</span>-value).</p></li>
+<li><p>Therefore, <span class="math notranslate nohighlight">\(H_{0}\)</span> is unlikely to be true.</p></li>
+</ol>
+<p>This is exactly the same logical form as above and yet it <em>sounds</em> like a plausible line of reasoning. Nevertheless, in the same vein as the example above, it is logically invalid. Yet this is the conclusion that is implicit in every significant finding reported in the literature. This is what <a class="reference external" href="https://www.sjsu.edu/faculty/gerstman/misc/Cohen1994.pdf">Cohen (1994)</a> refers to as “the illusion of obtaining improbability”. In fact, jumping from 2 to 3 above requires an <em>inductive leap</em> because it does not follow logically using deduction. This is the inductive reasoning that lies at the heart of NHST. We are rejecting the possibility that we observed something rare and are instead assuming that <span class="math notranslate nohighlight">\(H_{0}\)</span> is false. This is a <em>leap of faith</em>[^logic-foot]. Although the mathematics of calculating <span class="math notranslate nohighlight">\(p\)</span>-values are purely deductive, drawing conclusions about <span class="math notranslate nohighlight">\(H_{0}\)</span> based on <span class="math notranslate nohighlight">\(p\)</span>-value is inescapably induction and logically invalid.</p>
+<p>Another way of thinking about this is that a probabilistic conclusion has been reached about <span class="math notranslate nohighlight">\(H_{0}\)</span>, yet we know that a <span class="math notranslate nohighlight">\(p\)</span>-value is <em>not</em> a probability statement about <span class="math notranslate nohighlight">\(H_{0}\)</span>. How can we conclude that the null is unlikely when we have not calculated the probability of the null? Instead, a <span class="math notranslate nohighlight">\(p\)</span>-value is a probability statement about the <em>data</em>. In other words, <span class="math notranslate nohighlight">\(p = P(\mathcal{D}|H_{0}) \neq P(H_{0}|\mathcal{D})\)</span>. Although <span class="math notranslate nohighlight">\(P(\mathcal{D}|H_{0})\)</span> and <span class="math notranslate nohighlight">\(P(H_{0}|\mathcal{D})\)</span> <em>sound</em> very similar, they are not the same quantity. This is discussed in much more detail in the optional drop-down box below. From a pure Frequentist perspective, if we have a significant <span class="math notranslate nohighlight">\(p\)</span>-value we can conclude that our data are unlikely if the null hypothesis were true. We cannot make any statement about the null hypothesis itself, no matter how much we want to!</p>
+<blockquote class="epigraph">
+<div><p>What’s wrong with NHST? Well, among many other things, it does not tell us what we want to know, and we
+so much want to know what we want to know that, out of desperation, we nevertheless believe that it does!</p>
+<p class="attribution">—Jacob Cohen, <em>The World Is Round (p &lt; 0.05)</em> (1994)</p>
+</div></blockquote>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Why <span class="math notranslate nohighlight">\(P(\mathcal{D}|H_{0}) \neq P(H_{0}|\mathcal{D})\)</span></p>
+<p>It can be helpful in trying to understand why the two statements <span class="math notranslate nohighlight">\(P(\mathcal{D}|H_{0})\)</span> and <span class="math notranslate nohighlight">\(P(H_{0}|\mathcal{D})\)</span> are <em>not</em> the same quantity by studying an example. This is taken from <a class="reference external" href="https://www.sjsu.edu/faculty/gerstman/misc/Cohen1994.pdf">Cohen (1994)</a> and concerns the results of a new test for Schizophrenia. Based on testing 1,000 random individual from the whole population, we have:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Result</p></th>
+<th class="head"><p>Normal</p></th>
+<th class="head"><p>Schiz</p></th>
+<th class="head text-right"><p>Total</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Negative test (Normal)</p></td>
+<td><p>949</p></td>
+<td><p>1</p></td>
+<td class="text-right"><p>950</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Positive test (Schiz)</p></td>
+<td><p>30</p></td>
+<td><p>20</p></td>
+<td class="text-right"><p>50</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Total</p></td>
+<td><p>979</p></td>
+<td><p>21</p></td>
+<td class="text-right"><p>1000</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>To put this into the framework of NHST, let us then assume:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(H_{0}\)</span> = An individual is “normal”</p></li>
+<li><p><span class="math notranslate nohighlight">\(H_{1}\)</span> = An individual has Schizophrenia</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathcal{D}\)</span> = The test result is positive for Schizophrenia</p></li>
+</ul>
+<p>From here, let us see what the <span class="math notranslate nohighlight">\(p\)</span>-value tells us. Remembering that <span class="math notranslate nohighlight">\(p = P(\mathcal{D}|H_{0})\)</span>, we are therefore conditioning on <span class="math notranslate nohighlight">\(H_{0}\)</span> being true. For the table above, that means we are only looking at the <em>first column</em>. Based on this column alone, what is the probability that the result is positive? In this instance, we would calculate <span class="math notranslate nohighlight">\(30\)</span> positive results out of a total of <span class="math notranslate nohighlight">\(979\)</span>, which gives a <span class="math notranslate nohighlight">\(p\)</span>-value of <span class="math notranslate nohighlight">\(30/979 = 0.031\)</span>. So we would say that this is a <em>significant</em> result. In other words, if it is true that the individual is “normal”, the chance of getting a positive test result is small. Given our usual convention, we would therefore <em>reject the null-hypothesis</em> that the individual is “normal”.</p>
+<p>Now let us see what <span class="math notranslate nohighlight">\(P(H_{0}|\mathcal{D})\)</span> tells us. This time, we are conditioning on the data we have obtained. Because these data indicate a <em>positive</em> test result, this means only looking at the <em>second row</em> of the table. Here, we want to know, out of all individuals who recieved a positive test result, how likely is it that they are “normal”? In this instance, we would calculate <span class="math notranslate nohighlight">\(30\)</span> “normal” individuals out of a total of <span class="math notranslate nohighlight">\(50\)</span> individuals who recieved a positive test, which gives a probability of <span class="math notranslate nohighlight">\(30/50 = 0.60\)</span>. So far from the null hypothesis being unlikely, it is actually fairly probable that the null hypothesis is <em>true</em>, given the data we have.</p>
+<p>In this example, the extreme difference comes from the low base-rate of Schizophrenia. If we pluck a random individual off the street, it is fairly unlikely that they have Schizophrenia. Even if they test positive, it still remains unlikely that we found someone with Schizophrenia by chance. However, if we know ahead of time that we have only selected individuals <em>without</em> Schizophrenia, the chance of the test coming back positive is very low. This is the difference between conditioning on the data versus conditioning on the null. This illustrates why the two probability statements are not interchangeable, and also illustrates why you cannot say anything about the probability of the null from a <span class="math notranslate nohighlight">\(p\)</span>-value because the calculation of the <span class="math notranslate nohighlight">\(p\)</span>-value <em>presupposes the null is true</em>.</p>
+</div>
+</section>
+<section id="despite-appearances-nhst-is-not-objective">
+<h3>4. Despite Appearances, NHST is <em>Not</em> Objective<a class="headerlink" href="#despite-appearances-nhst-is-not-objective" title="Link to this heading">#</a></h3>
+<p>Another issue with NHST is that it presents itself as an objective alternative to “subjective” Bayesianism, yet on closer inspection, this claim falls short. It has been stated already that Fisher’s main motivating factor for developing Frequentist methods was that he believed that there was no room for <em>personal belief</em> within science. His aim was to create a method that was <em>objective</em>, and NHST was the result. Unfortunately, despite Fisher’s efforts, two key parts of NHST remain highly subjective:</p>
+<ul class="simple">
+<li><p>The threshold for significance itself is <em>arbitrary</em>. Although Fisher did not condone hard thresholds, his heuristic of <span class="math notranslate nohighlight">\(p = 0.05\)</span> remains a subjective marker for “significance”. There is no argument to be made that can logically or rationally justify why <span class="math notranslate nohighlight">\(1/20\)</span> is a meaningful yardstick. This gets worse when moving to the Neyman-Pearson approach and making binary decisions based on an arbitrary <span class="math notranslate nohighlight">\(\alpha\)</span>-level.</p></li>
+<li><p>The results of NHST are highly dependent on the decisions of the data analyst. Choices about the model form, variables, null value, test-statistic and direction of the test are all based on subjective decisions made by the researcher. These choices<a class="footnote-reference brackets" href="#rdf-foot" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> are a natural part of a data analysis, but will always have a big impact on the <span class="math notranslate nohighlight">\(p\)</span>-value.</p></li>
+</ul>
+<p>So, far from being the <em>objective</em> method that Fisher desired, NHST simply displaces subjectivity into modelling decisions and arbitrary heuristics/thresholds for interpretation. This leads to a method that is unable to be purely objective, but in trying to be objective ends up answering questions we are not interested in. Indeed, the obsessive strive for objectivity backs NHST into a corner, where it is unable to say much that is useful. Somewhat ironically, Fisher’s desire for objectivity stemmed from his own <em>subjective</em> view of how science ought to be. In criticising Bayesian inference (which he referred to as “inverse probability”), Fisher said:</p>
+<blockquote class="epigraph">
+<div><p>The theory of inverse probability is founded upon an error, and must be wholly rejected.</p>
+<p class="attribution">—Ronald Fisher, <em>Statistical Methods for Research Workers</em> (1925)</p>
+</div></blockquote>
+<p>The “error” that Fisher is referring to is the use of prior probabilities and the treatment of <em>parameters</em> as random variables. So this “error” is a <em>subjective opinion</em> based on Fsiher’s refusal to treat probability as a <em>degree of belief</em>, rather than a long-run frequency. So, Fisher’s desire for objectivity is based entirely on his own subjective view of how he thought the world should operate. As an alternative, it has been argued that we need to embrace the fact that some degree of personal belief will <em>always</em> be a part of science. As the philosopher’s <a class="reference external" href="https://www.librarysearch.manchester.ac.uk/permalink/44MAN_INST/bofker/alma992975897924201631">Howson &amp; Urbach (2006)</a> put it:</p>
+<blockquote class="epigraph">
+<div><p>There is a subjective element…which offends some, but which, we submit, is wholly realistic. Perfectly sane scientists with access to the same information often do evaluate theories differently…You might take the view that…responsible scientists ought not to let personal, subjective factors influence their beliefs. But then you would have to face the fact that this view is itself a prejudice, because despite an immense intellectual effort, no one has produced a coherent defence of it, let alone a proof.</p>
+<p class="attribution">—Howson &amp; Urback, <em>Scientific Reasoning: The Bayesian Approach</em> (2006, pg. 262-63)</p>
+</div></blockquote>
+<p>Another way of thinking about this is that <em>if</em> there are universal truths of nature, they will emerge <em>despite</em> individual subjective opinions. The way Bayesian probability works is that it weights prior beliefs with the actual data to produce a <em>shifting</em> of belief. If the data is numerous and disagrees with the prior beliefs, then the data will <em>force</em> beliefs to change. As such, even if researchers start with very different opinions about a subject, the data will force them into agreement as it becomes more numerous. This convergence of opinion is a natural part of the Bayesian framework and it is a mistake to ignore it and assume that bias introduced by the priors is an irreconcilable problem. At the end of the day, the data will win and the truth will out.</p>
+</section>
+<section id="nhst-is-not-popperian-falsificationism">
+<h3>5. NHST is <em>Not</em> Popperian Falsificationism<a class="headerlink" href="#nhst-is-not-popperian-falsificationism" title="Link to this heading">#</a></h3>
+<p>As a final issue, we need to address a common confusion between NHST and Popper’s Falsificationism. At the beginning of this lesson, we presented Popper’s answer to the problem of induction via his principle of falsification. We also presented Falsificationism alongside Bayesian scientific reasoning as different approaches to addressing induction. Given that we have also implied that Bayesian methods are an alternative to Frequentist methods, it may be natural to think that NHST and Falsificationism are somehow connected. Indeed, given that both methods focus on <em>refuting</em> some position (e.g. trying to reject the null), it is a common confusion to think that NHST is some sort of implementation of Popper’s philosophy. However, this is not true.</p>
+<p>Perhaps the simplest way to demonstrate this is to indicate that Fisher’s development of NHST came years <em>before</em> Popper published on Falsificationism. Fisher’s key ideas around <span class="math notranslate nohighlight">\(p\)</span>-values appeared in 1925, whereas Popper published his ideas on Falsificationism in 1934 in German, with the English translation not appearing until 1959. Furthermore, Popper himself was highly critical of statistical inference because it is <em>inescapably</em> inductive. However, much like there has been an incompatible blurring of Fisher and Nyman-Pesrson, researchers often blend-in an equally incompatible dash of Popper.</p>
+<p>To see why NHST does not work as an implementation of Popper’s ideas, consider that Popper’s concerns were with falsifying <em>theories</em> using deductive logic, not providing probabilistic statements on indirect claims related to a theory (i.e. the null hypothesis). The rejection of the null is not falsification of a scientific theory. A small <span class="math notranslate nohighlight">\(p\)</span>-value does not logically falsify the null and a large <span class="math notranslate nohighlight">\(p\)</span>-value does not verify the null. These are probability statements about data, not deductive falsification. Popper wanted results that logically and unambiguously show that a theory <em>cannot be correct</em>.</p>
+<p>As an example, consider the theory is that it is raining outside. Our testable prediction is based on seeing whether the ground is wet. If the ground is <em>not wet</em>, then my theory has been falsified. This is deductive falsification as a variant of the <em>modus tollens</em> argument we saw earlier:</p>
+<ol class="arabic simple">
+<li><p>If it is raining, the ground will be wet. My theory is that it is raining.</p></li>
+<li><p>We observe that the ground is <em>not</em> wet.</p></li>
+<li><p>Therefore, my theory has been falsified and we conclude that it is <em>not</em> raining.</p></li>
+</ol>
+<p>Compare this to the NHST approach. Here we use the null hypothesis that it is <em>not raining</em>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{H}_{0} : \text{It is not raining}.
+\]</div>
+<p>We observe the ground and see that it <em>is</em> wet.</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{D} : \text{The ground is wet}
+\]</div>
+<p>We then compute our <span class="math notranslate nohighlight">\(p\)</span>-value as the probability of observing wet ground when it is not raining</p>
+<div class="math notranslate nohighlight">
+\[
+p = P\left(\mathcal{D}|\mathcal{H}_{0}\right) = P\left(\text{The ground is wet}|\text{It is not raining}\right).
+\]</div>
+<p>For the sake of argument, say we get <span class="math notranslate nohighlight">\(p = 0.01\)</span> and we reject the null. However, we have <em>not</em> deductively falsified the null here. This is a probability statement about the compatibility of the data. However, there could be other reasons why the ground is wet. Maybe the neighbours have their sprinklers switched on? Maybe somebody spilled something? So even if wet ground is <em>unlikely</em> under the null, rejecting the idea that it is “not raining” does not logically confirm that it is “raining”. We might reject the null, but we have not falsified it because the conclusion is <em>probabilistic</em>. Popper’s system would require us to use deductive logic to absolutely refute that it is not raining and thus confirm that it is raining. NHST does not allow us to do this and so <em>cannot</em> be an implementation of Falsificationism.</p>
+</section>
+</section>
+<section id="should-we-abandon-nhst">
+<h2>Should We Abandon NHST?<a class="headerlink" href="#should-we-abandon-nhst" title="Link to this heading">#</a></h2>
+<p>We have now reached the bigger question of this lesson. NHST is ubiquitous, in whatever form it takes, as the universal method used for statistical inference. This is especially true in a field like Experimental Psychology, where our reliance on statistics is so high, and the field itself developed almost hand-in-hand with modern statistics. Areas such as Biology, Chemistry and Physics managed to progress for hundreds of years without <span class="math notranslate nohighlight">\(p\)</span>-values, yet the history of Psychology is largely an exercise in how many <span class="math notranslate nohighlight">\(p\)</span>-values smaller than 0.05 we can find. Hopefully, given our discussions in this lesson, this is quite a concerning state of affairs. Such concerns are nothing new, as criticisms of NHST have existed since Fisher first introduced the framework. However, concern has more recently been renewed thanks to a <a class="reference external" href="https://en.wikipedia.org/wiki/Replication_crisis">crisis of confidence</a> in the abilility of many scientific findings to replicate. So, should we be moving towards abandoning NHST? Perhaps the better question is, given how entrenched NHST is in modern science, <em>can</em> we abandon NHST? Is it even possible to turn this ship around? Does any of this even matter if induction is logically invalid? These are big questions and will be the focus of this week’s synchoronous session.</p>
+<aside class="topic">
+<p class="topic-title">What do you now know?</p>
+<p>In this section, we have explored the controversy behind using NHST as our main method for statistical inference. After reading this section, you should have a good sense of:</p>
+<ul class="simple">
+<li><p>The idea that NHST does not answer the questions that most researchers are interested in, due to restrictions in the way that Frequentists interpret probability.</p></li>
+<li><p>The idea that the null hypothesis is often implausible, even when choosing a value other than 0. The consequence is that the null is <em>almost never true</em>, meaning that we just need enough to data to calculate a significant <span class="math notranslate nohighlight">\(p\)</span>-value.</p></li>
+<li><p>The idea that NHST requires an inductive leap to go from a probability statement about the data under the null, to assuming that the null is therefore unlikely. This is logically invalid.</p></li>
+<li><p>The idea that NHST is not objective because thresholds are arbitrary and decisions during the data modelling will influence the <span class="math notranslate nohighlight">\(p\)</span>-values.</p></li>
+<li><p>The key clarification that NHST is <em>not</em> an implementation of Popperian Falsificationism, despite some cursory similarities.</p></li>
+</ul>
+</aside>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="mlfoot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>This is the reason why maximum-likelihood is based on maximising the probability of the <em>data</em>, rather than the probability of the <em>parameters</em>.</p>
+</aside>
+<aside class="footnote brackets" id="fiducialfoot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Fisher <em>knew</em> that frequentist probabilities about the data were unsatisfying. He also knew that researchers wanted was a quantity more like <span class="math notranslate nohighlight">\(P(\beta_{1}|\mathcal{D})\)</span>. To do this <em>without</em> Bayesian methods, he tried to invent a new type of probability called <a class="reference external" href="https://en.wikipedia.org/wiki/Fiducial_inference"><em>fiducial</em> probability</a> to get statements about parameters that were compatible with Frequentism. This was generally considered a failure, but does highlight that even Fisher knew that Frequentist methods were answering the wrong question.</p>
+</aside>
+<aside class="footnote brackets" id="rdf-foot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>The wealth of choices available during a data analysis are sometimes known as <em>researcher degrees of freedom</em>. The more choices available, the more possible outcomes of the analysis there are and the more a set of results depends upon the choices that were made. This <em>garden of forking paths</em> is actually quite a big problem in terms of being able to replicate existing results with new data.</p>
+</aside>
+</aside>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "r"
+        },
+        kernelOptions: {
+            name: "ir",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ir'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="5.null-hypothesis-testing-III.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">NHST III: Statistical Significance</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="summary.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Summary</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problems-with-nhst">Problems with NHST</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nhst-is-not-answering-the-right-question">1. NHST is Not Answering the Right Question</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-null-hypothesis-is-implausible">2. The Null Hypothesis is Implausible</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions-from-nhst-are-logically-flawed">3. Conclusions From NHST are Logically Flawed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#despite-appearances-nhst-is-not-objective">4. Despite Appearances, NHST is <em>Not</em> Objective</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nhst-is-not-popperian-falsificationism">5. NHST is <em>Not</em> Popperian Falsificationism</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#should-we-abandon-nhst">Should We Abandon NHST?</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dr George Farmer & Dr Martyn McFarquhar
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

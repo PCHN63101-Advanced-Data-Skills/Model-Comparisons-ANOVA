@@ -1,0 +1,784 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>NHST II: Test Statistics &#8212; Linear Models II: Statistical Inference</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/test.css?v=90b7ad94" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '4.null-hypothesis-testing-II';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="NHST III: Statistical Significance" href="5.null-hypothesis-testing-III.html" />
+    <link rel="prev" title="NHST I: The Null Hypothesis" href="3.null-hypothesis-testing-I.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="0.intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Linear Models II: Statistical Inference - Home"/>
+    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Linear Models II: Statistical Inference - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="0.intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1.purpose-of-inference.html">The Purpose of Statistical Inference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.estimation-uncertainty.html">Uncertainty in Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.null-hypothesis-testing-I.html">NHST I: The Null Hypothesis</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">NHST II: Test Statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.null-hypothesis-testing-III.html">NHST III: Statistical Significance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6.controversy.html">The Controversy of NHST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Inference-Linear-Model" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Inference-Linear-Model/issues/new?title=Issue%20on%20page%20%2F4.null-hypothesis-testing-II.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/4.null-hypothesis-testing-II.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>NHST II: Test Statistics</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-logic-of-test-statistics">The Logic of Test Statistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-z-statistic">The <span class="math notranslate nohighlight">\(z\)</span>-statistic</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-effect-of-estimating-the-variance">The Effect of Estimating the Variance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-t-statistic">The <span class="math notranslate nohighlight">\(t\)</span>-statistic</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-test-statistics">Other Test Statistics</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="nhst-ii-test-statistics">
+<h1>NHST II: Test Statistics<a class="headerlink" href="#nhst-ii-test-statistics" title="Link to this heading">#</a></h1>
+<p>We have now reached a point where most of the logic of NHST has been established. To review, we begin by determining what value our parameter of interest would have under the null hypothesis of no effect. We can then compare that value to the actual value we have calculated to produce a <em>difference</em> that we have called <span class="math notranslate nohighlight">\(\delta\)</span>. Using the theoretical sampling distribution of <span class="math notranslate nohighlight">\(\delta\)</span>, we can establish the probability of this value having occurred <em>if the null hypothesis were true</em>. The smaller this probability, the less compatible our data is with the proposed null value. If the probability gets small enough, we can take this as evidence <em>against</em> the null hypothesis.</p>
+<section id="the-logic-of-test-statistics">
+<h2>The Logic of Test Statistics<a class="headerlink" href="#the-logic-of-test-statistics" title="Link to this heading">#</a></h2>
+<p>Although we have yet to define precisely how to use probability in the method above, we first need to discuss some practical limitations of calculating probability directly from the distribution of <span class="math notranslate nohighlight">\(\delta\)</span>:</p>
+<ul class="simple">
+<li><p>With our current method, we need to construct a new null distribution for every data analysis because the distribution of <span class="math notranslate nohighlight">\(\delta\)</span> depends upon both the units of our measurements and the standard error. Because of this, the procedure is not very <em>generalisable</em>, as we have to start from scratch each time.</p></li>
+<li><p>We cannot compare values of <span class="math notranslate nohighlight">\(\delta\)</span> across diffeerent studies, because <span class="math notranslate nohighlight">\(\delta\)</span> is only interpretable within the context of the current analysis.</p></li>
+<li><p>The probabilities associated with <span class="math notranslate nohighlight">\(\delta\)</span> must also be calculated manually each time, due to the fact that the distribution changes. Although less problematic now with computers, in the past this would have been very impractical for working statisticians.</p></li>
+</ul>
+<p>For all these reasons, it is typical to transform <span class="math notranslate nohighlight">\(\delta\)</span> into a standardised value known as a <em>test statistic</em>. In doing so, we are able to turn a messy and context-specific procedure into a universally interpretable process for inference.</p>
+</section>
+<section id="the-z-statistic">
+<h2>The <span class="math notranslate nohighlight">\(z\)</span>-statistic<a class="headerlink" href="#the-z-statistic" title="Link to this heading">#</a></h2>
+<p>The first method we can use to standardise <span class="math notranslate nohighlight">\(\delta\)</span> is to divide it by its <em>standard error</em>. This produces a value that we will call <span class="math notranslate nohighlight">\(z\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+z = \frac{\delta}{\sqrt{\text{Var}(\delta)}}.
+\]</div>
+<p>This <em>scales</em> <span class="math notranslate nohighlight">\(\delta\)</span> into units of standard error. We can think of this as the magnitude of <span class="math notranslate nohighlight">\(\delta\)</span>, expressed in terms of the number of standard errors the deviation represents. As an example, if <span class="math notranslate nohighlight">\(\delta = 6\)</span> and <span class="math notranslate nohighlight">\(\sqrt{\text{Var}(\delta)} = 3\)</span>, then <span class="math notranslate nohighlight">\(z = \frac{6}{3} = 2\)</span>. In this situation, the average deviation from 0 is 3, so a <span class="math notranslate nohighlight">\(\delta\)</span> of 6 represents 2 of those average deviations. In other words, the magnitude of <span class="math notranslate nohighlight">\(\delta\)</span> is 2 standard errors away from 0. Because both the numerator and denominator of this caclulation have the same units, they effectively cancel and we end up with a <em>unitless</em> quantity. So, irrespective of the original units that we measured, we can transform <span class="math notranslate nohighlight">\(\delta\)</span> into a quantity that can be compared and intepreted across studies. In our current example of testing a regression slope against 0, we therefore have</p>
+<div class="math notranslate nohighlight">
+\[
+z = \frac{\delta}{\sqrt{\text{Var}(\delta)}} = \frac{\hat{\beta}_{1} - \beta_{1}^{(0)}}{\sqrt{\text{Var}\left(\hat{\beta}_{1} - \beta_{1}^{(0)}\right)}} = \frac{\hat{\beta}_{1}}{\text{SE}\left(\hat{\beta}_{1}\right)} = \frac{\hat{\beta}_{1}}{\sqrt{\frac{\sigma^{2}}{\sum{(x_{i} - \bar{x})^{2}}}}},
+\]</div>
+<p>where the denominator is often rearranged and written as</p>
+<div class="math notranslate nohighlight">
+\[
+z = \frac{\hat{\beta}_{1}}{\sigma / \sqrt{\sum{(x_{i} - \bar{x})^{2}}}}.
+\]</div>
+<p>Either way, we are simply dividing the estimate by its standard error to produce a quantity that expresses <span class="math notranslate nohighlight">\(\delta\)</span> in units of standard error. The larger <span class="math notranslate nohighlight">\(z\)</span> is, the larger <span class="math notranslate nohighlight">\(\delta\)</span> is, relative to its standard error. This is useful for interpretation, because the same value of <span class="math notranslate nohighlight">\(\delta\)</span> across different experiments may result in different values of <span class="math notranslate nohighlight">\(z\)</span>, depending upon the degree of uncertainty. This helps our previous eye-balling of each estimate in relation to its standard error by turning it into a single number. For instance, <span class="math notranslate nohighlight">\(\delta = 5\)</span> would be interpreted very differently if the SE was 2 compared to 10. In the first case, the difference is 2.5 times the standard error, meaning <span class="math notranslate nohighlight">\(\delta\)</span> is going to be out in the tails of its distribution. In the second case, the difference is <em>half</em> a standard error, meaning <span class="math notranslate nohighlight">\(\delta\)</span> is going to be within the main density of the distribution.</p>
+<p>Beyond, just changing the interpretation of <span class="math notranslate nohighlight">\(\delta\)</span>, conversion to a <span class="math notranslate nohighlight">\(z\)</span>-statistic also changes its distribution under the null. Importantly, in the expression for <span class="math notranslate nohighlight">\(z\)</span> above, we have used <span class="math notranslate nohighlight">\(\sigma^{2}\)</span> and <em>not</em> <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}\)</span>. So this is based on knowing the population variance, which does not seem particularly useful. However, sometimes assumptions have to be made in order to make progress, so we will stick with this and then address it in more detail below. The main utility in assuming <span class="math notranslate nohighlight">\(\sigma^{2}\)</span> is known is that the denominator of <span class="math notranslate nohighlight">\(z\)</span> become a <em>constant</em>. If we assume that replicating the same expriment involves that same number of data points measured using the same values of <span class="math notranslate nohighlight">\(x\)</span>, then the standard error of the estimate becomes a fixed quantity. Given that the numerator here is just <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span> and we known that this is normally distributed, all <span class="math notranslate nohighlight">\(z\)</span> is doing is dividing a normal random variable by a constant. This does not change the <em>shape</em> of the distribution, it only changes the units. Because <span class="math notranslate nohighlight">\(E(\delta|\mathcal{H}_{0}) = 0\)</span>, this will not change, as dividing 0 by anything still equals 0. However, the standard error of the distribution of <span class="math notranslate nohighlight">\(z\)</span> becomes</p>
+<div class="math notranslate nohighlight">
+\[
+\text{SE}\left(\frac{\delta}{\text{SE}(\delta)}\right) = \frac{\text{SE}(\delta)}{\text{SE}(\delta)} = 1.
+\]</div>
+<p>From this, the distribution of <span class="math notranslate nohighlight">\(z\)</span> must be</p>
+<div class="math notranslate nohighlight">
+\[
+z \sim \mathcal{N}\left(0,1\right),
+\]</div>
+<p>which is known as a <em>standard normal distribution</em>. We can see that this conversion works, irrespective of the scale of the original data, using an example in <code class="docutils literal notranslate"><span class="pre">R</span></code>. The output below shows 6 examples of generating some data using a random mean and a random standard deviation. This data is then <em>standardised</em> and a histogram of the resultant distribution shown, with a standard normal curve on top.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="m">2</span><span class="p">))</span>
+<span class="nf">set.seed</span><span class="p">(</span><span class="m">666</span><span class="p">)</span>
+
+<span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">){</span>
+<span class="w">    </span><span class="n">rand.mu</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">min</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="o">=</span><span class="m">100</span><span class="p">)</span><span class="w">             </span><span class="c1"># Random mean</span>
+<span class="w">    </span><span class="n">rand.sd</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">min</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="w">  </span><span class="n">max</span><span class="o">=</span><span class="m">50</span><span class="p">)</span><span class="w">              </span><span class="c1"># Random SD</span>
+<span class="w">    </span><span class="n">rand.y</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="m">1000</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">rand.mu</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="n">rand.sd</span><span class="p">)</span><span class="w"> </span><span class="c1"># Generate data</span>
+<span class="w">    </span><span class="n">z.dist</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="n">rand.y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">rand.y</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nf">sd</span><span class="p">(</span><span class="n">rand.y</span><span class="p">)</span><span class="w">  </span><span class="c1"># Standardise</span>
+
+<span class="w">    </span><span class="c1"># plot scaling  </span>
+<span class="w">    </span><span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.2</span><span class="p">)</span><span class="w"> </span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1"># Histogram of z-transformed data</span>
+<span class="w">    </span><span class="n">title</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;y ~ N(&quot;</span><span class="p">,</span><span class="nf">round</span><span class="p">(</span><span class="n">rand.mu</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="s">&quot;,&quot;</span><span class="p">,</span><span class="nf">round</span><span class="p">(</span><span class="n">rand.sd</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="s">&quot;)&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">hist</span><span class="p">(</span><span class="n">z.dist</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0.45</span><span class="p">),</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-4</span><span class="p">,</span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;skyblue&quot;</span><span class="p">)</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1"># Add a standard normal curve</span>
+<span class="w">    </span><span class="nf">curve</span><span class="p">(</span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">  </span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/1394421cfb5f4466fe0c096a24471b44c654e8476d831ecaa63768038d81dab2.png"><img alt="_images/1394421cfb5f4466fe0c096a24471b44c654e8476d831ecaa63768038d81dab2.png" src="_images/1394421cfb5f4466fe0c096a24471b44c654e8476d831ecaa63768038d81dab2.png" style="width: 840px; height: 720px;" /></a>
+</div>
+</div>
+<p>The point of all this is to show that, no matter the original units of our data, we can calculate a <span class="math notranslate nohighlight">\(z\)</span>-statistic that we <em>know</em> has a standard normal distribution under the null. So, rather than having to work out the distribution of <span class="math notranslate nohighlight">\(\delta\)</span> each time, we can just turn <span class="math notranslate nohighlight">\(\delta\)</span> into <span class="math notranslate nohighlight">\(z\)</span> and <em>work with a single distribution</em>. So, we get an easy to interpret metric of the magnitude of <span class="math notranslate nohighlight">\(\delta\)</span> and can pre-compute probabilities to be used with <em>any</em> dataset. Indeed, in the past, this is exactly what was done. Statistical texts would contain tables of probabilities for different values of <span class="math notranslate nohighlight">\(z\)</span>. This meant that the working statistician could simply look-up the closest <span class="math notranslate nohighlight">\(z\)</span>-value in the table and would know the probaility of that value under the null hypothesis, rather than having to compute it manually. From here, a decision could be made about whether the calculated value of <span class="math notranslate nohighlight">\(z\)</span> was <em>compatible</em> or <em>incompatible</em> with the hypothesised null value. So, from this perspective, a test statistic is useful for both standardising interpretation, and allowing the necessary probabilities to be pre-computed and then applied to any dataset.</p>
+<section id="the-effect-of-estimating-the-variance">
+<h3>The Effect of Estimating the Variance<a class="headerlink" href="#the-effect-of-estimating-the-variance" title="Link to this heading">#</a></h3>
+<p>As mentioned above, the calculation of <span class="math notranslate nohighlight">\(z\)</span> depended upon knowing <span class="math notranslate nohighlight">\(\sigma^{2}\)</span>. However, in practise, we do not known <span class="math notranslate nohighlight">\(\sigma^{2}\)</span>. Instead, we have an estimated value, denoted <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}\)</span>. So how does that change things? For our current example, we can plug the estimated variance into the standard error formula, like so</p>
+<div class="math notranslate nohighlight">
+\[
+\widehat{\text{SE}}\left(\delta\right) = \sqrt{\widehat{\text{Var}}\left(\hat{\beta}_{1}\right)} = \sqrt{\frac{\hat{\sigma}^{2}}{(n-1)\sigma^{2}_{x}}},
+\]</div>
+<p>resulting in a value for the standard error of <span class="math notranslate nohighlight">\(\delta\)</span>. However, what we have done here is replaced the <em>constant</em> <span class="math notranslate nohighlight">\(\sigma^{2}\)</span> with the <em>random variable</em> <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}\)</span>. In effect, we have <em>estimated</em> the variance of our estimate, meaning that our calculated standard error is now also a <em>random variable</em>. This means that we will be introducing additional randomness into the calculation of <span class="math notranslate nohighlight">\(z\)</span>. The denominator of the test statistic is no longer a constant that simple scales the distribution. Instead, we are now dividing a <em>random variable</em> by <em>another random variable</em>.</p>
+<p>So what happens when we do this? Well, the denominator of <span class="math notranslate nohighlight">\(z\)</span> served to scale <span class="math notranslate nohighlight">\(\delta\)</span> into standard units.
+However, the range of standardised values we get will change depending on how variable the denominator is. When the denominator is constant this is fixed, but when this value is <em>random</em> this range changes <em>dynamically</em>. So, rather than having a distribution with a fixed-width, such as the standard normal, you end up with a distribution that changes its width <em>dynamically</em>. How this width changes depends upon the precision of our estimated standard error. The <em>less</em> precise the estimate, the more we expect extreme value of <span class="math notranslate nohighlight">\(z\)</span> to occur<a class="footnote-reference brackets" href="#distwidthfoot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. This is because we will get more <em>underestimates</em> and more <em>overestimates</em> of the true value. This means that both <em>smaller</em> and <em>larger</em> test statistic values will occur. This will be reflected in a null distribution that is <em>wider</em> than a standard normal. As our estimated standard error gets <em>more precise</em>, we would expect the width of the null distribution to <em>decrease</em> as fewer extreme values will occur.</p>
+<div class="warning admonition">
+<p class="admonition-title">Why Does This Matter?</p>
+<p>The ramifications of having a null distribution that is <em>wider</em> than we think is that our calculated probabilities will be <em>wrong</em>. If we were to use a standard normal distribution to calculate probabilities when <span class="math notranslate nohighlight">\(n\)</span> is small, then the probabilies of extreme values would be <em>too small</em>. If we calculate a large discrepancy from the null, this would then appear <em>rarer</em> than it actually is and we would be overstating how incompatible our data are with the null hypothesis. In other words, we may well reach the <em>wrong conclusion</em>.</p>
+</div>
+<p>So what governs the precision of this estimate (and thus the width of the null distribution)? As we saw earlier with the samplimg distribution of <span class="math notranslate nohighlight">\(\beta_{1}\)</span>, this is governed by the <em>sample size</em>. We can illustrate this using some simulations in <code class="docutils literal notranslate"><span class="pre">R</span></code>. The output below shows the null distribution of <span class="math notranslate nohighlight">\(z\)</span> when the SE is estimated (<em>left</em> column) and when the SE is known (<em>right</em> column). The empirical distribution from the simulations is shown as a solid line, with the theoretical standard normal distribution shown as a dashed line. When the sample size is <em>small</em> and the SE is <em>estimated</em>, we can see that the empirical distribution is <em>wider</em> than a standard normal. This discrepancy decreases as <span class="math notranslate nohighlight">\(n\)</span> gets larger. However, when the SE is <em>known</em>, the standard normal fits, irrespective of the sample size. For the left column, the act of estimating the SE is adding randomness to the calculation of <span class="math notranslate nohighlight">\(z\)</span>, which is amplified in smaller samples. For the right column, the SE is known and is only acting as a constant scaling that changes the <em>units</em> of the distribution, but not its <em>shape</em>.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">123</span><span class="p">)</span>
+
+<span class="c1"># Sample sizes to test</span>
+<span class="n">sample.sizes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="m">5</span><span class="p">,</span><span class="m">10</span><span class="p">,</span><span class="m">20</span><span class="p">,</span><span class="m">500</span><span class="p">)</span>
+<span class="n">n.sims</span><span class="w">       </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">10000</span>
+<span class="n">true.sd</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span>
+<span class="n">mu</span><span class="w">           </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0</span>
+
+<span class="c1"># Set up plotting area: rows = sample sizes, 2 columns (estimated vs known SE)</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">sample.sizes</span><span class="p">),</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="m">3</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">mgp</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">0.6</span><span class="p">,</span><span class="m">0</span><span class="p">))</span>
+
+<span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="n">sample.sizes</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="n">z.est</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">n.sims</span><span class="p">)</span><span class="w">  </span>
+<span class="w">     </span><span class="n">z.known</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">n.sims</span><span class="p">)</span><span class="w">  </span>
+<span class="w">  </span>
+<span class="w">     </span><span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">n.sims</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="c1"># Generate data</span>
+<span class="w">          </span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="n">true.sd</span><span class="p">)</span>
+<span class="w">    </span>
+<span class="w">          </span><span class="c1"># Test statistics</span>
+<span class="w">          </span><span class="n">z.est</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">mu</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="nf">sd</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w">   </span><span class="o">/</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="w"> </span><span class="c1"># estimated</span>
+<span class="w">          </span><span class="n">z.known</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">mu</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">true.sd</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="w"> </span><span class="c1"># known</span>
+<span class="w">     </span><span class="p">}</span>
+<span class="w">  </span>
+<span class="w">     </span><span class="c1"># Density estimates</span>
+<span class="w">     </span><span class="n">d.est</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">density</span><span class="p">(</span><span class="n">z.est</span><span class="p">)</span>
+<span class="w">     </span><span class="n">d.known</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">density</span><span class="p">(</span><span class="n">z.known</span><span class="p">)</span>
+
+<span class="w">     </span><span class="c1"># plot scaling  </span>
+<span class="w">     </span><span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.2</span><span class="p">)</span><span class="w"> </span>
+<span class="w">   </span>
+<span class="w">     </span><span class="c1">## --- LEFT: Estimated SE ---</span>
+<span class="w">     </span><span class="nf">plot</span><span class="p">(</span><span class="n">d.est</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;n =&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;| Estimated SE&quot;</span><span class="p">),</span>
+<span class="w">          </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-4</span><span class="p">,</span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0.45</span><span class="p">))</span>
+<span class="w">  </span>
+<span class="w">     </span><span class="nf">curve</span><span class="p">(</span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="w">  </span>
+<span class="w">     </span><span class="c1">## --- RIGHT: Known SE ---</span>
+<span class="w">     </span><span class="nf">plot</span><span class="p">(</span><span class="n">d.known</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;n =&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;| Known SE&quot;</span><span class="p">),</span>
+<span class="w">          </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-4</span><span class="p">,</span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0.45</span><span class="p">))</span>
+<span class="w">  </span>
+<span class="w">     </span><span class="nf">curve</span><span class="p">(</span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/f850efa1bdfa4f13de3a23004edd5a4176e3c5245ff15655ee9ea217dfa5dabf.png"><img alt="_images/f850efa1bdfa4f13de3a23004edd5a4176e3c5245ff15655ee9ea217dfa5dabf.png" src="_images/f850efa1bdfa4f13de3a23004edd5a4176e3c5245ff15655ee9ea217dfa5dabf.png" style="width: 720px; height: 900px;" /></a>
+</div>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">Implications for Sample Size</p>
+<p>Be aware that although the plots above may imply that everything is fine so long as we use a sample size of 50 or more, the scaling of the plots actually hides the truth. Although we cannot see it from such a zoomed-out perspective, if we rescale the plots so we can see the tails close up, we can see that a discrepancy between the empirical and theoretical distributions exists even at <span class="math notranslate nohighlight">\(n=50\)</span>. To see this for yourself, try running the code above but changing the scaling of the plots to <code class="docutils literal notranslate"><span class="pre">xlim=c(-2.1,-2),</span> <span class="pre">ylim=c(0,0.1)</span></code>. In fact, such a discrepancy will be visible up until around <span class="math notranslate nohighlight">\(n=500\)</span>. However, this is again misleading, as changing <code class="docutils literal notranslate"><span class="pre">ylim=c(0.042,0.055)</span></code> will make clear. As <span class="math notranslate nohighlight">\(n\)</span> increases, the difference becomes smaller and smaller, but this is not the same as saying there is <em>no</em> difference.</p>
+</div>
+</section>
+</section>
+<section id="the-t-statistic">
+<h2>The <span class="math notranslate nohighlight">\(t\)</span>-statistic<a class="headerlink" href="#the-t-statistic" title="Link to this heading">#</a></h2>
+<p>Because of the difference between using the true standard error and an estimate of the standard error, when we divide <span class="math notranslate nohighlight">\(\delta\)</span> by an <em>estimated</em> value we call the resultant statistic a <span class="math notranslate nohighlight">\(t\)</span>, rather than <span class="math notranslate nohighlight">\(z\)</span><a class="footnote-reference brackets" href="#studentz-foot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p>
+<div class="math notranslate nohighlight">
+\[
+t = \frac{\delta}{\sqrt{\widehat{\text{Var}}\left(\delta\right)}},
+\]</div>
+<p>which we can rewrite for our current example as</p>
+<div class="math notranslate nohighlight">
+\[
+t = \frac{\hat{\beta}_{1}}{\hat{\sigma} / \sqrt{\sum{(x_{i} - \bar{x})^{2}}}},
+\]</div>
+<p>or</p>
+<div class="math notranslate nohighlight">
+\[
+t = \frac{\hat{\beta}_{1}}{\hat{\sigma} / \sqrt{(n-1)\sigma^{2}_{x}}}.
+\]</div>
+<p>The corresponding null distribution for this <span class="math notranslate nohighlight">\(t\)</span>-statistic is, unsurprisingly, known as the <span class="math notranslate nohighlight">\(t\)</span>-distribution. As discussed above, given the uncertainty in the estimation of the denominator of the <span class="math notranslate nohighlight">\(t\)</span>-statistic, the <span class="math notranslate nohighlight">\(t\)</span>-distribution is able to dynamically reshape its width. This is achieved using a single parameter denoted <span class="math notranslate nohighlight">\(\nu\)</span>, more commonly known as the <em>degrees of freedom</em>. The value of <span class="math notranslate nohighlight">\(\nu\)</span> is directly informed by the sampling distribution of <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}\)</span>. Previously in this lesson, we touched-upon the sampling distribution of <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}\)</span> in simple regression, mentioning that it had a scaled <span class="math notranslate nohighlight">\(\chi^{2}\)</span> distribution with parameter <span class="math notranslate nohighlight">\(k = n - 2\)</span>. This parameter is <em>exactly</em> the degrees of freedom that controls the shape of the <span class="math notranslate nohighlight">\(t\)</span>-distribution. You do not need to understand much about a scaled <span class="math notranslate nohighlight">\(\chi^{2}\)</span>-distribution. The only element that matters is that this reflects the uncertainty in estimation due to the sample size, and is the part of the denominator that influences the width of the null <span class="math notranslate nohighlight">\(t\)</span>-distribution. As illustrated below, for small values of <span class="math notranslate nohighlight">\(\nu\)</span> the <span class="math notranslate nohighlight">\(t\)</span>-distribution is wider and fatter than a standard normal. As <span class="math notranslate nohighlight">\(\nu\)</span> grows, the width shrinks until the <span class="math notranslate nohighlight">\(t\)</span>-distribution is the same as a standard normal. This is the expected behaviour in order to correctly capture the influence of small sample sizes on the distribution of the test statistic.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up the x-axis range</span>
+<span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">seq</span><span class="p">(</span><span class="m">-4</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">length.out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">500</span><span class="p">)</span>
+
+<span class="c1"># Define degrees of freedom to compare</span>
+<span class="n">dfs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">30</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">)</span>
+
+<span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span><span class="w"> </span><span class="c1"># plot scaling</span>
+
+<span class="c1"># Set up plot</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">dt</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;n&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0.4</span><span class="p">),</span>
+<span class="w">     </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;t value&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Density&quot;</span><span class="p">,</span>
+<span class="w">     </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;t-Distributions with Varying Degrees of Freedom&quot;</span><span class="p">)</span>
+
+<span class="c1"># Define a color palette</span>
+<span class="n">colors</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rainbow</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">dfs</span><span class="p">))</span>
+
+<span class="c1"># Add lines for each t-distribution</span>
+<span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="nf">seq_along</span><span class="p">(</span><span class="n">dfs</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">dt</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dfs</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">lwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1"># Add standard normal distribution for reference</span>
+<span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span>
+
+<span class="c1"># Add legend</span>
+<span class="n">labels</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;nu == &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">dfs</span><span class="p">)</span>
+<span class="nf">legend</span><span class="p">(</span><span class="s">&quot;topright&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">      </span><span class="n">legend</span><span class="o">=</span><span class="nf">parse</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">labels</span><span class="p">),</span>
+<span class="w">      </span><span class="n">col</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span><span class="w"> </span>
+<span class="w">      </span><span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span>
+<span class="w">      </span><span class="n">bty</span><span class="o">=</span><span class="s">&quot;n&quot;</span><span class="p">)</span>
+
+<span class="nf">legend</span><span class="p">(</span><span class="s">&quot;topleft&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">legend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Standard Normal&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">bty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;n&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/73873908e5acb5590753bb138931e2a9e70dd580ec681fd16978f9898d7fda2b.png"><img alt="_images/73873908e5acb5590753bb138931e2a9e70dd580ec681fd16978f9898d7fda2b.png" src="_images/73873908e5acb5590753bb138931e2a9e70dd580ec681fd16978f9898d7fda2b.png" style="width: 720px; height: 420px;" /></a>
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Student and the History of the <span class="math notranslate nohighlight">\(t\)</span>-statistic</p>
+<p>The devlopment of the <span class="math notranslate nohighlight">\(t\)</span>-statistic is an interesting part of the history of modern statistics. The additional uncertainty added by using an estimate of the variance in small samples was not appreciated by statistians before a seminal publication by Student in 1908. Prior to this, statisticans would just use <span class="math notranslate nohighlight">\(z\)</span>-statistics and assume that the estimate of the variance could just be used as a close approximation of the population value. The paper titled <a class="reference external" href="https://www.jstor.org/stable/2331554">The Probable Error of a Mean</a> changed this thinking and introduced the world to the concept of the <span class="math notranslate nohighlight">\(t\)</span>-statistic and the <span class="math notranslate nohighlight">\(t\)</span>-distribution. The author was named <a class="reference external" href="https://en.wikipedia.org/wiki/William_Sealy_Gosset">William Sealy Gosset</a>, who was a statistician working for Guinness. However, due to previous disclosure of trade secrets through scientific publication, Guinness only allowed their staff to publish on condition that they did not mention:</p>
+<ol class="arabic simple">
+<li><p>Beer</p></li>
+<li><p>Guinness</p></li>
+<li><p>Their own surname</p></li>
+</ol>
+<p>As such, Gosset published his work on the <span class="math notranslate nohighlight">\(t\)</span>-distribution under the pseudonym “Student”. Because of this, the null distribution is still often referred to as “Student’s <span class="math notranslate nohighlight">\(t\)</span>-distribution”. Unfortunately, Gosset’s work fell largely on deaf ears until Fisher realised the usefulness of these results when developing his own methods several years later. Indeed, it was Fisher who, in a <a class="reference external" href="https://www.jstor.org/stable/2683142?origin=crossref">series of letters to Gosset</a>, corrected the derivation of the <span class="math notranslate nohighlight">\(t\)</span>-distribution by suggesting the use of the <em>degrees of freedom</em>, not the total sample size (as Gosset originally thought). This is an interesting historical point as it shows that the concept of degrees of freedom were not intuitive for statisticians and, in fact, were quite a controversial idea when <a class="reference external" href="https://www.jstor.org/stable/2340521?seq=1">first introduced</a> by Fisher.</p>
+</div>
+</section>
+<section id="other-test-statistics">
+<h2>Other Test Statistics<a class="headerlink" href="#other-test-statistics" title="Link to this heading">#</a></h2>
+<p>There are many more test statistics in the world beyond the <span class="math notranslate nohighlight">\(z\)</span>-statistic and the <span class="math notranslate nohighlight">\(t\)</span>-statistic. As we move forward on this course, we will see other test statistics introduced. In all cases, the logic of using the statistic is the same. Whatever our null hypothesis may be, we want to place the calculated discrepancy from the null on a standardised scale that can be understood by anyone, irrespective of the original units of the data. Ideally, the null distribution of this statistic should be dynamic to reflect uncertainty in the estimation of the standard error in small samples. However, if this is not possible, then we can still use statistics with a fixed null distribution and treat them as <em>asymptotically correct</em>. This means that the probabilities calculated from these distributions are correct, but only as <span class="math notranslate nohighlight">\(n\)</span> gets larger<a class="footnote-reference brackets" href="#infinitefoot" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. This may seem a strange approach to take, however, we will see later on the course that there are some models where the concept of <em>degrees of freedom</em> causes problems because they become impossible to verify. This means that either an approximation is needed, or we have to abandon the concept entirely. If we choose the latter approach, then our only choice is to fall-back on asymptotic statistics.</p>
+<aside class="topic">
+<p class="topic-title">What do you now know?</p>
+<p>In this section, we have explored the second part of NHST in terms of defining a test-statistic. After reading this section, you should have a good sense of:</p>
+<ul class="simple">
+<li><p>Why it is more practical to turn our raw difference <span class="math notranslate nohighlight">\(\delta\)</span> in a standardised value, to allow for easier interpretation and, historically, easier calculation of probabilities.</p></li>
+<li><p>The logic behind the <span class="math notranslate nohighlight">\(z\)</span>-statistic, which divides <span class="math notranslate nohighlight">\(\delta\)</span> by its standard error, rescaling <span class="math notranslate nohighlight">\(\delta\)</span> into standard error units.</p></li>
+<li><p>The idea that this rescaling alters the distribution of <span class="math notranslate nohighlight">\(\delta\)</span> such that <span class="math notranslate nohighlight">\(z\)</span> follows a standard normal distribution under the null, irrespective of the original units of the data.</p></li>
+<li><p>The idea that the <span class="math notranslate nohighlight">\(z\)</span>-statistic is based on assuming that <span class="math notranslate nohighlight">\(\sigma^{2}\)</span> is known, when in reality we almost always have to <em>estimate</em> this value.</p></li>
+<li><p>The principle that when we <em>estimate</em> the variance (and thus estimate the standard error), the resultant test statistic is known as a <span class="math notranslate nohighlight">\(t\)</span>-statistic and follows a <span class="math notranslate nohighlight">\(t\)</span>-distribution under the null.</p></li>
+<li><p>The concept that the <span class="math notranslate nohighlight">\(t\)</span>-distribution is able to flexibly adapt to the uncertainty in the estimation of the standard error by altering its width, as governed by its <em>degrees of freedom</em>.</p></li>
+</ul>
+</aside>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="distwidthfoot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Remembering back to how the width of the sampling distribution changes with more data and how this makes the estimate more or less precise.</p>
+</aside>
+<aside class="footnote brackets" id="studentz-foot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>This was value was originally called Student’s <span class="math notranslate nohighlight">\(z\)</span>-statistic, but the name was later changed to the <span class="math notranslate nohighlight">\(t\)</span>-statistic by Fisher.</p>
+</aside>
+<aside class="footnote brackets" id="infinitefoot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Matematically, we would say “in the limit, as <span class="math notranslate nohighlight">\(n\)</span> approaches infinity”, written <span class="math notranslate nohighlight">\(n \rightarrow \infty\)</span>. Obviously, an infinite sample size is a silly thing to consider, however, this is just a mathematical vehicle for reaching results that hold as the sample size gets larger and larger. When using asymptotically correct null distributions, either a large sample size is needed, or additional caution is warranted in small samples.</p>
+</aside>
+</aside>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "r"
+        },
+        kernelOptions: {
+            name: "ir",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ir'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="3.null-hypothesis-testing-I.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">NHST I: The Null Hypothesis</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="5.null-hypothesis-testing-III.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">NHST III: Statistical Significance</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-logic-of-test-statistics">The Logic of Test Statistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-z-statistic">The <span class="math notranslate nohighlight">\(z\)</span>-statistic</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-effect-of-estimating-the-variance">The Effect of Estimating the Variance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-t-statistic">The <span class="math notranslate nohighlight">\(t\)</span>-statistic</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-test-statistics">Other Test Statistics</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dr George Farmer & Dr Martyn McFarquhar
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
