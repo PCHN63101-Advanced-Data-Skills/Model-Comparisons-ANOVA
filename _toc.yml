@@ -4,10 +4,11 @@
 format: jb-book
 root: 0.intro
 chapters:
-- file: 1.purpose-of-inference
-- file: 2.estimation-uncertainty
-- file: 3.null-hypothesis-testing-I
-- file: 4.null-hypothesis-testing-II
-- file: 5.null-hypothesis-testing-III
-- file: 6.controversy
+- file: 1.dummy-variables
+- file: 2.t-tests-oneway
+- file: 3.omnibus-tests-model-comps
+- file: 4.higher-order-ANOVA
+#- file: 5.follow-up
+- file: 6.unbalanced-ANOVA
+- file: 7.ANCOVA
 - file: summary
