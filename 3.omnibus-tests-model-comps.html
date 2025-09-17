@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Summary &#8212; Linear Models IV: Model Comparisons and the ANOVA</title>
+    <title>Omnibus Tests and Model Comparisons &#8212; Linear Models IV: Model Comparisons and the ANOVA</title>
   
   
   
@@ -61,10 +61,11 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'summary';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '3.omnibus-tests-model-comps';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Analysis of Covariance (ANCOVA)" href="7.ANCOVA.html" />
+    <link rel="next" title="Higher-order ANOVA Models" href="4.higher-order-ANOVA.html" />
+    <link rel="prev" title="One-way ANOVA" href="2.t-tests-oneway.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -171,11 +172,11 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1.dummy-variables.html">Dummy Variable Regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2.t-tests-oneway.html">One-way ANOVA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.omnibus-tests-model-comps.html">Omnibus Tests and Model Comparisons</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Omnibus Tests and Model Comparisons</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4.higher-order-ANOVA.html">Higher-order ANOVA Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="6.unbalanced-ANOVA.html">ANOVAs for Unbalanced Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="7.ANCOVA.html">Analysis of Covariance (ANCOVA)</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
 </ul>
 
     </div>
@@ -252,7 +253,7 @@
       
       
       
-      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Model-Comparisons-ANOVA/issues/new?title=Issue%20on%20page%20%2Fsummary.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Model-Comparisons-ANOVA/issues/new?title=Issue%20on%20page%20%2F3.omnibus-tests-model-comps.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -282,7 +283,7 @@
       
       
       
-      <li><a href="_sources/summary.ipynb" target="_blank"
+      <li><a href="_sources/3.omnibus-tests-model-comps.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -356,7 +357,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Summary</h1>
+    <h1>Omnibus Tests and Model Comparisons</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -370,9 +371,9 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="summary">
-<h1>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>
-<p>… None of these criticisms are unique. For instance, see <a class="reference external" href="https://media.pluto.psy.uconn.edu/Gigerenzer%20superego%20ego%20id.pdf">…</a>, ()[], or ()[].</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="omnibus-tests-and-model-comparisons">
+<h1>Omnibus Tests and Model Comparisons<a class="headerlink" href="#omnibus-tests-and-model-comparisons" title="Link to this heading">#</a></h1>
+<p>… So, the core understanding here is that the ANOVA is simply a <em>model comparison procedure</em>. The ANOVA effects usually reported within an ANOVA table are really comparisons between a model that contains that effect and a model that does not contain that effect. The <em>variance</em> within the name ANOVA is a comparison between the error variances of these models. In other words, the ANOVA is asking the question “how much does the error reduce when we include this effect in the model?” The table is just a helpful way of organising all these comparisons. So we can see that the ANOVA model is in fact just a form of multiple regression, and the tests associated with the ANOVA are summaries of model comparisons. This is the true way to conceptualise an ANOVA.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -406,13 +407,22 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="7.ANCOVA.html"
+       href="2.t-tests-oneway.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Analysis of Covariance (ANCOVA)</p>
+        <p class="prev-next-title">One-way ANOVA</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="4.higher-order-ANOVA.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Higher-order ANOVA Models</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
