@@ -587,7 +587,13 @@ See ?effectsTheme for details.
 \[
 \hat{y}^{\text{USA}} - \hat{y}^{\text{Other}} = \left(\beta_{0} + \beta_{1}\right) - \beta_{0} = \beta_{1}.
 \]</div>
-<p>So, using this dummy scheme, the predicted values of each category are simply their sample means, which are encoded by the intercept becoming the <em>mean</em> of whichever group is coded as 0 (often known as the <em>reference group</em>) and the slope becoming the <em>mean difference</em> between the groups. From the output above, we can therefore conclude that cars from the USA have <em>lower</em> average fuel efficiency compared to cars from the rest of the world by around 6.656 fewer miles to the gallon.</p>
+<p>Performing the subtraction in other other direction gives you</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{y}^{\text{Other}} - \hat{y}^{\text{USA}} = \beta_{0} - \left(\beta_{0} + \beta_{1}\right) = -\beta_{1},
+\]</div>
+<p>so we can always see the mean difference in the other direction by simply multiplying the slope by -1.</p>
+<p>Using this dummy scheme, the predicted values of each category are simply their sample means, which are encoded by the intercept becoming the <em>mean</em> of whichever group is coded as 0 (often known as the <em>reference group</em>) and the slope becoming the <em>mean difference</em> between the groups. From the output above, we can therefore conclude that cars from the USA have <em>lower</em> average fuel efficiency compared to cars from the rest of the world by around 6.656 fewer miles to the gallon.</p>
 </section>
 <section id="automatic-dummy-variables">
 <h3>Automatic Dummy Variables<a class="headerlink" href="#automatic-dummy-variables" title="Link to this heading">#</a></h3>
