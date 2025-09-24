@@ -65,7 +65,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Higher-order ANOVA Models" href="4.higher-order-ANOVA.html" />
-    <link rel="prev" title="One-way ANOVA" href="2.t-tests-oneway.html" />
+    <link rel="prev" title="One-way ANOVA" href="2.oneway-ANOVA.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -171,10 +171,9 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1.dummy-variables.html">Dummy Variable Regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.t-tests-oneway.html">One-way ANOVA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.oneway-ANOVA.html">One-way ANOVA</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Omnibus Tests and Model Comparisons</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4.higher-order-ANOVA.html">Higher-order ANOVA Models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="6.unbalanced-ANOVA.html">ANOVAs for Unbalanced Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="7.ANCOVA.html">Analysis of Covariance (ANCOVA)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
 </ul>
@@ -373,7 +372,9 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="omnibus-tests-and-model-comparisons">
 <h1>Omnibus Tests and Model Comparisons<a class="headerlink" href="#omnibus-tests-and-model-comparisons" title="Link to this heading">#</a></h1>
+<p>In the previous section, we saw how to use dummy variables with multiple categorical levels and then specify a subsequent regression model that fits group means and mean differeces. Although we called this a One-way ANOVA model, it probably does not look much like an ANOVA to you yet. In this section, we will complete the picture by discussing the nature of the ANOVA omnibus tests and showing how these are effectively <em>model comparisons</em>. The familiar ANOVA table is simply a way of displaying the results of several model comparisons. We will show how to generate this within <code class="docutils literal notranslate"><span class="pre">R</span></code> and also show how the values within this table relate to comparing different regression models.</p>
 <p>… So, the core understanding here is that the ANOVA is simply a <em>model comparison procedure</em>. The ANOVA effects usually reported within an ANOVA table are really comparisons between a model that contains that effect and a model that does not contain that effect. The <em>variance</em> within the name ANOVA is a comparison between the error variances of these models. In other words, the ANOVA is asking the question “how much does the error reduce when we include this effect in the model?” The table is just a helpful way of organising all these comparisons. So we can see that the ANOVA model is in fact just a form of multiple regression, and the tests associated with the ANOVA are summaries of model comparisons. This is the true way to conceptualise an ANOVA.</p>
+<p>… Notice that this table says Type II Sums-of-squares at the top. This is something we will explore in more detail in the associated synchronous session next week.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -407,7 +408,7 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="2.t-tests-oneway.html"
+       href="2.oneway-ANOVA.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
