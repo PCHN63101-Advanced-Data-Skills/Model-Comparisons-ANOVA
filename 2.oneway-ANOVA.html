@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Introduction &#8212; Linear Models IV: Model Comparisons and the ANOVA</title>
+    <title>One-way ANOVA &#8212; Linear Models IV: Model Comparisons and the ANOVA</title>
   
   
   
@@ -61,12 +61,11 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '0.intro';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '2.oneway-ANOVA';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Dummy Variable Regression" href="1.dummy-variables.html" />
+    <link rel="next" title="Omnibus Tests and Model Comparisons" href="3.omnibus-tests-model-comps.html" />
+    <link rel="prev" title="Dummy Variable Regression" href="1.dummy-variables.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -118,8 +117,6 @@
       
       
       
-        
-      
       <dialog id="pst-primary-sidebar-modal"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
@@ -139,7 +136,7 @@
     
   
 
-<a class="navbar-brand logo" href="#">
+<a class="navbar-brand logo" href="0.intro.html">
   
   
   
@@ -166,15 +163,15 @@
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1 current active">
-                <a class="reference internal" href="#">
+            <li class="toctree-l1">
+                <a class="reference internal" href="0.intro.html">
                     Introduction
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1.dummy-variables.html">Dummy Variable Regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.oneway-ANOVA.html">One-way ANOVA</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">One-way ANOVA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.omnibus-tests-model-comps.html">Omnibus Tests and Model Comparisons</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4.higher-order-ANOVA.html">Higher-order ANOVA Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="7.ANCOVA.html">Analysis of Covariance (ANCOVA)</a></li>
@@ -255,7 +252,7 @@
       
       
       
-      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Model-Comparisons-ANOVA/issues/new?title=Issue%20on%20page%20%2F0.intro.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Model-Comparisons-ANOVA/issues/new?title=Issue%20on%20page%20%2F2.oneway-ANOVA.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -285,7 +282,7 @@
       
       
       
-      <li><a href="_sources/0.intro.ipynb" target="_blank"
+      <li><a href="_sources/2.oneway-ANOVA.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -348,9 +345,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -361,20 +356,11 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Introduction</h1>
+    <h1>One-way ANOVA</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contents">Contents</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#about-the-authors">About the Authors</a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -384,44 +370,89 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h1>
-<p>So far on this unit, we have treated multiple regression as a way of modelling the relationship between a <em>continuous</em> outcome variable and <em>continuous</em> predictor variables. Although we saw last week that the use of a continuous outcome is one of the assumptions of a multiple regression model, the use of continuous predictors is not. As such, it is possible to mix continuous and categorical predictor variables within the same model. This ability is very important to understand because it allows multiple regression to become a much more general framework for statistical analysis. Categorical predictors have strong ties to experimental research. For instance, comparing different conditions of an experimental task or comparing different groups of clinical patients. As such, the integration of categorical predictors makes multiple regression much more suitable for experimental data. Moreso, the integration of categorical predictors allows traditional analyses such as the <span class="math notranslate nohighlight">\(t\)</span>-test or ANOVA to be conducted within the multiple regression frameowork. This is a powerful approach known as the <em>general linear model</em> (GLM). In this lesson, we will explore how categorical predictors can be used within multiple regression via the use of <em>dummy variables</em>. …</p>
-<section id="contents">
-<h2>Contents<a class="headerlink" href="#contents" title="Link to this heading">#</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="1.dummy-variables.html">Dummy Variable Regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.oneway-ANOVA.html">One-way ANOVA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.omnibus-tests-model-comps.html">Omnibus Tests and Model Comparisons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4.higher-order-ANOVA.html">Higher-order ANOVA Models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="7.ANCOVA.html">Analysis of Covariance (ANCOVA)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
-</ul>
+  <section class="tex2jax_ignore mathjax_ignore" id="one-way-anova">
+<h1>One-way ANOVA<a class="headerlink" href="#one-way-anova" title="Link to this heading">#</a></h1>
+<p>…</p>
+<p>To begin with, we will redefine our <code class="docutils literal notranslate"><span class="pre">origin</span></code> variable to further split the <code class="docutils literal notranslate"><span class="pre">Other</span></code> category into <code class="docutils literal notranslate"><span class="pre">Japan</span></code> and <code class="docutils literal notranslate"><span class="pre">Europe</span></code>. We also convert this into a factor straight away and check the levels.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span>
+<span class="w">                   </span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span>
+<span class="w">                   </span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span>
+<span class="w">                   </span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">)</span>
+<span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.factor</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">levels</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="p">))</span>
+</pre></div>
 </div>
-</section>
-<section id="about-the-authors">
-<h2>About the Authors<a class="headerlink" href="#about-the-authors" title="Link to this heading">#</a></h2>
-</br>
-<figure class="align-left">
-<a class="reference internal image-reference" href="_images/martyn.jpeg"><img alt="_images/martyn.jpeg" src="_images/martyn.jpeg" style="width: 185.7px; height: 223.04999999999998px;" /></a>
-</figure>
-<p><strong>Dr Martyn McFarquhar | PhD FHEA</strong></p>
-<p>Lecturer in Neuroimaging</p>
-<p>4.33 Booth Street East | Division of Psychology, Communication and Human Neuroscience | School of Health Sciences | The University of Manchester M13 9PL</p>
-<p>t: +44 (0)161 275 2688 | e: <a class="reference external" href="mailto:martyn&#46;mcfarquhar&#37;&#52;&#48;manchester&#46;ac&#46;uk">martyn<span>&#46;</span>mcfarquhar<span>&#64;</span>manchester<span>&#46;</span>ac<span>&#46;</span>uk</a>
-</br>
-</br>
-</br>
-</br></p>
-<figure class="align-right">
-<a class="reference internal image-reference" href="_images/george.jpg"><img alt="_images/george.jpg" src="_images/george.jpg" style="width: 190.4px; height: 190.4px;" /></a>
-</figure>
-<p><strong>Dr George Farmer | PhD</strong></p>
-<p>Lecturer</p>
-<p>… Dover Street Building | Division of Psychology, Communication and Human Neuroscience | School of Health Sciences | The University of Manchester M13 9PL</p>
-<p>t: +44 (0)161 275 … | e: <a class="reference external" href="mailto:george&#46;farmer&#37;&#52;&#48;manchester&#46;ac&#46;uk">george<span>&#46;</span>farmer<span>&#64;</span>manchester<span>&#46;</span>ac<span>&#46;</span>uk</a></p>
-</section>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Europe&quot; &quot;Japan&quot;  &quot;USA&quot;   
+</pre></div>
+</div>
+</div>
+</div>
+<p>The dataset now looks like this</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb origin
+Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4  Japan
+Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4  Japan
+Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1    USA
+Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1    USA
+Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2    USA
+Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1    USA
+Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4    USA
+Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2 Europe
+Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2 Europe
+Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4 Europe
+Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4 Europe
+Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3 Europe
+Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3 Europe
+Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3 Europe
+Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4    USA
+Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4    USA
+Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4    USA
+Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1 Europe
+Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2  Japan
+Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1  Japan
+Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1  Japan
+Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2    USA
+AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2    USA
+Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4    USA
+Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2    USA
+Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1 Europe
+Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2 Europe
+Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2 Europe
+Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4    USA
+Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6 Europe
+Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8 Europe
+Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 Europe
+</pre></div>
+</div>
+</div>
+</div>
+<p>So let us now see how <code class="docutils literal notranslate"><span class="pre">R</span></code> has coded these catgories in terms of dummy variables</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">contrasts</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>       Japan USA
+Europe     0   0
+Japan      1   0
+USA        0   1
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -454,12 +485,21 @@
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="right-next"
+    <a class="left-prev"
        href="1.dummy-variables.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Dummy Variable Regression</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="3.omnibus-tests-model-comps.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Dummy Variable Regression</p>
+        <p class="prev-next-title">Omnibus Tests and Model Comparisons</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -469,23 +509,6 @@
             </div>
             
             
-              
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contents">Contents</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#about-the-authors">About the Authors</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>
