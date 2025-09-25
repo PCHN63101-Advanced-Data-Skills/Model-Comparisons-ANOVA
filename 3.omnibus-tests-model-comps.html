@@ -345,7 +345,9 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -361,6 +363,14 @@
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unequal-variance">Unequal Variance</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -375,6 +385,10 @@
 <p>In the previous section, we saw how to use dummy variables with multiple categorical levels and then specify a subsequent regression model that fits group means and mean differeces. Although we called this a One-way ANOVA model, it probably does not look much like an ANOVA to you yet. In this section, we will complete the picture by discussing the nature of the ANOVA omnibus tests and showing how these are effectively <em>model comparisons</em>. The familiar ANOVA table is simply a way of displaying the results of several model comparisons. We will show how to generate this within <code class="docutils literal notranslate"><span class="pre">R</span></code> and also show how the values within this table relate to comparing different regression models.</p>
 <p>… So, the core understanding here is that the ANOVA is simply a <em>model comparison procedure</em>. The ANOVA effects usually reported within an ANOVA table are really comparisons between a model that contains that effect and a model that does not contain that effect. The <em>variance</em> within the name ANOVA is a comparison between the error variances of these models. In other words, the ANOVA is asking the question “how much does the error reduce when we include this effect in the model?” The table is just a helpful way of organising all these comparisons. So we can see that the ANOVA model is in fact just a form of multiple regression, and the tests associated with the ANOVA are summaries of model comparisons. This is the true way to conceptualise an ANOVA.</p>
 <p>… Notice that this table says Type II Sums-of-squares at the top. This is something we will explore in more detail in the associated synchronous session next week.</p>
+<section id="unequal-variance">
+<h2>Unequal Variance<a class="headerlink" href="#unequal-variance" title="Link to this heading">#</a></h2>
+<p>We can also demonstrate how these same steps apply to models fit using GLS.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -431,6 +445,22 @@
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unequal-variance">Unequal Variance</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
