@@ -368,7 +368,8 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unequal-variance">Unequal Variance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#follow-up-tests">Follow-up Tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-general-anova-procedure">The General ANOVA Procedure</a></li>
 </ul>
             </nav>
         </div>
@@ -384,10 +385,145 @@
 <h1>Omnibus Tests and Model Comparisons<a class="headerlink" href="#omnibus-tests-and-model-comparisons" title="Link to this heading">#</a></h1>
 <p>In the previous section, we saw how to use dummy variables with multiple categorical levels and then specify a subsequent regression model that fits group means and mean differeces. Although we called this a One-way ANOVA model, it probably does not look much like an ANOVA to you yet. In this section, we will complete the picture by discussing the nature of the ANOVA omnibus tests and showing how these are effectively <em>model comparisons</em>. The familiar ANOVA table is simply a way of displaying the results of several model comparisons. We will show how to generate this within <code class="docutils literal notranslate"><span class="pre">R</span></code> and also show how the values within this table relate to comparing different regression models.</p>
 <p>… So, the core understanding here is that the ANOVA is simply a <em>model comparison procedure</em>. The ANOVA effects usually reported within an ANOVA table are really comparisons between a model that contains that effect and a model that does not contain that effect. The <em>variance</em> within the name ANOVA is a comparison between the error variances of these models. In other words, the ANOVA is asking the question “how much does the error reduce when we include this effect in the model?” The table is just a helpful way of organising all these comparisons. So we can see that the ANOVA model is in fact just a form of multiple regression, and the tests associated with the ANOVA are summaries of model comparisons. This is the true way to conceptualise an ANOVA.</p>
-<p>… Notice that this table says Type II Sums-of-squares at the top. This is something we will explore in more detail in the associated synchronous session next week.</p>
-<section id="unequal-variance">
-<h2>Unequal Variance<a class="headerlink" href="#unequal-variance" title="Link to this heading">#</a></h2>
-<p>We can also demonstrate how these same steps apply to models fit using GLS.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span>
+<span class="w">                   </span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span>
+<span class="w">                   </span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span>
+<span class="w">                   </span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">)</span>
+<span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.factor</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="p">)</span>
+
+<span class="n">null.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w">      </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">full.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nf">anova</span><span class="p">(</span><span class="n">null.mod</span><span class="p">,</span><span class="w"> </span><span class="n">full.mod</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Analysis of Variance Table
+
+Model 1: mpg ~ 1
+Model 2: mpg ~ origin
+  Res.Df     RSS Df Sum of Sq      F   Pr(&gt;F)   
+1     31 1126.05                                
+2     29  732.17  2    393.88 7.8003 0.001947 **
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">Anova</span><span class="p">(</span><span class="n">full.mod</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Anova Table (Type II tests)
+
+Response: mpg
+          Sum Sq Df F value   Pr(&gt;F)   
+origin    393.88  2  7.8003 0.001947 **
+Residuals 732.17 29                    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+</pre></div>
+</div>
+</div>
+</div>
+<p>… Notice that this table says <code class="docutils literal notranslate"><span class="pre">Type</span> <span class="pre">II</span> <span class="pre">tests</span></code> at the top. This is something we will explore in more detail in the associated synchronous session next week.</p>
+<section id="follow-up-tests">
+<h2>Follow-up Tests<a class="headerlink" href="#follow-up-tests" title="Link to this heading">#</a></h2>
+</section>
+<section id="the-general-anova-procedure">
+<h2>The General ANOVA Procedure<a class="headerlink" href="#the-general-anova-procedure" title="Link to this heading">#</a></h2>
+<p>At this point, we have examined a lot of theory and output releated to ANOVA models. This can make these models look very complicated, whereas the actual procedure inside <code class="docutils literal notranslate"><span class="pre">R</span></code> is actually very simple. As shown below, we generally just follow 5 steps:</p>
+<ol class="arabic simple">
+<li><p>Convert categorical variables from strings into factors.</p></li>
+<li><p>Fit and summarise the model using <code class="docutils literal notranslate"><span class="pre">lm()</span></code>.</p></li>
+<li><p>Generate omnibus tests using the <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">car</span></code> package.</p></li>
+<li><p>Generate follow-up tests using the <code class="docutils literal notranslate"><span class="pre">emmeans</span></code> package.</p></li>
+<li><p>Extract and plot the fitted values using the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package.</p></li>
+</ol>
+<p>Indeed, these same 5 steps can be followed for <em>every linear model you ever use</em>. The only differences are that steps 1, 3 and 4 are not needed when there are no categorical predictors in the model. Obviously, you also need to check assumptions, consider transformations and do all the other things we discussed last week. In addition, we have options at different stages in terms of the exact output we need. For instance, we can choose to generate NHST results from <code class="docutils literal notranslate"><span class="pre">emmeans</span></code>, or generate confidence intervals instead. However, the core of the modelling procedure exists within these 5 steps.</p>
+<p>To see this in action, consider the following summary of the complete <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> analysis</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">emmeans</span><span class="p">)</span>
+
+<span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span>
+<span class="w">                   </span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span>
+<span class="w">                   </span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span>
+<span class="w">                   </span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">)</span>
+
+<span class="c1"># Step 1 - convert categorical predictors</span>
+<span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.factor</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="p">)</span>
+
+<span class="c1"># Step 2 - fit the model</span>
+<span class="n">origin.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">summary</span><span class="p">(</span><span class="n">origin.mod</span><span class="p">))</span>
+
+<span class="c1"># Step 3 - generate the ANOVA table</span>
+<span class="n">anova.tbl</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Anova</span><span class="p">(</span><span class="n">origin.mod</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">anova.tbl</span><span class="p">)</span>
+
+<span class="c1"># Step 4 - generate follow-up tests</span>
+<span class="n">follow.up</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">emmeans</span><span class="p">(</span><span class="n">origin.mod</span><span class="p">,</span><span class="w"> </span><span class="n">specs</span><span class="o">=</span><span class="n">pairwise</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">adjust</span><span class="o">=</span><span class="s">&#39;holm&#39;</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">follow.up</span><span class="o">$</span><span class="n">contrasts</span><span class="p">)</span>
+
+<span class="c1"># Step 5 - extract and plot effects</span>
+<span class="n">effs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">allEffects</span><span class="p">(</span><span class="n">origin.mod</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">effs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = mpg ~ origin, data = mtcars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.8071 -4.1718 -0.7885  3.3444 10.5929 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   21.807      1.343  16.239 4.26e-16 ***
+originJapan    3.753      2.618   1.434  0.16238    
+originUSA     -5.669      1.935  -2.929  0.00656 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 5.025 on 29 degrees of freedom
+Multiple R-squared:  0.3498,	Adjusted R-squared:  0.3049 
+F-statistic:   7.8 on 2 and 29 DF,  p-value: 0.001947
+
+Anova Table (Type II tests)
+
+Response: mpg
+          Sum Sq Df F value   Pr(&gt;F)   
+origin    393.88  2  7.8003 0.001947 **
+Residuals 732.17 29                    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+ contrast       estimate   SE df t.ratio p.value
+ Europe - Japan    -3.75 2.62 29  -1.434  0.1624
+ Europe - USA       5.67 1.94 29   2.929  0.0131
+ Japan - USA        9.42 2.64 29   3.563  0.0039
+
+P value adjustment: holm method for 3 tests 
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/5364699f54430767e1af94a1c04a307a4949867ea873b08bf6ee48922ed084ad.png"><img alt="_images/5364699f54430767e1af94a1c04a307a4949867ea873b08bf6ee48922ed084ad.png" src="_images/5364699f54430767e1af94a1c04a307a4949867ea873b08bf6ee48922ed084ad.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>This leads to a reasonable amount of output, but which contains everything we need to reach conclusions. Indeed, the summarising of the results of <code class="docutils literal notranslate"><span class="pre">lm()</span></code> is not strictly necessary. However, it is good practice to always look at this to make sure the model is correct, otherwise we can miss important misspecifications that will cause issues later on. It is also notable that the actual reference level of the dummy variables does not matter here, nor does even understanding the coding used for the dummy variables. These are <em>implementation details</em> that matter for understanding the theory, but should not influence the final results.</p>
 </section>
 </section>
 
@@ -456,7 +592,8 @@
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unequal-variance">Unequal Variance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#follow-up-tests">Follow-up Tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-general-anova-procedure">The General ANOVA Procedure</a></li>
 </ul>
   </nav></div>
 
