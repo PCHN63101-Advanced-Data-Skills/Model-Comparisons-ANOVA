@@ -369,6 +369,7 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unbalanced-anova-models">Unbalanced ANOVA Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unequal-variance">Unequal Variance</a></li>
 </ul>
             </nav>
         </div>
@@ -384,6 +385,112 @@
 <h1>ANOVA Workshop<a class="headerlink" href="#anova-workshop" title="Link to this heading">#</a></h1>
 <section id="unbalanced-anova-models">
 <h2>Unbalanced ANOVA Models<a class="headerlink" href="#unbalanced-anova-models" title="Link to this heading">#</a></h2>
+</section>
+<section id="unequal-variance">
+<h2>Unequal Variance<a class="headerlink" href="#unequal-variance" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">nlme</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">emmeans</span><span class="p">)</span>
+
+<span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span>
+<span class="w">                   </span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span>
+<span class="w">                   </span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span>
+<span class="w">                   </span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">)</span>
+
+<span class="c1"># Step 1 - convert categorical predictors</span>
+<span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.factor</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="p">)</span>
+
+<span class="c1"># Step 2 - fit the model (GLS assuming heterogeneity of variance)</span>
+<span class="n">origin.gls.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gls</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">,</span><span class="w"> </span><span class="n">weights</span><span class="o">=</span><span class="nf">varIdent</span><span class="p">(</span><span class="n">form</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">~</span><span class="m">1</span><span class="o">|</span><span class="n">origin</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">summary</span><span class="p">(</span><span class="n">origin.gls.mod</span><span class="p">))</span>
+
+<span class="c1"># Step 3 - generate the ANOVA table</span>
+<span class="n">anova.tbl</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Anova</span><span class="p">(</span><span class="n">origin.gls.mod</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">anova.tbl</span><span class="p">)</span>
+
+<span class="c1"># Step 4 - generate follow-up tests</span>
+<span class="n">follow.up</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">emmeans</span><span class="p">(</span><span class="n">origin.gls.mod</span><span class="p">,</span><span class="w"> </span><span class="n">specs</span><span class="o">=</span><span class="n">pairwise</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">adjust</span><span class="o">=</span><span class="s">&#39;holm&#39;</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">follow.up</span><span class="o">$</span><span class="n">contrasts</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">confint</span><span class="p">(</span><span class="n">follow.up</span><span class="o">$</span><span class="n">contrasts</span><span class="p">))</span>
+
+<span class="c1"># Step 5 - extract and plot effects</span>
+<span class="n">effs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">allEffects</span><span class="p">(</span><span class="n">origin.gls.mod</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">effs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: carData
+
+lattice theme set by effectsTheme()
+See ?effectsTheme for details.
+
+Welcome to emmeans.
+Caution: You lose important information if you filter this package&#39;s results.
+See &#39;? untidy&#39;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Generalized least squares fit by REML
+  Model: mpg ~ origin 
+  Data: mtcars 
+       AIC      BIC    logLik
+  192.4491 200.6529 -90.22457
+
+Variance function:
+ Structure: Different standard deviations per stratum
+ Formula: ~1 | origin 
+ Parameter estimates:
+    Japan       USA    Europe 
+1.0000000 0.6171796 0.9122182 
+
+Coefficients:
+                Value Std.Error   t-value p-value
+(Intercept) 21.807143  1.498187 14.555685  0.0000
+originJapan  3.752857  3.130032  1.198984  0.2402
+originUSA   -5.668681  1.830585 -3.096649  0.0043
+
+ Correlation: 
+            (Intr) orgnJp
+originJapan -0.479       
+originUSA   -0.818  0.392
+
+Standardized residuals:
+       Min         Q1        Med         Q3        Max 
+-1.5130471 -0.7420504 -0.2078919  0.7578757  1.8896570 
+
+Residual standard error: 6.145135 
+Degrees of freedom: 32 total; 29 residual
+Analysis of Deviance Table (Type II tests)
+
+Response: mpg
+       Df  Chisq Pr(&gt;Chisq)    
+origin  2 16.462  0.0002663 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+ contrast       estimate   SE    df t.ratio p.value
+ Europe - Japan    -3.75 3.13  6.53  -1.199  0.2722
+ Europe - USA       5.67 1.83 22.92   3.097  0.0153
+ Japan - USA        9.42 2.94  5.20   3.202  0.0453
+
+Degrees-of-freedom method: satterthwaite 
+P value adjustment: holm method for 3 tests 
+ contrast       estimate   SE    df lower.CL upper.CL
+ Europe - Japan    -3.75 3.13  6.53  -13.752     6.25
+ Europe - USA       5.67 1.83 22.92    0.941    10.40
+ Japan - USA        9.42 2.94  5.20   -0.802    19.64
+
+Degrees-of-freedom method: satterthwaite 
+Confidence level used: 0.95 
+Conf-level adjustment: bonferroni method for 3 estimates 
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/cae1f765df357c58ef2787ae6cdb74bea4752f8e955f321b475e28dccd77ac8a.png"><img alt="_images/cae1f765df357c58ef2787ae6cdb74bea4752f8e955f321b475e28dccd77ac8a.png" src="_images/cae1f765df357c58ef2787ae6cdb74bea4752f8e955f321b475e28dccd77ac8a.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
 </section>
 </section>
 
@@ -435,6 +542,7 @@
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unbalanced-anova-models">Unbalanced ANOVA Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unequal-variance">Unequal Variance</a></li>
 </ul>
   </nav></div>
 
