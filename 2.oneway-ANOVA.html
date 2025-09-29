@@ -431,11 +431,19 @@
 </table>
 </div>
 <p>However, in reality, it is more accurate to think of an ANOVA as a very basic <em>linear model</em>. The ANOVA table is a convenient way to organise the arithmetic of hypothesis tests, but the table is <em>not</em> the model itself. Traditional statistical education in Psychology tends to skip the actual model and go straight to the hypothesis tests. This is not what we are going to do. Instead, we will ignore the ANOVA table for the moment and start by focusing on the <em>true form</em> of the ANOVA as a very basic linear model of <em>group means</em>.</p>
-<p>As mentioned above, in the case of a One-way ANOVA, there is only a <em>single</em> categorical predictor with a certain number of levels. The linear model at the heart of the ANOVA is then</p>
+<p>In the case of a One-way ANOVA, there is only a <em>single</em> categorical predictor with a certain number of levels. The linear model at the heart of the ANOVA is then</p>
 <div class="math notranslate nohighlight">
 \[
-y_{ij} = \mu_{j} + \epsilon_{ij},
+y_{ij} \sim \mathcal{N}\left(\mu_{j},\sigma^{2}\right).
 \]</div>
+<p>Or, equivalently,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+    y_{ij} &amp;= \mu_{j} + \epsilon_{ij} \\
+    \epsilon_{ij} &amp;\sim \mathcal{N}\left(0,\sigma^{2}\right),
+\end{align*}
+\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu_{j}\)</span> is simply the <em>group mean</em> for level <span class="math notranslate nohighlight">\(j\)</span> of the predictor. For instance, say our categorical predictor had 3 levels (<span class="math notranslate nohighlight">\(j = 1,2,3\)</span>). The <span class="math notranslate nohighlight">\(i\)</span> th observation from the first level would be denoted <span class="math notranslate nohighlight">\(y_{i1}\)</span>, the <span class="math notranslate nohighlight">\(i\)</span> th observation from the second level would be denoted <span class="math notranslate nohighlight">\(y_{i2}\)</span> and the <span class="math notranslate nohighlight">\(i\)</span> th observation from the third level would be denoted <span class="math notranslate nohighlight">\(y_{i3}\)</span>. As such, this implies that there are 3 unique model predictions, one for each level of the categorical predictor. So, when <span class="math notranslate nohighlight">\(j = 1,2,3\)</span>, we have</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -445,28 +453,31 @@ y_{ij} = \mu_{j} + \epsilon_{ij},
     y_{i3} &amp;= \mu_{3} + \epsilon_{i3}
 \end{align*}
 \end{split}\]</div>
-<p>This makes the model <em>very simple</em>. Every data point has a predicted value that is equal to the mean of the group that data point belongs to. The errors then reflect the differences between the group means and the raw data. To make this even clearer, if we say that there are 3 data point per-group then <span class="math notranslate nohighlight">\(i = 1,2,3\)</span> and the model for the whole dataset is</p>
+<p>This makes the model <em>very simple</em>. Every data point has a predicted value that is equal to the mean of the group that data point belongs to. The errors then reflect the differences between the group means and the raw data. To make this even clearer, if we say that there are 4 data point per-group then <span class="math notranslate nohighlight">\(i = 1,2,3,4\)</span> and the model for the whole dataset is</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
 &amp;\text{Group 1} \begin{cases}
         y_{11} &amp;= \mu_{1} + \epsilon_{11} \\
         y_{21} &amp;= \mu_{1} + \epsilon_{21} \\
-        y_{31} &amp;= \mu_{1} + \epsilon_{31}
+        y_{31} &amp;= \mu_{1} + \epsilon_{31} \\
+        y_{41} &amp;= \mu_{1} + \epsilon_{41} \\
 \end{cases} \\
 &amp;\text{Group 2} \begin{cases}
         y_{12} &amp;= \mu_{2} + \epsilon_{12} \\
         y_{22} &amp;= \mu_{2} + \epsilon_{22} \\
-        y_{32} &amp;= \mu_{2} + \epsilon_{32}
+        y_{32} &amp;= \mu_{2} + \epsilon_{32} \\
+        y_{42} &amp;= \mu_{2} + \epsilon_{42} \\
 \end{cases} \\
 &amp;\text{Group 3} \begin{cases}
         y_{13} &amp;= \mu_{3} + \epsilon_{13} \\
         y_{23} &amp;= \mu_{3} + \epsilon_{23} \\
-        y_{33} &amp;= \mu_{3} + \epsilon_{33}
+        y_{33} &amp;= \mu_{3} + \epsilon_{33} \\
+        y_{43} &amp;= \mu_{3} + \epsilon_{43} \\
 \end{cases}
 \end{align*}.
 \end{split}\]</div>
-<p>Of course, you would usually have more than 3 subjects per-group, but this should make it very clear that all the ANOVA is doing is using the mean of each group as the predicted value. The magnitude of the errors within each group will then reflect how good a prediction the mean actually is.</p>
+<p>Of course, you would usually have more than 4 subjects per-group, but this should make it very clear that all the ANOVA is doing is using the mean of each group as the predicted value. The magnitude of the errors within each group will then reflect how good a prediction the mean actually is.</p>
 <p>Notice that there is nothing in the definition above that states how many values <span class="math notranslate nohighlight">\(j\)</span> should take. This is important because both the one-sample and two-sample <span class="math notranslate nohighlight">\(t\)</span>-tests are <em>sepecial cases</em> of the one-way ANOVA model given above. In the <em>one-sample</em> case, we set <span class="math notranslate nohighlight">\(j = 1\)</span> and we have</p>
 <div class="math notranslate nohighlight">
 \[
@@ -523,10 +534,10 @@ y_{i} = \beta_{0} + \beta_{1}x_{i} + \epsilon_{i}.
 <section id="dummy-variables-coding-2-levels">
 <h2>Dummy Variables Coding &gt; 2 Levels<a class="headerlink" href="#dummy-variables-coding-2-levels" title="Link to this heading">#</a></h2>
 <p>At this point, we should have a sense of the more formal linear model specification of a one-way ANOVA <em>and</em> should have a sense of how we can create this same model within the context of linear regression by using dummy variables. However, we have only seen this for cases where the categorical predictor has 2 levels. What happens when our our predictor has <em>more</em> than 2 levels?</p>
-<p>The short answer is that we simply <em>add more dummy variables</em>. The general rule is that for <span class="math notranslate nohighlight">\(k\)</span> levels of a predictor we need to add <span class="math notranslate nohighlight">\(k - 1\)</span> dummy variables to the model. Notice that this fits with what we have already seen. For a two-sample <span class="math notranslate nohighlight">\(t\)</span>-test, <span class="math notranslate nohighlight">\(k = 2\)</span> and we had to add <span class="math notranslate nohighlight">\(k - 1 = 2 - 1 = 1\)</span> dummy variable to the model. If it were a one-sample <span class="math notranslate nohighlight">\(t\)</span>-test, we would have <span class="math notranslate nohighlight">\(k = 1\)</span> and we would add <span class="math notranslate nohighlight">\(k - 1 = 1 - 1 = 0\)</span> dummy variables to the model (because we only need an intercept). For the most basic one-way ANOVA case where <span class="math notranslate nohighlight">\(k = 3\)</span>, we therefore need to add <span class="math notranslate nohighlight">\(k - 1 = 3 - 1 = 2\)</span> dummy variables to the model.</p>
+<p>The short answer is that we simply <em>add more dummy variables</em>. The general rule is that for <span class="math notranslate nohighlight">\(k\)</span> levels of a predictor we need to add <span class="math notranslate nohighlight">\(k - 1\)</span> dummy variables to the model. Notice that this fits with what we have already seen. For a two-sample <span class="math notranslate nohighlight">\(t\)</span>-test, <span class="math notranslate nohighlight">\(k = 2\)</span> and we had to add <span class="math notranslate nohighlight">\(2 - 1 = 1\)</span> dummy variable to the model. If it were a one-sample <span class="math notranslate nohighlight">\(t\)</span>-test, we would have <span class="math notranslate nohighlight">\(k = 1\)</span> and we would add <span class="math notranslate nohighlight">\(1 - 1 = 0\)</span> dummy variables to the model (because we only need an intercept). For the most basic one-way ANOVA case where <span class="math notranslate nohighlight">\(k = 3\)</span>, we therefore need to add <span class="math notranslate nohighlight">\(3 - 1 = 2\)</span> dummy variables to the model.</p>
 <section id="example-in-r">
 <h3>Example in <code class="docutils literal notranslate"><span class="pre">R</span></code><a class="headerlink" href="#example-in-r" title="Link to this heading">#</a></h3>
-<p>Let us start by seeing how this is done in <code class="docutils literal notranslate"><span class="pre">R</span></code>, before we discuss the theory in more detail. To begin with, we will redefine our <code class="docutils literal notranslate"><span class="pre">origin</span></code> variable to further split the <code class="docutils literal notranslate"><span class="pre">Other</span></code> category into <code class="docutils literal notranslate"><span class="pre">Japan</span></code> and <code class="docutils literal notranslate"><span class="pre">Europe</span></code>. We also convert this into a factor straight away and check the levels.</p>
+<p>We will examine how this is done in <code class="docutils literal notranslate"><span class="pre">R</span></code> and then use this to discuss the theory in more detail. To begin with, we will redefine our <code class="docutils literal notranslate"><span class="pre">origin</span></code> variable to further split the <code class="docutils literal notranslate"><span class="pre">Other</span></code> category into <code class="docutils literal notranslate"><span class="pre">Japan</span></code> and <code class="docutils literal notranslate"><span class="pre">Europe</span></code>. We also convert this into a factor straight away and check the levels.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
@@ -545,7 +556,7 @@ y_{i} = \beta_{0} + \beta_{1}x_{i} + \epsilon_{i}.
 </div>
 </div>
 </div>
-<p>The dataset now looks like this</p>
+<p>So we now have a categorical variable with <span class="math notranslate nohighlight">\(k = 3\)</span> levels and the dataset looks like this</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
@@ -606,16 +617,38 @@ USA        0   1
 </div>
 </div>
 </div>
-<p>So, now we have <em>two</em> dummy variables. The first (lablled <code class="docutils literal notranslate"><span class="pre">Japan</span></code> above) is a 1 for all the Japanese cars and a 0 for everything else, whereas the second (labelled <code class="docutils literal notranslate"><span class="pre">USA</span></code> above) is a 1 for all the USA cars and a 0 for everything else. Including <em>two</em> dummy variables in the model will lead to <em>three</em> model parameters: <span class="math notranslate nohighlight">\(\beta_{0}, \beta_{1}, \beta_{2}\)</span>. As we saw in previous examples, the intercept parameter <span class="math notranslate nohighlight">\(\beta_{0}\)</span> will become the <em>mean of the reference category</em>. In this example, this is whatever level is coded as a 0 across <em>all</em> the dummy variables. The two slope parameters <span class="math notranslate nohighlight">\(\beta_{1}\)</span> and <span class="math notranslate nohighlight">\(\beta_{2}\)</span> will again become <em>mean differences</em> relative to the reference category. Without even fitting the model yet, we can therefore summise that</p>
+<p>So, now we have <em>two</em> dummy variables. The first (lablled <code class="docutils literal notranslate"><span class="pre">Japan</span></code>) is a 1 for all the Japanese cars and a 0 for everything else, whereas the second (labelled <code class="docutils literal notranslate"><span class="pre">USA</span></code>) is a 1 for all the USA cars and a 0 for everything else. Although we will not be using manually-defined dummy variables, it can be helpful to create these so you have the clearest sense of what is being put into the model. The code below shows the creation of these two dummy variables. Adding these to the model will results in an <em>identical</em> fit to the model we will use use a little further below<a class="footnote-reference brackets" href="#tryit-foot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w">         </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="p">)</span>
+<span class="n">dummy.JAP</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+<span class="n">dummy.USA</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+
+<span class="n">dummy.JAP</span><span class="p">[</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;Japan&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span>
+<span class="n">dummy.USA</span><span class="p">[</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;USA&quot;</span><span class="p">]</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">dummy.JAP</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">dummy.USA</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> [1] 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0
+ [1] 0 0 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 1 1 1 1 0 0 0 1 0 0 0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Including <em>two</em> dummy variables in the model will lead to <em>three</em> model parameters (intercept + two dummies), which we will call <span class="math notranslate nohighlight">\(\beta_{0}\)</span>, <span class="math notranslate nohighlight">\(\beta_{1}\)</span> and <span class="math notranslate nohighlight">\(\beta_{2}\)</span>. As we saw in previous examples, the intercept parameter <span class="math notranslate nohighlight">\(\beta_{0}\)</span> will become the <em>mean of the reference category</em>. In this example, this is whatever level is coded as a 0 across <em>both</em> dummy variables. The two slope parameters <span class="math notranslate nohighlight">\(\beta_{1}\)</span> and <span class="math notranslate nohighlight">\(\beta_{2}\)</span> will again become <em>mean differences</em> relative to the reference category. Without even fitting the model yet, we can therefore summise that</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
-    \mu_{\text{Europe}} &amp;= \beta_{0} + (\beta_{1} \times \mathbf{0}) + (\beta_{2} \times \mathbf{0}) = \beta_{0} \\
-    \mu_{\text{Japan}}  &amp;= \beta_{0} + (\beta_{1} \times \mathbf{1}) + (\beta_{2} \times \mathbf{0}) = \beta_{0} + \beta_{1} \\
+    \mu_{\text{EUR}} &amp;= \beta_{0} + (\beta_{1} \times \mathbf{0}) + (\beta_{2} \times \mathbf{0}) = \beta_{0} \\
+    \mu_{\text{JAP}}  &amp;= \beta_{0} + (\beta_{1} \times \mathbf{1}) + (\beta_{2} \times \mathbf{0}) = \beta_{0} + \beta_{1} \\
     \mu_{\text{USA}}    &amp;= \beta_{0} + (\beta_{1} \times \mathbf{0}) + (\beta_{2} \times \mathbf{1}) = \beta_{0} + \beta_{2} \\
 \end{align*}
 \end{split}\]</div>
-<p>Our interpretation of the parameters in this model is therefore</p>
+<p>The dummy coding has been highlighted here in <strong>bold</strong> to make the clearest connection to the table of dummy values given by <code class="docutils literal notranslate"><span class="pre">R</span></code> earlier. Our interpretation of the parameters in this model is therefore</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -673,7 +706,7 @@ F-statistic:   7.8 on 2 and 29 DF,  p-value: 0.001947
 <span class="n">mu.JAP</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">mpg</span><span class="p">[</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;Japan&quot;</span><span class="p">])</span>
 <span class="n">mu.USA</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">mpg</span><span class="p">[</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;USA&quot;</span><span class="p">])</span>
 
-<span class="n">comp.table</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="s">&quot;Means&quot;</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">mu.EUR</span><span class="p">,</span><span class="w"> </span><span class="n">mu.JAP</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">mu.EUR</span><span class="p">,</span><span class="w"> </span><span class="n">mu.USA</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">mu.EUR</span><span class="p">),</span>
+<span class="n">comp.table</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="s">&quot;Means&quot;</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">mu.EUR</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">mu.JAP</span><span class="o">-</span><span class="n">mu.EUR</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">mu.USA</span><span class="o">-</span><span class="n">mu.EUR</span><span class="p">)),</span>
 <span class="w">                         </span><span class="s">&quot;Estimates&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">origin.mod</span><span class="p">))</span>
 
 <span class="nf">print</span><span class="p">(</span><span class="n">comp.table</span><span class="p">)</span>
@@ -689,7 +722,11 @@ originUSA   -5.668681 -5.668681
 </div>
 </div>
 </div>
-<p>So, on this basis, we could immediately draw some conclusions about the differences in MPG between these categories. For instance, if we want to use NHST for inference, we could say that there is a significant difference between the average MPG of USA cars and European cars (<span class="math notranslate nohighlight">\(t_{29} = -2.929, p &lt; 0.01\)</span>), but not between the average MPG of Japanese cars and European cars (<span class="math notranslate nohighlight">\(t_{29} = 1.434, p = 0.16\)</span>). What about comparing the USA and Japan? We could simply relevel the <code class="docutils literal notranslate"><span class="pre">origin</span></code> factor and change the reference in order to generate this test. Note that this is not typically what you would do with an ANOVA model, but we will explore the more usual procedure later when we discuss <em>omnibus tests</em> in the next part of this lesson.</p>
+<p>As we can see, the model fit is exactly as expected from our knowledge of the dummy variables. Furthermore, the automatic tests on the slope parameters are equivalent to performing <span class="math notranslate nohighlight">\(t\)</span>-tests on two of the possible mean differences across the levels of <code class="docutils literal notranslate"><span class="pre">origin</span></code>. On this basis, we could immediately draw some conclusions about the differences in MPG between these categories. For instance, if we want to use NHST for inference, we could say that there is a significant difference between the average MPG of USA cars and European cars (<span class="math notranslate nohighlight">\(t_{29} = -2.929, p &lt; 0.01\)</span>), but not between the average MPG of Japanese cars and European cars (<span class="math notranslate nohighlight">\(t_{29} = 1.434, p = 0.16\)</span>). What about comparing the USA and Japan? We could simply relevel the <code class="docutils literal notranslate"><span class="pre">origin</span></code> factor and change the reference in order to generate this test.</p>
+<div class="note admonition">
+<p class="admonition-title">Typical ANOVA Approach</p>
+<p>An important element to recognise at present is that what we have demonstrated here is not the <em>typical</em> approach to an ANOVA. If you think of a more traditional ANOVA, it would be usual to generate an <em>omnibus</em> test of the factor as a whole and then consider <em>follow-up</em> tests after this. However, there is actually nothing wrong with just jumping straight to the tests on the parameter estimates. After all, this is what we always do in regression models. The insistance on an omnibus tests within an ANOVA framework is largely <em>historical</em> and a matter of <em>convention</em>, rather than mathematical necessity. Nevertheless, omnibus tests are useful because they group together parameter estimates that relate to the same variable. So, in a way, omnibus tests test the <em>higher-level structure</em> of the model, before we drill-down into the specifics. We will explore this more typical procedure and the nature of omnibus tests in the next part of this lesson.</p>
+</div>
 <p>Exploring the model results a little further, we can also see that the predicted values are simply the group means for each level of <code class="docutils literal notranslate"><span class="pre">origin</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -736,15 +773,16 @@ Volvo 142E           21.80714 Europe
 </div>
 </div>
 </div>
-<p>So, <span class="math notranslate nohighlight">\(\mu_{\text{EUR}} = 21.81\)</span>, <span class="math notranslate nohighlight">\(\mu_{\text{JAP}} = 25.56\)</span> and <span class="math notranslate nohighlight">\(\mu_{\text{USA}} = 16.14\)</span>. Which we can, of course, recover from the parameter estimates</p>
+<p>So, <span class="math notranslate nohighlight">\(\mu_{\text{EUR}} = 21.81\)</span>, <span class="math notranslate nohighlight">\(\mu_{\text{JAP}} = 25.56\)</span> and <span class="math notranslate nohighlight">\(\mu_{\text{USA}} = 16.14\)</span>. We can also recover these values by using the parameter estimates to replicate the model equations. In the code below, we write these in full with the dummy values to make it as clear as possible.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">beta</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">origin.mod</span><span class="p">)</span>
-<span class="n">mu.EUR</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w">                   </span><span class="c1"># beta0</span>
-<span class="n">mu.JAP</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="w">         </span><span class="c1"># beta0 + beta1</span>
-<span class="n">mu.USA</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">3</span><span class="p">]</span><span class="w">         </span><span class="c1"># beta0 + beta2</span>
-<span class="n">means</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">mu.EUR</span><span class="p">,</span><span class="w"> </span><span class="n">mu.JAP</span><span class="p">,</span><span class="w"> </span><span class="n">mu.USA</span><span class="p">)</span>
 
+<span class="n">mu.EUR</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">beta</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">beta</span><span class="p">[</span><span class="m">3</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">0</span><span class="p">)</span>
+<span class="n">mu.JAP</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">beta</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">beta</span><span class="p">[</span><span class="m">3</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">0</span><span class="p">)</span>
+<span class="n">mu.USA</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">beta</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">beta</span><span class="p">[</span><span class="m">3</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
+
+<span class="n">means</span><span class="w">        </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">mu.EUR</span><span class="p">,</span><span class="w"> </span><span class="n">mu.JAP</span><span class="p">,</span><span class="w"> </span><span class="n">mu.USA</span><span class="p">)</span>
 <span class="nf">names</span><span class="p">(</span><span class="n">means</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;EUR&quot;</span><span class="p">,</span><span class="s">&quot;JAP&quot;</span><span class="p">,</span><span class="s">&quot;USA&quot;</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">means</span><span class="p">)</span>
 </pre></div>
@@ -757,7 +795,7 @@ Volvo 142E           21.80714 Europe
 </div>
 </div>
 </div>
-<p>We can also more easily do this using the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package, which is generally the approch we would advocate. For more complex models, it can become tricky to recover the group means by replicating the model equations, whereas the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package will always get this right. The <code class="docutils literal notranslate"><span class="pre">effects</span></code> package will also calculate the correct 95% CIs for us as well, which can become tricky to do in more complex cases.</p>
+<p>We can also more easily do this using the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package, which is generally the approch we would advocate. For more complex models, it can become tricky to recover the group means by replicating the model equations, whereas the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package will always get this right.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
@@ -780,12 +818,12 @@ origin
 <p>The advantage of the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package is that we can also produce a plot of the model fit</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">effs</span><span class="p">,</span><span class="w"> </span><span class="n">partial.residuals</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">smooth</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">effs</span><span class="p">,</span><span class="w"> </span><span class="n">partial.residuals</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">smooth</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">),</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="m">40</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/14123b652feb7cc5e9c6695d02baa8d346ad61b91f7916b443ad9c4033636d0d.png"><img alt="_images/14123b652feb7cc5e9c6695d02baa8d346ad61b91f7916b443ad9c4033636d0d.png" src="_images/14123b652feb7cc5e9c6695d02baa8d346ad61b91f7916b443ad9c4033636d0d.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/5d93ba1543534cdcd38c82e8c2ee5bd4e81d800acf104f5b237b288ccbab9f27.png"><img alt="_images/5d93ba1543534cdcd38c82e8c2ee5bd4e81d800acf104f5b237b288ccbab9f27.png" src="_images/5d93ba1543534cdcd38c82e8c2ee5bd4e81d800acf104f5b237b288ccbab9f27.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>Here we can see the large overlap in CIs between <code class="docutils literal notranslate"><span class="pre">Europe</span></code> and <code class="docutils literal notranslate"><span class="pre">Japan</span></code>, which is why this difference is not “significant”. We can also clearly see how much lower the MPG values are for cars from the <code class="docutils literal notranslate"><span class="pre">USA</span></code>. This plot is also interesting because we can see that there is quite a wide-range of MPGs within the <code class="docutils literal notranslate"><span class="pre">Europe</span></code> category, as well as an apparent dichotomisation of cars within the <code class="docutils literal notranslate"><span class="pre">Japan</span></code> category. This is likely because we have mixed together low-MPG sports cars with high-MPG non-sports cars within those groups. This suggests that an additional categorical variable denoting the <em>type</em> of car could be useful in explaining the variance in the data.</p>
@@ -794,6 +832,10 @@ origin
 <aside class="footnote brackets" id="j-foot" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p>Here, we have removed <span class="math notranslate nohighlight">\(j\)</span> because it is constant across all the model equations and thus has become redundant.</p>
+</aside>
+<aside class="footnote brackets" id="tryit-foot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>We will leave it as an exercise if you want to validate this for yourself. Remember, the only difference between doing this manually and letting <code class="docutils literal notranslate"><span class="pre">R</span></code> do it automatically is whether other functions inside <code class="docutils literal notranslate"><span class="pre">R</span></code> “know” that the two dummy variable actually represent a single categorical variable. Without this knowledge, everything else inside <code class="docutils literal notranslate"><span class="pre">R</span></code> will treat them as two separate binary variables.</p>
 </aside>
 </aside>
 </section>
