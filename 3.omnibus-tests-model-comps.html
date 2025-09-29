@@ -374,8 +374,11 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#omnibus-tests">Omnibus Tests</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#omnibus-tests-from-model-comparisons">Omnibus Tests From Model Comparisons</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-f-ratio">The <span class="math notranslate nohighlight">\(F\)</span>-ratio</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anova-tables-in-r">ANOVA Tables in <code class="docutils literal notranslate"><span class="pre">R</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-anova-function">The <code class="docutils literal notranslate"><span class="pre">anova()</span></code> Function</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test</a></li>
@@ -489,8 +492,8 @@ y_{i} \sim \mathcal{N}\left(\mu,\sigma^{2}\right).
 </section>
 <section id="the-f-ratio">
 <h3>The <span class="math notranslate nohighlight">\(F\)</span>-ratio<a class="headerlink" href="#the-f-ratio" title="Link to this heading">#</a></h3>
-<p>In order to compare the <span class="math notranslate nohighlight">\(SS_{B}\)</span> and <span class="math notranslate nohighlight">\(SS_{W}\)</span>, we typically calculate a <em>test statistic</em> with a known distribution under the null. Although it may initially seem like we can compare these values, they are not actually directly comparable without some scaling.</p>
-<p>Beginning with <span class="math notranslate nohighlight">\(SS_{B}\)</span>, we can interpret this value as the improvement in model fit (the reduction in error) after adding a certain number of parameters to the model. Unfortunately, this value will always scales with the number of parameters we add so will get bigger and bigger. This is because the more parameters we add, the better the fit can become, even by a small amount<a class="footnote-reference brackets" href="#params-foot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. To make this value more meaningful, we divide it by the number of parameters we have added to give an <em>average improvement per-parameter</em>. This is known as the <em>between-group mean square</em>, or <span class="math notranslate nohighlight">\(MS_{B}\)</span> for short. In the case of the <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> example, we need to add <span class="math notranslate nohighlight">\(k - 1 = 2\)</span> parameters to the model to capture the different group means. As such, we divide <span class="math notranslate nohighlight">\(SS_{B}\)</span> by 2 to produce the <span class="math notranslate nohighlight">\(MS_{B}\)</span></p>
+<p>In order to compare the <span class="math notranslate nohighlight">\(SS_{B}\)</span> and <span class="math notranslate nohighlight">\(SS_{W}\)</span>, we typically calculate a <em>test statistic</em> called <span class="math notranslate nohighlight">\(F\)</span> (named after <em>Fisher</em>), which has a known distribution under the null. This test statistic takes the form of a <em>ratio</em> between two variance terms. The logic is to compare the amount of variance we have <em>explained</em> to the amount of variance that remains <em>unexplained</em>. This effectively gives a <em>signal-to-noise</em> ratio. The larger the value of <span class="math notranslate nohighlight">\(F\)</span>, the larger the “signal” is (the variance we have explained) relative to the “noise” (the variance we have not explained). In the context of the one-way ANOVA, this “signal” is based on assuming that the group means actually differ. If this assumption results in a much larger improvement in terms of explained variance relative to error variance, it suggests that the full model fits the data better than the null model. The alternative is that the improvement in explained variance is of a similar magnitude to the error variance. In this situation, we cannot tell whether any “improvement” is just noise, because it looks effectively the same as the error. As such, if the null were true, we would expect <span class="math notranslate nohighlight">\(F \approx 1\)</span>. This is because there are no differences between the group means and so both <span class="math notranslate nohighlight">\(SS_{B}\)</span> and <span class="math notranslate nohighlight">\(SS_{W}\)</span> are capturing noise. The larger the value of <span class="math notranslate nohighlight">\(F\)</span> becomes, the less we believe the null because the magnitude of improvement is much greater than we would expect if it were just noise. In this case, <span class="math notranslate nohighlight">\(SS_{W}\)</span> is still capturing noise, but <span class="math notranslate nohighlight">\(SS_{B}\)</span> is capturing something more systematic about the data. Any time we get <span class="math notranslate nohighlight">\(F &gt; 1\)</span> this is suggestive that the null may not be correct<a class="footnote-reference brackets" href="#nhst-foot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. The larger <span class="math notranslate nohighlight">\(F\)</span> becomes, the greater this suggestion becomes and the smaller the associated <span class="math notranslate nohighlight">\(p\)</span>-value.</p>
+<p>Given the description above, it may seem like we could simply calculate <span class="math notranslate nohighlight">\(F = \frac{SS_{B}}{SS_{W}}\)</span>. However, these two values are not directly comparable in this manner without some scaling. Beginning with <span class="math notranslate nohighlight">\(SS_{B}\)</span>, we can interpret this value as the improvement in model fit (the reduction in error) after adding a certain number of parameters to the model. Unfortunately, this value will always scales with the number of parameters we add so will get bigger and bigger. This is because the more parameters we add, the better the fit can become, even by a small amount<a class="footnote-reference brackets" href="#params-foot" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. To make this value more meaningful, we divide it by the number of parameters we have added to give an <em>average improvement per-parameter</em>. This is known as the <em>between-group mean square</em>, or <span class="math notranslate nohighlight">\(MS_{B}\)</span> for short. In the case of the <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> example, we need to add <span class="math notranslate nohighlight">\(k - 1 = 2\)</span> parameters to the model to capture the different group means. As such, we divide <span class="math notranslate nohighlight">\(SS_{B}\)</span> by 2 to produce the <span class="math notranslate nohighlight">\(MS_{B}\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df.B</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span>
@@ -544,6 +547,9 @@ F = \frac{\text{Average reduction in variance per-parameter}}{\text{Average vari
 \]</div>
 <p>Or, to put this a difference way, how much have we managed to explain for each parameter we have added compared to how much we still have left to explain? The larger the <span class="math notranslate nohighlight">\(F\)</span>-ratio becomes, the greater the variance reduction relative to the error and the smaller the associated <span class="math notranslate nohighlight">\(p\)</span>-value becomes.</p>
 </section>
+</section>
+<section id="anova-tables-in-r">
+<h2>ANOVA Tables in <code class="docutils literal notranslate"><span class="pre">R</span></code><a class="headerlink" href="#anova-tables-in-r" title="Link to this heading">#</a></h2>
 <section id="the-anova-function">
 <h3>The <code class="docutils literal notranslate"><span class="pre">anova()</span></code> Function<a class="headerlink" href="#the-anova-function" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
@@ -568,8 +574,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 <p>Within this table, we should see all the values that we calculated manually above, alongside the <span class="math notranslate nohighlight">\(p\)</span>-value for the <span class="math notranslate nohighlight">\(F\)</span>-ratio.</p>
 </section>
-<section id="id3">
-<h3>The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<section id="id4">
+<h3>The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
@@ -702,8 +708,12 @@ P value adjustment: holm method for 3 tests
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p>A lot of the ANOVA theory involves messing around with sums-of-squares, mean squares and degrees of freedom and it may not always be clear <em>why</em> each is being used at each stage. For instance, why use sums-of-squares rather than just calculating the error variance directly? The simple answer is that all of this complexity comes down to requiring a test statistic with a null distribution that is tractable. In other words, this was the only way that these results were possible in a world before computers. These days, if you were using a method such as permutation testing, none of this is necessary as the tractability of the null does not matter.</p>
 </aside>
-<aside class="footnote brackets" id="params-foot" role="note">
+<aside class="footnote brackets" id="nhst-foot" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>With all the caveats around the logic of NHST still in place.</p>
+</aside>
+<aside class="footnote brackets" id="params-foot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
 <p>One way to think about this is the extreme example of having one parameter for every observation. In this case, we could make the model fit <em>perfectly</em> as each parameter can make sure that the exact value of the raw data is predicted. If we do this, there will be 0 error. Thus, we can always make the model better and better by adding more and more parameters. However, this is an extreme example of <em>over-fitting</em>, where the model will be capturing <em>noise</em> and not any universal truth about the data in question.</p>
 </aside>
 </aside>
@@ -779,8 +789,11 @@ P value adjustment: holm method for 3 tests
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#omnibus-tests">Omnibus Tests</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#omnibus-tests-from-model-comparisons">Omnibus Tests From Model Comparisons</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-f-ratio">The <span class="math notranslate nohighlight">\(F\)</span>-ratio</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anova-tables-in-r">ANOVA Tables in <code class="docutils literal notranslate"><span class="pre">R</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-anova-function">The <code class="docutils literal notranslate"><span class="pre">anova()</span></code> Function</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test</a></li>
