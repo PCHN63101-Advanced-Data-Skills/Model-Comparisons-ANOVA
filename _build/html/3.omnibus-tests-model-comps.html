@@ -61,6 +61,8 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '3.omnibus-tests-model-comps';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -368,6 +370,20 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anova-as-a-model-comparison-procedure">ANOVA as a Model Comparison Procedure</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#omnibus-tests">Omnibus Tests</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#omnibus-tests-from-model-comparisons">Omnibus Tests From Model Comparisons</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-f-ratio">The <span class="math notranslate nohighlight">\(F\)</span>-ratio</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-anova-function">The <code class="docutils literal notranslate"><span class="pre">anova()</span></code> Function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-model-comparison-procedures">Other Model Comparison Procedures</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-2"><span class="math notranslate nohighlight">\(R^2\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aic-and-bic">AIC and BIC</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#follow-up-tests">Follow-up Tests</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-general-anova-procedure">The General ANOVA Procedure</a></li>
 </ul>
@@ -384,7 +400,34 @@
   <section class="tex2jax_ignore mathjax_ignore" id="omnibus-tests-and-model-comparisons">
 <h1>Omnibus Tests and Model Comparisons<a class="headerlink" href="#omnibus-tests-and-model-comparisons" title="Link to this heading">#</a></h1>
 <p>In the previous section, we saw how to use dummy variables with multiple categorical levels and then specify a subsequent regression model that fits group means and mean differeces. Although we called this a One-way ANOVA model, it probably does not look much like an ANOVA to you yet. In this section, we will complete the picture by discussing the nature of the ANOVA omnibus tests and showing how these are effectively <em>model comparisons</em>. The familiar ANOVA table is simply a way of displaying the results of several model comparisons. We will show how to generate this within <code class="docutils literal notranslate"><span class="pre">R</span></code> and also show how the values within this table relate to comparing different regression models.</p>
-<p>… So, the core understanding here is that the ANOVA is simply a <em>model comparison procedure</em>. The ANOVA effects usually reported within an ANOVA table are really comparisons between a model that contains that effect and a model that does not contain that effect. The <em>variance</em> within the name ANOVA is a comparison between the error variances of these models. In other words, the ANOVA is asking the question “how much does the error reduce when we include this effect in the model?” The table is just a helpful way of organising all these comparisons. So we can see that the ANOVA model is in fact just a form of multiple regression, and the tests associated with the ANOVA are summaries of model comparisons. This is the true way to conceptualise an ANOVA.</p>
+<section id="anova-as-a-model-comparison-procedure">
+<h2>ANOVA as a Model Comparison Procedure<a class="headerlink" href="#anova-as-a-model-comparison-procedure" title="Link to this heading">#</a></h2>
+<p>In order to understand the ANOVA within the framework of linear models, we need to demonstrate how the ANOVA results are simply the outcomes from comparing different linear models in a specific way. To begin, we need to consider the logic of an <em>omnibus test</em>.</p>
+<section id="omnibus-tests">
+<h3>Omnibus Tests<a class="headerlink" href="#omnibus-tests" title="Link to this heading">#</a></h3>
+<p>An omnibus test is a test that contains <em>multiple</em> comparisons between means. In comparison to a procedure such as a <span class="math notranslate nohighlight">\(t\)</span>-test, which only compares <em>two</em> means, an omnibus test can compare <em>multiple</em> means. In our example of a One-way ANOVA where <span class="math notranslate nohighlight">\(k = 3\)</span>, the omnibus null hypothesis is</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{H}_{0} : \mu_{1} = \mu_{2} = \mu_{3}.
+\]</div>
+<p>In other words, the null is that <em>all</em> the means are identical. Or, to put it another way, that all the mean differences are 0. An omnibus test of this hypothesis is able to simultaneously compare <em>all possible mean differences</em>. Within the NHST framework, a significant omnibus effect suggests that <em>at least one</em> of all possible mean differences is significant. Traditionally, we would then drill-down to see which of the differences is driving the omnibus effect.</p>
+<p>At this point, you may well ask: what is the point of an omnibus test? If we just end up drilling-down to work out which differences are significant, why not just start there? Why bother with omnibus tests at all? The traditional argument is one of <em>error control</em>, which requires us to take a quick detour into the world of <em>multiple comparisons</em>.</p>
+<p>…</p>
+</section>
+<section id="omnibus-tests-from-model-comparisons">
+<h3>Omnibus Tests From Model Comparisons<a class="headerlink" href="#omnibus-tests-from-model-comparisons" title="Link to this heading">#</a></h3>
+<p>So, how do we generate omnibus tests from model comparisons? To see how this works, consider that the omnibus null hypothesis above actually <em>implies</em> a specific model. If it were true that all the group means are identical, then the grouping variable is effectively meaningless. It has simply chopped the data up randomly into 3 groups. Assuming that the population means of the groups are all the <em>same</em> implies that all the data are drawn from the <em>same population distibution</em>. Thus, rather than assuming</p>
+<div class="math notranslate nohighlight">
+\[
+y_{ij} \sim \mathcal{N}\left(\mu_{j},\sigma^{2}\right)
+\]</div>
+<p>we are assuming</p>
+<div class="math notranslate nohighlight">
+\[
+y_{i} \sim \mathcal{N}\left(\mu,\sigma^{2}\right).
+\]</div>
+<p>Here we have <em>two different models</em>. One that just assumes a single mean for all the data and one that assumes <em>different</em> means for the different groups. In the context of a regression model, this is a comparison between a model that only contains an intercept, and a model containing an intercept <em>and</em> dummy variables for the categories.</p>
+<p>To see this more clearly, we will call these models the <em>null model</em> and the <em>full model</em>. In <code class="docutils literal notranslate"><span class="pre">R</span></code>, sticking with out <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> example, we could specify these in the following way</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
@@ -396,8 +439,116 @@
 
 <span class="n">null.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w">      </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
 <span class="n">full.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="nf">anova</span><span class="p">(</span><span class="n">null.mod</span><span class="p">,</span><span class="w"> </span><span class="n">full.mod</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Thus, the full model contains our categorical variable of interest and the null model does not. If our question revolves around whether this predictor is actually necessary, a natural way to do so would be to compare how well each model fits the data. To do so, we can calculate the sum-of-squared residuals as an (un-normalised) measure of the variance left over by each model<a class="footnote-reference brackets" href="#ss-foot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. The large the value, the more variance remains and the <em>worse</em> the model fits the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">null.SS</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="nf">resid</span><span class="p">(</span><span class="n">null.mod</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
+<span class="n">full.SS</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="nf">resid</span><span class="p">(</span><span class="n">full.mod</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">null.SS</span><span class="p">,</span><span class="n">full.SS</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 1126.0472  732.1721
+</pre></div>
+</div>
+</div>
+</div>
+<p>So, we can see already that the null model has a much larger residual variance and thus is worse fit to the data. The difference between these values therefore tells us how much the error reduces after including <code class="docutils literal notranslate"><span class="pre">origin</span></code> in the model. This difference is known as the <em>between-groups sum-of-squares</em>, or <span class="math notranslate nohighlight">\(SS_{B}\)</span> for short</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">SS.B</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">null.SS</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">full.SS</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">SS.B</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 393.8751
+</pre></div>
+</div>
+</div>
+</div>
+<p>On its own, this value does not mean much. However, what we want to do is see whether the amount we have managed to explain by including <code class="docutils literal notranslate"><span class="pre">origin</span></code> in the model is large or small relative to how much variability we still have left. If adding <code class="docutils literal notranslate"><span class="pre">origin</span></code> to the model has done very little, then we will still have a lot of variability left over. However, if the means of the groups truly do differ, then adding <code class="docutils literal notranslate"><span class="pre">origin</span></code> should have soaked up quite a lot of variability and we will not have as much left over. As such, we want to compare <span class="math notranslate nohighlight">\(SS_{B}\)</span> to the sum-of-squared residuals from the full model. In other words, the (un-normalised) measure of variance left over once <code class="docutils literal notranslate"><span class="pre">origin</span></code> has been added to the model. This is known as the <em>within-group sum-of-squares</em>, or <span class="math notranslate nohighlight">\(SS_{W}\)</span> for short</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">SS.W</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">full.SS</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">SS.W</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 732.1721
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-f-ratio">
+<h3>The <span class="math notranslate nohighlight">\(F\)</span>-ratio<a class="headerlink" href="#the-f-ratio" title="Link to this heading">#</a></h3>
+<p>In order to compare the <span class="math notranslate nohighlight">\(SS_{B}\)</span> and <span class="math notranslate nohighlight">\(SS_{W}\)</span>, we typically calculate a <em>test statistic</em> with a known distribution under the null. Although it may initially seem like we can compare these values, they are not actually directly comparable without some scaling.</p>
+<p>Beginning with <span class="math notranslate nohighlight">\(SS_{B}\)</span>, we can interpret this value as the improvement in model fit (the reduction in error) after adding a certain number of parameters to the model. Unfortunately, this value will always scales with the number of parameters we add so will get bigger and bigger. This is because the more parameters we add, the better the fit can become, even by a small amount<a class="footnote-reference brackets" href="#params-foot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. To make this value more meaningful, we divide it by the number of parameters we have added to give an <em>average improvement per-parameter</em>. This is known as the <em>between-group mean square</em>, or <span class="math notranslate nohighlight">\(MS_{B}\)</span> for short. In the case of the <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> example, we need to add <span class="math notranslate nohighlight">\(k - 1 = 2\)</span> parameters to the model to capture the different group means. As such, we divide <span class="math notranslate nohighlight">\(SS_{B}\)</span> by 2 to produce the <span class="math notranslate nohighlight">\(MS_{B}\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df.B</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span>
+<span class="n">MS.B</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">SS.B</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">df.B</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">MS.B</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 196.9376
+</pre></div>
+</div>
+</div>
+</div>
+<p>So, we have an average reduction in error variance of 196.94 for each parameter we have added.</p>
+<p>Moving on to <span class="math notranslate nohighlight">\(SS_{W}\)</span>, we have a similar problem because this value always scales with sample size. …</p>
+<p>We can therefore think of the two mean-square values as directly comparable, because they both represent <em>average variances</em> after taking into account the elements of the model that scale their magnitude.</p>
+<p>So, in actual fact, <span class="math notranslate nohighlight">\(MS_{W}\)</span> is simply estimating <span class="math notranslate nohighlight">\(\sigma^{2}\)</span>, Bessel’s correction and all.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df.W</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">full.mod</span><span class="o">$</span><span class="n">df.residual</span>
+<span class="n">MS.W</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">SS.W</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">df.W</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">MS.W</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 25.24731
+</pre></div>
+</div>
+</div>
+</div>
+<p>Compared with</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">sigma</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="n">full.mod</span><span class="p">)</span><span class="o">$</span><span class="n">sigma</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">sigma</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 25.24731
+</pre></div>
+</div>
+</div>
+</div>
+<p>… So, the <span class="math notranslate nohighlight">\(F\)</span>-ratio is compaing two measures of variance. Hence the name, Analysis of <em>Variance</em>.</p>
+<div class="math notranslate nohighlight">
+\[
+F = \frac{\text{Average reduction in variance per-parameter}}{\text{Average variance left over per-observation}}.
+\]</div>
+<p>Or, to put this a difference way, how much have we managed to explain for each parameter we have added compared to how much we still have left to explain? The larger the <span class="math notranslate nohighlight">\(F\)</span>-ratio becomes, the greater the variance reduction relative to the error and the smaller the associated <span class="math notranslate nohighlight">\(p\)</span>-value becomes.</p>
+</section>
+<section id="the-anova-function">
+<h3>The <code class="docutils literal notranslate"><span class="pre">anova()</span></code> Function<a class="headerlink" href="#the-anova-function" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">anova</span><span class="p">(</span><span class="n">null.mod</span><span class="p">,</span><span class="w"> </span><span class="n">full.mod</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -415,6 +566,10 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 </div>
+<p>Within this table, we should see all the values that we calculated manually above, alongside the <span class="math notranslate nohighlight">\(p\)</span>-value for the <span class="math notranslate nohighlight">\(F\)</span>-ratio.</p>
+</section>
+<section id="id3">
+<h3>The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
@@ -436,6 +591,23 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 <p>… Notice that this table says <code class="docutils literal notranslate"><span class="pre">Type</span> <span class="pre">II</span> <span class="pre">tests</span></code> at the top. This is something we will explore in more detail in the associated synchronous session next week.</p>
+<p>… So, the core understanding here is that the ANOVA is simply a <em>model comparison procedure</em>. The ANOVA effects usually reported within an ANOVA table are really comparisons between a model that contains that effect and a model that does not contain that effect. The <em>variance</em> within the name ANOVA is a comparison between the error variances of these models. In other words, the ANOVA is asking the question “how much does the error reduce when we include this effect in the model?” The table is just a helpful way of organising all these comparisons. So we can see that the ANOVA model is in fact just a form of multiple regression, and the tests associated with the ANOVA are summaries of model comparisons. This is the true way to conceptualise an ANOVA.</p>
+</section>
+</section>
+<section id="the-regression-anova-f-test">
+<h2>The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test<a class="headerlink" href="#the-regression-anova-f-test" title="Link to this heading">#</a></h2>
+<p>… In fact, this test is already provided at the bottom of the regression table…</p>
+<p>Note that this will not always align with the ANOVA tests we want. For simple models that only contain a single factor and <em>nothing else</em>, the regression ANOVA test will be equivalent to an omnibus test on that single factor. For models that contain <em>multiple</em> factors and/or continuous predictors, this will not be equivalent. As such, it can be good practise to produce the ANOVA table anyway, even if in some cases it is redundant.</p>
+</section>
+<section id="other-model-comparison-procedures">
+<h2>Other Model Comparison Procedures<a class="headerlink" href="#other-model-comparison-procedures" title="Link to this heading">#</a></h2>
+<section id="r-2">
+<h3><span class="math notranslate nohighlight">\(R^2\)</span><a class="headerlink" href="#r-2" title="Link to this heading">#</a></h3>
+</section>
+<section id="aic-and-bic">
+<h3>AIC and BIC<a class="headerlink" href="#aic-and-bic" title="Link to this heading">#</a></h3>
+</section>
+</section>
 <section id="follow-up-tests">
 <h2>Follow-up Tests<a class="headerlink" href="#follow-up-tests" title="Link to this heading">#</a></h2>
 </section>
@@ -524,6 +696,17 @@ P value adjustment: holm method for 3 tests
 </div>
 </div>
 <p>This leads to a reasonable amount of output, but which contains everything we need to reach conclusions. Indeed, the summarising of the results of <code class="docutils literal notranslate"><span class="pre">lm()</span></code> is not strictly necessary. However, it is good practice to always look at this to make sure the model is correct, otherwise we can miss important misspecifications that will cause issues later on. It is also notable that the actual reference level of the dummy variables does not matter here, nor does even understanding the coding used for the dummy variables. These are <em>implementation details</em> that matter for understanding the theory, but should not influence the final results.</p>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="ss-foot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>A lot of the ANOVA theory involves messing around with sums-of-squares, mean squares and degrees of freedom and it may not always be clear <em>why</em> each is being used at each stage. For instance, why use sums-of-squares rather than just calculating the error variance directly? The simple answer is that all of this complexity comes down to requiring a test statistic with a null distribution that is tractable. In other words, this was the only way that these results were possible in a world before computers. These days, if you were using a method such as permutation testing, none of this is necessary as the tractability of the null does not matter.</p>
+</aside>
+<aside class="footnote brackets" id="params-foot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>One way to think about this is the extreme example of having one parameter for every observation. In this case, we could make the model fit <em>perfectly</em> as each parameter can make sure that the exact value of the raw data is predicted. If we do this, there will be 0 error. Thus, we can always make the model better and better by adding more and more parameters. However, this is an extreme example of <em>over-fitting</em>, where the model will be capturing <em>noise</em> and not any universal truth about the data in question.</p>
+</aside>
+</aside>
 </section>
 </section>
 
@@ -592,6 +775,20 @@ P value adjustment: holm method for 3 tests
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anova-as-a-model-comparison-procedure">ANOVA as a Model Comparison Procedure</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#omnibus-tests">Omnibus Tests</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#omnibus-tests-from-model-comparisons">Omnibus Tests From Model Comparisons</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-f-ratio">The <span class="math notranslate nohighlight">\(F\)</span>-ratio</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-anova-function">The <code class="docutils literal notranslate"><span class="pre">anova()</span></code> Function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-model-comparison-procedures">Other Model Comparison Procedures</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-2"><span class="math notranslate nohighlight">\(R^2\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aic-and-bic">AIC and BIC</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#follow-up-tests">Follow-up Tests</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-general-anova-procedure">The General ANOVA Procedure</a></li>
 </ul>
