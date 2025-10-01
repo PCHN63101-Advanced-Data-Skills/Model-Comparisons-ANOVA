@@ -16,20 +16,22 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-  
-  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
@@ -37,10 +39,11 @@
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/test.css?v=90b7ad94" />
   
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
@@ -67,6 +70,7 @@
     <link rel="prev" title="One-way ANOVA" href="2.oneway-ANOVA.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -82,19 +86,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -102,7 +95,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -110,8 +102,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -127,7 +119,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -157,21 +150,17 @@
     
     
     <img src="_static/logo.png" class="logo__image only-light" alt="Linear Models IV: Model Comparisons and the ANOVA - Home"/>
-    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Linear Models IV: Model Comparisons and the ANOVA - Home"/>`);</script>
+    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Linear Models IV: Model Comparisons and the ANOVA - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -197,9 +186,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -343,24 +337,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -387,6 +373,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anova-as-a-model-comparison-procedure">ANOVA as a Model Comparison Procedure</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#omnibus-tests">Omnibus Tests</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#omnibus-tests-from-model-comparisons">Omnibus Tests From Model Comparisons</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-comparisons-using-sums-of-squares">Model Comparisons Using Sums-of-Squares</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-f-ratio">The <span class="math notranslate nohighlight">\(F\)</span>-ratio</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-squares-and-the-f-ratio">Mean-squares and the <span class="math notranslate nohighlight">\(F\)</span>-ratio</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-definition-of-f">The Definition of <span class="math notranslate nohighlight">\(F\)</span></a></li>
@@ -396,7 +383,7 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anova-tables-in-r">ANOVA Tables in <code class="docutils literal notranslate"><span class="pre">R</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-anova-function">The <code class="docutils literal notranslate"><span class="pre">anova()</span></code> Function</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test</a></li>
@@ -442,29 +429,61 @@ y_{ij} \sim \mathcal{N}\left(\mu_{j},\sigma^{2}\right)
 \[
 y_{i} \sim \mathcal{N}\left(\mu,\sigma^{2}\right).
 \]</div>
-<p>Here we have <em>two different models</em>. One that just assumes a single mean for all the data and one that assumes <em>different</em> means for the different groups. In the context of a regression model, this is a comparison between a model that only contains an intercept, and a model containing an intercept <em>and</em> dummy variables for the categories.</p>
-<p>To see this more clearly, we will call these models the <em>null model</em> and the <em>full model</em>. In <code class="docutils literal notranslate"><span class="pre">R</span></code>, sticking with out <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> example, we could specify these in the following way</p>
+<p>Here we have <em>two different models</em>. One that just assumes a single mean for all the data and one that assumes <em>different</em> means for the different groups. In the context of a regression model, this is a comparison between a model that only contains an intercept, and a model containing an intercept <em>and</em> dummy variables for the categories. Typically, these are called the <em>null model</em> and the <em>full model</em>, so we have</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+    \mathcal{M}_{0} &amp;: y_{i\phantom{j}}  = \mu_{\phantom{j}}     + \epsilon_{i}  &amp;\quad \text{Null Model} \\
+    \mathcal{M}_{1} &amp;: y_{ij} = \mu_{j} + \epsilon_{ij} &amp;\quad \text{Full Model} \\
+\end{align*}
+\end{split}\]</div>
+<p>In <code class="docutils literal notranslate"><span class="pre">R</span></code>, sticking with our <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> example, we could specify these in the following way</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
-<span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span>
-<span class="w">                   </span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span>
-<span class="w">                   </span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span>
-<span class="w">                   </span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">)</span>
-<span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.factor</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="p">)</span>
-
-<span class="n">null.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w">      </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
-<span class="n">full.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">null.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w">      </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span><span class="w"> </span><span class="c1"># null model</span>
+<span class="n">full.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span><span class="w"> </span><span class="c1"># full model</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Thus, the full model contains our categorical variable of interest and the null model does not. If our question revolves around whether this predictor is actually necessary, a natural way to do so would be to compare how well each model fits the data. To do so, we can calculate the sum-of-squared residuals as an (un-normalised) measure of the variance left over by each model<a class="footnote-reference brackets" href="#ss-foot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. The large the value, the more variance remains and the <em>worse</em> the model fits the data.</p>
+<p>Thus, the full model contains our categorical variable of interest and the null model does not. If our question revolves around whether this predictor is actually necessary, a natural way to do so would be to compare how well each model fits the data. If the null and full model have a similar model fit, then it suggests that <code class="docutils literal notranslate"><span class="pre">origin</span></code> is doing little more than an intercept. In other words, the groups means appear largely identical. Alternatively, if the full model fits much better than the null model then it suggests that allowing the group means to differ is a more accurate reflection of the data. In other words, at least two of the group means appear to be different.</p>
+</section>
+<section id="model-comparisons-using-sums-of-squares">
+<h3>Model Comparisons Using Sums-of-Squares<a class="headerlink" href="#model-comparisons-using-sums-of-squares" title="Link to this heading">#</a></h3>
+<p>In order to compare the model fits, the most intuitive method would be to calculate the the magnitude of the residual variance of each model and compare them. If a model fits better, its residual variance will be smaller. In other words, the average degree to which the data deviates from the model prediction will be reduced. Unfortunately, there is a numeric problem with this. What we really want to do is figure out how much the model has improved between the null and the full. In other words, what is the magnitude of variance associated with our effect of interest. Intutively, what we might think about doing is calculating</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta\sigma^{2} = \sigma^{2}_{\text{null}} - \sigma^{2}_{\text{full}}.
+\]</div>
+<p>However, mathematically this is a messy quantity that does not cleanly isolate the improvement added by the full model. To see why, consider the expanded definition of the variances above</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta\sigma^{2} = \underbrace{\frac{\sum{\epsilon_{0}^{2}}}{n - p_{0}}}_{\sigma^{2}_{\text{null}}} - \underbrace{\frac{\sum{\epsilon_{1}^{2}}}{n - p_{1}}}_{\sigma^{2}_{\text{full}}},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\epsilon_{0}\)</span> are the residuals from the null model, <span class="math notranslate nohighlight">\(\epsilon_{1}\)</span> are the residuals from the full model, <span class="math notranslate nohighlight">\(p_{0}\)</span> is the number of parameters in the null model and <span class="math notranslate nohighlight">\(p_{1}\)</span> is the number of parameters in the full model. Written this way, it is clear that we are subtracting quantities with different denominators. This makes the final value very unclear in terms of what it is actually telling us about the differences between these models, because it is somewhat confounded by the difference in the number of parameters.</p>
+<p>The solution is to <em>not</em> use the residual variance to compare the models, despite its intuitive appeal. Instead, we forego the denominators entirely to give</p>
+<div class="math notranslate nohighlight">
+\[
+SS_{\text{effect}} = \sum{\epsilon_{0}^{2}} - \sum{\epsilon_{1}^{2}}.
+\]</div>
+<p>This value is more usually known as the <em>between-groups sum-of-squares</em> (<span class="math notranslate nohighlight">\(SS_{B}\)</span>) and is formed from the <em>residual sum-of-squares</em> (RSS) from each model. The logic is therefore that we cannot isolate the magnitude of the model improvement by using the raw error variances because</p>
+<div class="math notranslate nohighlight">
+\[
+\sigma^{2}_{\text{effect}} \neq \sigma^{2}_{\text{null}} - \sigma^{2}_{\text{full}}.
+\]</div>
+<p>But we <em>can</em> using the sums-of-squares because</p>
+<div class="math notranslate nohighlight">
+\[
+SS_{\text{effect}} = RSS_{\text{null}} - RSS_{\text{full}}.
+\]</div>
+<p>This is a direct consequence of removing the messiness of the denominators from the calculation.</p>
+<p>Let us see this in practice for our two example models. In the code below, we can calculate the residual sums-of-squares as a measure of each model fit. The <em>larger</em> the value, the more error remains and the <em>worse</em> the model fits the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">null.SS</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="nf">resid</span><span class="p">(</span><span class="n">null.mod</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
-<span class="n">full.SS</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="nf">resid</span><span class="p">(</span><span class="n">full.mod</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">null.SS</span><span class="p">,</span><span class="n">full.SS</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">null.RSS</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="nf">resid</span><span class="p">(</span><span class="n">null.mod</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
+<span class="n">full.RSS</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="nf">resid</span><span class="p">(</span><span class="n">full.mod</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">null.RSS</span><span class="p">,</span><span class="n">full.RSS</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -474,20 +493,24 @@ y_{i} \sim \mathcal{N}\left(\mu,\sigma^{2}\right).
 </div>
 </div>
 </div>
-<p>So, we can see already that the null model has a much larger residual variance and thus is worse fit to the data. The difference between these values therefore tells us how much the error reduces after including <code class="docutils literal notranslate"><span class="pre">origin</span></code> in the model. This difference is known as the <em>between-groups sum-of-squares</em>, or <span class="math notranslate nohighlight">\(SS_{B}\)</span> for short</p>
+<p>…</p>
+<p>So, we can see already that the null model has a much larger residual sum-of-squares and thus is worse fit to the data. The difference between these values therefore tells us how much the error <em>reduces</em> after including <code class="docutils literal notranslate"><span class="pre">origin</span></code> in the model. This difference is known as the <em>between-groups sum-of-squares</em>, or <span class="math notranslate nohighlight">\(SS_{B}\)</span> for short</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">SS.B</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">null.SS</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">full.SS</span>
+
 <span class="nf">print</span><span class="p">(</span><span class="n">SS.B</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 393.8751
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="nb">eval</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">envir</span><span class="p">,</span> <span class="n">enclos</span><span class="p">):</span> <span class="nb">object</span> <span class="s1">&#39;null.SS&#39;</span> <span class="ow">not</span> <span class="n">found</span>
+<span class="ne">Traceback</span>:
 </pre></div>
 </div>
 </div>
 </div>
+<p>How do we interpret this value? Generally, we cannot on its own because the units are … In addition, much like the <span class="math notranslate nohighlight">\(t\)</span>-statistic, we need to consider this effect <em>relative</em> to our uncertainty.</p>
 <p>On its own, this value does not mean much. However, what we want to do is see whether the amount we have managed to explain by including <code class="docutils literal notranslate"><span class="pre">origin</span></code> in the model is large or small relative to how much variability we still have left. If adding <code class="docutils literal notranslate"><span class="pre">origin</span></code> to the model has done very little, then we will still have a lot of variability left over. However, if the means of the groups truly do differ, then adding <code class="docutils literal notranslate"><span class="pre">origin</span></code> should have soaked up quite a lot of variability and we will not have as much left over. As such, we want to compare <span class="math notranslate nohighlight">\(SS_{B}\)</span> to the sum-of-squared residuals from the full model. In other words, the (un-normalised) measure of variance left over once <code class="docutils literal notranslate"><span class="pre">origin</span></code> has been added to the model. This is known as the <em>within-group sum-of-squares</em>, or <span class="math notranslate nohighlight">\(SS_{W}\)</span> for short</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -506,11 +529,11 @@ y_{i} \sim \mathcal{N}\left(\mu,\sigma^{2}\right).
 <section id="the-f-ratio">
 <h3>The <span class="math notranslate nohighlight">\(F\)</span>-ratio<a class="headerlink" href="#the-f-ratio" title="Link to this heading">#</a></h3>
 <p>Given what we have discussed above, we could just eye-ball the magnitude of <span class="math notranslate nohighlight">\(SS_{B}\)</span> relative to <span class="math notranslate nohighlight">\(SS_{W}\)</span>. However, a more principled approach is to combine these values into some sort of <em>test statistic</em>, akin to the <span class="math notranslate nohighlight">\(t\)</span>-statistic we have discussed previously. In doing so, we can combine the two sources of information into a single standardised value that can be interpreted across different datasets. Much in the same way that a <span class="math notranslate nohighlight">\(t\)</span>-statistic is formed by dividing an <em>effect</em> by <em>error</em>, we could similarly form a statistic by calculating <span class="math notranslate nohighlight">\(\frac{SS_{B}}{SS_{W}}\)</span>. This would tell us how large the improvement in model fit is, relative to the amount of error left over.</p>
-<p>As an example, if <span class="math notranslate nohighlight">\(\frac{SS_{B}}{SS_{W}} = 1\)</span> then the model improvement has the same magnitude as the error. In other words, the improvement is no bigger than what you would expect just from noise. In this situation we would typically <em>discount</em> any improvement as evidence of a genuine effect<a class="footnote-reference brackets" href="#noise-foot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. However, if <span class="math notranslate nohighlight">\(\frac{SS_{B}}{SS_{W}} = 2\)</span> then the amount we have reduced the error is <em>twice</em> the amount left over. In other words, the improvement is much larger than we would expect just from noise. In this situation, we would typically conclude that a genuine effect has been found because the possibility that we are only seeing noise becomes less and less plausible.</p>
+<p>As an example, if <span class="math notranslate nohighlight">\(\frac{SS_{B}}{SS_{W}} = 1\)</span> then the model improvement has the same magnitude as the error. In other words, the improvement is no bigger than what you would expect just from noise. In this situation we would typically <em>discount</em> any improvement as evidence of a genuine effect<a class="footnote-reference brackets" href="#noise-foot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. However, if <span class="math notranslate nohighlight">\(\frac{SS_{B}}{SS_{W}} = 2\)</span> then the amount we have reduced the error is <em>twice</em> the amount left over. In other words, the improvement is much larger than we would expect just from noise. In this situation, we would typically conclude that a genuine effect has been found because the possibility that we are only seeing noise becomes less and less plausible.</p>
 <p>The statistic we use for this purpose is known as <span class="math notranslate nohighlight">\(F\)</span> (after <em>Fisher</em>). Given the description above, it may seem like we could calculate <span class="math notranslate nohighlight">\(F = \frac{SS_{B}}{SS_{W}}\)</span>. However, there is some additional complexity. As calculated above, <span class="math notranslate nohighlight">\(SS_{B}\)</span> and <span class="math notranslate nohighlight">\(SS_{W}\)</span> are not directly comparable, for reasons we will now discuss.</p>
 <section id="mean-squares-and-the-f-ratio">
 <h4>Mean-squares and the <span class="math notranslate nohighlight">\(F\)</span>-ratio<a class="headerlink" href="#mean-squares-and-the-f-ratio" title="Link to this heading">#</a></h4>
-<p>Beginning with <span class="math notranslate nohighlight">\(SS_{B}\)</span>, we can interpret this value as the improvement in model fit (the reduction in error) after adding a certain number of parameters to the model. Unfortunately, this value will always scale with the number of parameters we add This is because the more parameters we add, the better the fit can become<a class="footnote-reference brackets" href="#params-foot" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. Because of this, we do not know whether <span class="math notranslate nohighlight">\(SS_{B}\)</span> is large because of a genuine improvement, or simply because we have added many more parameters. To make this value more meaningful, we can therefore divide it by the number of parameters we have added to give an <em>average improvement per-parameter</em>. The number of additional parameters is known as the <em>numerator degrees of freedom</em> (or <span class="math notranslate nohighlight">\(df_{1}\)</span>) and the scaled version of <span class="math notranslate nohighlight">\(SS_{B}\)</span> is known as the <em>between-group mean square</em>, or <span class="math notranslate nohighlight">\(MS_{B}\)</span> for short. As such</p>
+<p>Beginning with <span class="math notranslate nohighlight">\(SS_{B}\)</span>, we can interpret this value as the improvement in model fit (the reduction in error) after adding a certain number of parameters to the model. Unfortunately, this value will always scale with the number of parameters we add This is because the more parameters we add, the better the fit can become<a class="footnote-reference brackets" href="#params-foot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. Because of this, we do not know whether <span class="math notranslate nohighlight">\(SS_{B}\)</span> is large because of a genuine improvement, or simply because we have added many more parameters. To make this value more meaningful, we can therefore divide it by the number of parameters we have added to give an <em>average improvement per-parameter</em>. The number of additional parameters is known as the <em>numerator degrees of freedom</em> (or <span class="math notranslate nohighlight">\(df_{1}\)</span>) and the scaled version of <span class="math notranslate nohighlight">\(SS_{B}\)</span> is known as the <em>between-group mean square</em>, or <span class="math notranslate nohighlight">\(MS_{B}\)</span> for short. As such</p>
 <div class="math notranslate nohighlight">
 \[
 MS_{B} = \frac{SS_{B}}{df_{1}}.
@@ -568,7 +591,7 @@ MS_{B} = \frac{SS_{B}}{df_{1}}.
 <p>… So, the <span class="math notranslate nohighlight">\(F\)</span>-ratio is compaing two measures of variance. Hence the name, Analysis of <em>Variance</em>.</p>
 <div class="math notranslate nohighlight">
 \[
-F = \frac{\text{Average reduction in variance per-parameter}}{\text{Average variance left over per-observation}}.
+F = \frac{\text{Improvement in error (scaled by } df_{1})}{\text{Error remaining (scaled by } df_{2})}.
 \]</div>
 <p>Or, to put this a difference way, how much have we managed to explain for each parameter we have added compared to how much we still have left to explain? The larger the <span class="math notranslate nohighlight">\(F\)</span>-ratio becomes, the greater the variance reduction relative to the error and the smaller the associated <span class="math notranslate nohighlight">\(p\)</span>-value becomes.</p>
 <p>A summary of all the calculations involved in producing an <span class="math notranslate nohighlight">\(F\)</span>-ratio that compares the null and full model in order to test the omnibus hypothesis about group means is shown below</p>
@@ -579,20 +602,20 @@ F = \frac{\text{Average reduction in variance per-parameter}}{\text{Average vari
 <span class="n">full.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
 
 <span class="c1"># Residual sums-of-squares</span>
-<span class="n">null.SS</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="nf">resid</span><span class="p">(</span><span class="n">null.mod</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
-<span class="n">full.SS</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="nf">resid</span><span class="p">(</span><span class="n">full.mod</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
+<span class="n">null.RSS</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="nf">resid</span><span class="p">(</span><span class="n">null.mod</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
+<span class="n">full.RSS</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="nf">resid</span><span class="p">(</span><span class="n">full.mod</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
 
 <span class="c1"># Between-group sums-of-squares (model improvement)</span>
-<span class="n">SS.B</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">null.SS</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">full.SS</span>
+<span class="n">SS.B</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">null.RSS</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">full.RSS</span>
 
 <span class="c1"># Within-group sums-of-squares (error variance)</span>
-<span class="n">SS.W</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">full.SS</span>
+<span class="n">SS.W</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">full.RSS</span>
 
 <span class="c1"># Mean-squares</span>
 <span class="n">df.1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span>
 <span class="n">df.2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">full.mod</span><span class="o">$</span><span class="n">df.residual</span>
-<span class="n">MS.B</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">SS.B</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">df.1</span>
-<span class="n">MS.W</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">SS.W</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">df.2</span>
+<span class="n">MS.B</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">SS.B</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">df.1</span><span class="w"> </span><span class="c1"># average error reduction per-parameter</span>
+<span class="n">MS.W</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">SS.W</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">df.2</span><span class="w"> </span><span class="c1"># average error left over per-subject</span>
 
 <span class="c1"># F-ratio</span>
 <span class="bp">F</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">MS.B</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">MS.W</span>
@@ -609,7 +632,7 @@ F = \frac{\text{Average reduction in variance per-parameter}}{\text{Average vari
 </div>
 </div>
 </div>
-<p>In order to compare the <span class="math notranslate nohighlight">\(SS_{B}\)</span> and <span class="math notranslate nohighlight">\(SS_{W}\)</span>, we typically calculate a <em>test statistic</em> called <span class="math notranslate nohighlight">\(F\)</span> (named after <em>Fisher</em>), which has a known distribution under the null. This test statistic takes the form of a <em>ratio</em> between two variance terms. The logic is to compare the amount of variance we have <em>explained</em> to the amount of variance that remains <em>unexplained</em>. This effectively gives a <em>signal-to-noise</em> ratio. The larger the value of <span class="math notranslate nohighlight">\(F\)</span>, the larger the “signal” is (the variance we have explained) relative to the “noise” (the variance we have not explained). In the context of the one-way ANOVA, this “signal” is based on assuming that the group means actually differ. If this assumption results in a much larger improvement in terms of explained variance relative to error variance, it suggests that the full model fits the data better than the null model. The alternative is that the improvement in explained variance is of a similar magnitude to the error variance. In this situation, we cannot tell whether any “improvement” is just noise, because it looks effectively the same as the error. As such, if the null were true, we would expect <span class="math notranslate nohighlight">\(F \approx 1\)</span>. This is because there are no differences between the group means and so both <span class="math notranslate nohighlight">\(SS_{B}\)</span> and <span class="math notranslate nohighlight">\(SS_{W}\)</span> are capturing noise. The larger the value of <span class="math notranslate nohighlight">\(F\)</span> becomes, the less we believe the null because the magnitude of improvement is much greater than we would expect if it were just noise. In this case, <span class="math notranslate nohighlight">\(SS_{W}\)</span> is still capturing noise, but <span class="math notranslate nohighlight">\(SS_{B}\)</span> is capturing something more systematic about the data. Any time we get <span class="math notranslate nohighlight">\(F &gt; 1\)</span> this is suggestive that the null may not be correct<a class="footnote-reference brackets" href="#nhst-foot" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>. The larger <span class="math notranslate nohighlight">\(F\)</span> becomes, the greater this suggestion becomes and the smaller the associated <span class="math notranslate nohighlight">\(p\)</span>-value.</p>
+<p>In order to compare the <span class="math notranslate nohighlight">\(SS_{B}\)</span> and <span class="math notranslate nohighlight">\(SS_{W}\)</span>, we typically calculate a <em>test statistic</em> called <span class="math notranslate nohighlight">\(F\)</span> (named after <em>Fisher</em>), which has a known distribution under the null. This test statistic takes the form of a <em>ratio</em> between two variance terms. The logic is to compare the amount of variance we have <em>explained</em> to the amount of variance that remains <em>unexplained</em>. This effectively gives a <em>signal-to-noise</em> ratio. The larger the value of <span class="math notranslate nohighlight">\(F\)</span>, the larger the “signal” is (the variance we have explained) relative to the “noise” (the variance we have not explained). In the context of the one-way ANOVA, this “signal” is based on assuming that the group means actually differ. If this assumption results in a much larger improvement in terms of explained variance relative to error variance, it suggests that the full model fits the data better than the null model. The alternative is that the improvement in explained variance is of a similar magnitude to the error variance. In this situation, we cannot tell whether any “improvement” is just noise, because it looks effectively the same as the error. As such, if the null were true, we would expect <span class="math notranslate nohighlight">\(F \approx 1\)</span>. This is because there are no differences between the group means and so both <span class="math notranslate nohighlight">\(SS_{B}\)</span> and <span class="math notranslate nohighlight">\(SS_{W}\)</span> are capturing noise. The larger the value of <span class="math notranslate nohighlight">\(F\)</span> becomes, the less we believe the null because the magnitude of improvement is much greater than we would expect if it were just noise. In this case, <span class="math notranslate nohighlight">\(SS_{W}\)</span> is still capturing noise, but <span class="math notranslate nohighlight">\(SS_{B}\)</span> is capturing something more systematic about the data. Any time we get <span class="math notranslate nohighlight">\(F &gt; 1\)</span> this is suggestive that the null may not be correct<a class="footnote-reference brackets" href="#nhst-foot" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. The larger <span class="math notranslate nohighlight">\(F\)</span> becomes, the greater this suggestion becomes and the smaller the associated <span class="math notranslate nohighlight">\(p\)</span>-value.</p>
 </section>
 </section>
 </section>
@@ -639,8 +662,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 <p>Within this table, we should see all the values that we calculated manually above, alongside the <span class="math notranslate nohighlight">\(p\)</span>-value for the <span class="math notranslate nohighlight">\(F\)</span>-ratio.</p>
 </section>
-<section id="id5">
-<h3>The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<section id="id4">
+<h3>The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
@@ -649,9 +672,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: carData
-</pre></div>
-</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Anova Table (Type II tests)
 
 Response: mpg
@@ -722,35 +742,57 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>lattice theme set by effectsTheme()
-See ?effectsTheme for details.
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="n">library</span><span class="p">(</span><span class="n">emmeans</span><span class="p">):</span> <span class="n">there</span> <span class="ow">is</span> <span class="n">no</span> <span class="n">package</span> <span class="n">called</span> <span class="err">‘</span><span class="n">emmeans</span><span class="err">’</span>
-<span class="ne">Traceback</span>:
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = mpg ~ origin, data = mtcars)
 
-<span class="mi">1</span><span class="o">.</span> <span class="n">stop</span><span class="p">(</span><span class="n">packageNotFoundError</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">lib</span><span class="o">.</span><span class="n">loc</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">call</span><span class="p">()))</span>
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.8071 -4.1718 -0.7885  3.3444 10.5929 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   21.807      1.343  16.239 4.26e-16 ***
+originJapan    3.753      2.618   1.434  0.16238    
+originUSA     -5.669      1.935  -2.929  0.00656 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 5.025 on 29 degrees of freedom
+Multiple R-squared:  0.3498,	Adjusted R-squared:  0.3049 
+F-statistic:   7.8 on 2 and 29 DF,  p-value: 0.001947
+
+Anova Table (Type II tests)
+
+Response: mpg
+          Sum Sq Df F value   Pr(&gt;F)   
+origin    393.88  2  7.8003 0.001947 **
+Residuals 732.17 29                    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+ contrast       estimate   SE df t.ratio p.value
+ Europe - Japan    -3.75 2.62 29  -1.434  0.1624
+ Europe - USA       5.67 1.94 29   2.929  0.0131
+ Japan - USA        9.42 2.64 29   3.563  0.0039
+
+P value adjustment: holm method for 3 tests 
 </pre></div>
 </div>
+<a class="reference internal image-reference" href="_images/5364699f54430767e1af94a1c04a307a4949867ea873b08bf6ee48922ed084ad.png"><img alt="_images/5364699f54430767e1af94a1c04a307a4949867ea873b08bf6ee48922ed084ad.png" src="_images/5364699f54430767e1af94a1c04a307a4949867ea873b08bf6ee48922ed084ad.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>This leads to a reasonable amount of output, but which contains everything we need to reach conclusions. Indeed, the summarising of the results of <code class="docutils literal notranslate"><span class="pre">lm()</span></code> is not strictly necessary. However, it is good practice to always look at this to make sure the model is correct, otherwise we can miss important misspecifications that will cause issues later on. It is also notable that the actual reference level of the dummy variables does not matter here, nor does even understanding the coding used for the dummy variables. These are <em>implementation details</em> that matter for understanding the theory, but should not influence the final results.</p>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="ss-foot" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
-<p>A lot of the ANOVA theory involves messing around with sums-of-squares, mean squares and degrees of freedom and it may not always be clear <em>why</em> each is being used at each stage. For instance, why use sums-of-squares rather than just calculating the error variance directly? The simple answer is that all of this complexity comes down to requiring a test statistic with a null distribution that is tractable. In other words, this was the only way that these results were possible in a world before computers. These days, if you were using a method such as permutation testing, none of this is necessary as the tractability of the null does not matter.</p>
-</aside>
 <aside class="footnote brackets" id="noise-foot" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p>You may wonder why we cannot just conclude that the improvement is very small, rather than assuming it is noise simply because it is of the same magnitude. The point here is the ability to <em>distinguish</em> genuine effects from noise. If they are similar magnitude then we cannot know which is which. As such, even if the effect is genuine but small, we cannot be certain that it is not just noise and thus cannot reject the null.</p>
 </aside>
 <aside class="footnote brackets" id="params-foot" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
 <p>One way to think about this is the extreme example of having one parameter for every observation. In this case, we could make the model fit <em>perfectly</em> as each parameter can make sure that the exact value of the raw data is predicted. If we do this, there will be 0 error. Thus, we can always make the model better and better by adding more and more parameters. However, this is an extreme example of <em>over-fitting</em>, where the model will be capturing <em>noise</em> and not any universal truth about the data in question.</p>
 </aside>
 <aside class="footnote brackets" id="nhst-foot" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
 <p>With all the caveats around the logic of NHST still in place.</p>
 </aside>
 </aside>
@@ -812,7 +854,8 @@ See ?effectsTheme for details.
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -824,6 +867,7 @@ See ?effectsTheme for details.
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anova-as-a-model-comparison-procedure">ANOVA as a Model Comparison Procedure</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#omnibus-tests">Omnibus Tests</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#omnibus-tests-from-model-comparisons">Omnibus Tests From Model Comparisons</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-comparisons-using-sums-of-squares">Model Comparisons Using Sums-of-Squares</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-f-ratio">The <span class="math notranslate nohighlight">\(F\)</span>-ratio</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-squares-and-the-f-ratio">Mean-squares and the <span class="math notranslate nohighlight">\(F\)</span>-ratio</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-definition-of-f">The Definition of <span class="math notranslate nohighlight">\(F\)</span></a></li>
@@ -833,7 +877,7 @@ See ?effectsTheme for details.
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anova-tables-in-r">ANOVA Tables in <code class="docutils literal notranslate"><span class="pre">R</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-anova-function">The <code class="docutils literal notranslate"><span class="pre">anova()</span></code> Function</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test</a></li>
@@ -887,8 +931,8 @@ By Dr Martyn McFarquhar & Dr George Farmer
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>
