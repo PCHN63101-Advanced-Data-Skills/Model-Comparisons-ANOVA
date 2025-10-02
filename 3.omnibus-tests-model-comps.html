@@ -176,7 +176,7 @@
 <li class="toctree-l1"><a class="reference internal" href="2.oneway-ANOVA.html">One-way ANOVA</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Omnibus Tests and Model Comparisons</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4.higher-order-ANOVA.html">Higher-order ANOVA Models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="7.ANCOVA.html">Analysis of Covariance (ANCOVA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.follow-up.html">Follow-up Tests and Visualisations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
 </ul>
 
@@ -375,7 +375,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#omnibus-tests-from-model-comparisons">Omnibus Tests From Model Comparisons</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-comparisons-using-sums-of-squares">Model Comparisons Using Sums-of-Squares</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-f-ratio">The <span class="math notranslate nohighlight">\(F\)</span>-ratio</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-squares-and-the-f-ratio">Mean-squares and the <span class="math notranslate nohighlight">\(F\)</span>-ratio</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-squares">Mean-squares</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-definition-of-f">The Definition of <span class="math notranslate nohighlight">\(F\)</span></a></li>
 </ul>
 </li>
@@ -383,12 +383,10 @@
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anova-tables-in-r">ANOVA Tables in <code class="docutils literal notranslate"><span class="pre">R</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-anova-function">The <code class="docutils literal notranslate"><span class="pre">anova()</span></code> Function</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#follow-up-tests">Follow-up Tests</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-general-anova-procedure">The General ANOVA Procedure</a></li>
 </ul>
             </nav>
         </div>
@@ -413,9 +411,19 @@
 \[
 \mathcal{H}_{0} : \mu_{1} = \mu_{2} = \mu_{3}.
 \]</div>
-<p>In other words, the null is that <em>all</em> the means are identical. Or, to put it another way, that all the mean differences are 0. An omnibus test of this hypothesis is able to simultaneously compare <em>all possible mean differences</em>. Within the NHST framework, a significant omnibus effect suggests that <em>at least one</em> of all possible mean differences is significant. Traditionally, we would then drill-down to see which of the differences is driving the omnibus effect.</p>
-<p>At this point, you may well ask: what is the point of an omnibus test? If we just end up drilling-down to work out which differences are significant, why not just start there? Why bother with omnibus tests at all? The traditional argument is one of <em>error control</em>, which requires us to take a quick detour into the world of <em>multiple comparisons</em>.</p>
-<p>…</p>
+<p>In other words, the null is that <em>all</em> the means are identical. Or, to put it another way, that all the mean differences are 0. An omnibus test of this hypothesis is able to simultaneously compare <em>all possible mean differences</em>. Within the NHST framework, a significant omnibus effect suggests that <em>at least one</em> of all possible mean differences is significant. Traditionally, we would then drill-down to see which of the differences is driving the omnibus effect[^omnibus-foot].</p>
+<div class="tip dropdown admonition">
+<p class="admonition-title">What is the point of an omnibus test?</p>
+<p>At this point, you may well ask: what is the point of an omnibus test? If we just end up drilling-down to work out which differences are significant, why not just start there? Why even both with the omnibus test?</p>
+<p>The traditional argument is one of <em>error control</em> in relation to the problem of <em>multiple testing</em> or <em>multiple comparisons</em>. If our categorical variable has <span class="math notranslate nohighlight">\(k\)</span> levels, then there are <span class="math notranslate nohighlight">\(m = \frac{k(k-1)}{2}\)</span> comparisons we can make between the levels. If our desired error level is given by <span class="math notranslate nohighlight">\(\alpha\)</span>, then across all tests the probability of <em>at least one</em> being significant is <span class="math notranslate nohighlight">\(1 - (1 - \alpha)^{m}\)</span>. This is known as the <em>familywise error rate</em> (FWER). So, notice that whenever <span class="math notranslate nohighlight">\(m &gt; 1\)</span> our desired error-rate will be scaled by the number of tests and therefore get <em>bigger</em>.</p>
+<p>As an example, if we take <span class="math notranslate nohighlight">\(k = 5\)</span>, <span class="math notranslate nohighlight">\(m = 10\)</span> and <span class="math notranslate nohighlight">\(\alpha = 0.05\)</span>, the FWER is</p>
+<div class="math notranslate nohighlight">
+\[
+\text{FWER} = 1 - (1 - \alpha)^{m} = 1 - 0.95^{10} = 0.40.
+\]</div>
+<p>This means there is now a 40% chance of a significant effect under the null, rather than a 5% chance. This is the <em>multiple testing</em> problem. The more levels our categorical predictor has, the worse this gets. This is where an omnibus test helps because, irrespective of the value of <span class="math notranslate nohighlight">\(k\)</span>, the FWER stays at the desired <span class="math notranslate nohighlight">\(\alpha\)</span> because it is only a <em>single test</em>. So, we can have a factor with many levels and can assess all the differerences simultaneously using a single test that does not inflate the FWER.</p>
+<p>It is worth noting as well that multiple testing is really a problem of NHST and frequentist statistics. Because of these approaches, there is a sense that traditional statistical inference actively <em>punishes</em> researchers for wanting to investigate and explore their data. This is not universal of all statistical methods. For instance, Bayesian statistics allows as many comparisons as you want without disturbing the probabilistic structure of the conclusions. So just know that ominbus tests and the multiple comparisons problem are not <em>universal</em> in statistics, rather they are a consequence of one particular school of thought and one particular definition of probability.</p>
+</div>
 </section>
 <section id="omnibus-tests-from-model-comparisons">
 <h3>Omnibus Tests From Model Comparisons<a class="headerlink" href="#omnibus-tests-from-model-comparisons" title="Link to this heading">#</a></h3>
@@ -460,13 +468,13 @@ y_{i} \sim \mathcal{N}\left(\mu,\sigma^{2}\right).
 \[
 \Delta\sigma^{2} = \underbrace{\frac{\sum{\epsilon_{0}^{2}}}{n - p_{0}}}_{\sigma^{2}_{\text{null}}} - \underbrace{\frac{\sum{\epsilon_{1}^{2}}}{n - p_{1}}}_{\sigma^{2}_{\text{full}}},
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(\epsilon_{0}\)</span> are the residuals from the null model, <span class="math notranslate nohighlight">\(\epsilon_{1}\)</span> are the residuals from the full model, <span class="math notranslate nohighlight">\(p_{0}\)</span> is the number of parameters in the null model and <span class="math notranslate nohighlight">\(p_{1}\)</span> is the number of parameters in the full model. Written this way, it is clear that we are subtracting quantities with different denominators. This makes the final value very unclear in terms of what it is actually telling us about the differences between these models, because it is somewhat confounded by the difference in the number of parameters.</p>
-<p>The solution is to <em>not</em> use the residual variance to compare the models, despite its intuitive appeal. Instead, we forego the denominators entirely to give</p>
+<p>where <span class="math notranslate nohighlight">\(\epsilon_{0}\)</span> annd <span class="math notranslate nohighlight">\(\epsilon_{1}\)</span> are the residuals from the null and full models, and <span class="math notranslate nohighlight">\(p_{0}\)</span> and <span class="math notranslate nohighlight">\(p_{1}\)</span> are the number of parameters from the null and full models. Written this way, it is clear that we are subtracting quantities with different denominators. This makes the final value very unclear in terms of what it is actually telling us about the differences between these models, because the individual terms are scaled differently. As such, even if the model fits were <em>identical</em>, we would still see a difference here due to differences in the number of parameters.</p>
+<p>The solution then is to <em>not</em> use the residual variances to compare the models, despite its intuitive appeal. Instead, we forego the denominators entirely to give</p>
 <div class="math notranslate nohighlight">
 \[
 SS_{\text{effect}} = \sum{\epsilon_{0}^{2}} - \sum{\epsilon_{1}^{2}}.
 \]</div>
-<p>This value is more usually known as the <em>between-groups sum-of-squares</em> (<span class="math notranslate nohighlight">\(SS_{B}\)</span>) and is formed from the <em>residual sum-of-squares</em> (RSS) from each model. The logic is therefore that we cannot isolate the magnitude of the model improvement by using the raw error variances because</p>
+<p>This value is more usually known as the <em>between-groups sum-of-squares</em> (<span class="math notranslate nohighlight">\(SS_{B}\)</span>) and is formed from the <em>residual sum-of-squares</em> (RSS) from each model. The logic is that we cannot isolate the magnitude of the model improvement by using the raw error variances because</p>
 <div class="math notranslate nohighlight">
 \[
 \sigma^{2}_{\text{effect}} \neq \sigma^{2}_{\text{null}} - \sigma^{2}_{\text{full}}.
@@ -493,28 +501,28 @@ SS_{\text{effect}} = RSS_{\text{null}} - RSS_{\text{full}}.
 </div>
 </div>
 </div>
-<p>…</p>
-<p>So, we can see already that the null model has a much larger residual sum-of-squares and thus is worse fit to the data. The difference between these values therefore tells us how much the error <em>reduces</em> after including <code class="docutils literal notranslate"><span class="pre">origin</span></code> in the model. This difference is known as the <em>between-groups sum-of-squares</em>, or <span class="math notranslate nohighlight">\(SS_{B}\)</span> for short</p>
+<p>So, we can see already that the null model has a larger RSS and thus is a worse fit to the data. The difference between these values therefore tells us how much the error <em>reduces</em> after including <code class="docutils literal notranslate"><span class="pre">origin</span></code> in the model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">SS.B</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">null.SS</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">full.SS</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">SS.B</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">null.RSS</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">full.RSS</span>
 
 <span class="nf">print</span><span class="p">(</span><span class="n">SS.B</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="nb">eval</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">envir</span><span class="p">,</span> <span class="n">enclos</span><span class="p">):</span> <span class="nb">object</span> <span class="s1">&#39;null.SS&#39;</span> <span class="ow">not</span> <span class="n">found</span>
-<span class="ne">Traceback</span>:
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 393.8751
 </pre></div>
 </div>
 </div>
 </div>
-<p>How do we interpret this value? Generally, we cannot on its own because the units are … In addition, much like the <span class="math notranslate nohighlight">\(t\)</span>-statistic, we need to consider this effect <em>relative</em> to our uncertainty.</p>
-<p>On its own, this value does not mean much. However, what we want to do is see whether the amount we have managed to explain by including <code class="docutils literal notranslate"><span class="pre">origin</span></code> in the model is large or small relative to how much variability we still have left. If adding <code class="docutils literal notranslate"><span class="pre">origin</span></code> to the model has done very little, then we will still have a lot of variability left over. However, if the means of the groups truly do differ, then adding <code class="docutils literal notranslate"><span class="pre">origin</span></code> should have soaked up quite a lot of variability and we will not have as much left over. As such, we want to compare <span class="math notranslate nohighlight">\(SS_{B}\)</span> to the sum-of-squared residuals from the full model. In other words, the (un-normalised) measure of variance left over once <code class="docutils literal notranslate"><span class="pre">origin</span></code> has been added to the model. This is known as the <em>within-group sum-of-squares</em>, or <span class="math notranslate nohighlight">\(SS_{W}\)</span> for short</p>
+<p>How do we interpret this value? Generally, we cannot on its own because the units are not very interpretable. However, what we can do is compare this value <em>relative</em> to some other measure on the same scale. What measure to use? Well, at present, the <span class="math notranslate nohighlight">\(SS_{B}\)</span> gives us a sense of how much we have reduced the error of the null model by including a specific predictor. What we want to know is whether this is <em>large</em> or <em>small</em>? More generally, we want to know whether any improvement we have seen is likely to be random noise (in which case the predictor has done <em>nothing</em> to help the model) or whether it implies something more systematic about the data (i.e. that the population means differ across the groups).</p>
+<p>In order to do this, we have to consider whether the <em>magnitude</em> of this improvement is similar to what we would expect from noise, or whether it is <em>meaningfully larger</em>. If it looks similar to noise, we cannot say with any certainty that it is <em>not</em> noise, and thus would have to conclude that we cannot tell if the predictor has helped. If it is much larger than noise then it would be an unusal occurrance if the predictor had no relationship to the data.</p>
+<p>So, we need some measure of noise to compare <span class="math notranslate nohighlight">\(SS_{B}\)</span> to. In general, we have two options: <span class="math notranslate nohighlight">\(RSS_{\text{null}}\)</span> or <span class="math notranslate nohighlight">\(RSS_{\text{full}}\)</span>. These are both sums-of-sqaures that reflect the <em>error</em> or <em>noise</em>, as they capture the degree of variability that is left-over within each model. If it were the case that the predictor was <em>not</em> related to the data then these quantities would be similar. However, if the predictor <em>was</em> related to the data then the null model would be missing a key component and its error would be larger than it should be. This would make <span class="math notranslate nohighlight">\(RSS_{\text{null}}\)</span> a poor comparison. Because of this, <span class="math notranslate nohighlight">\(RSS_{\text{full}}\)</span> becomes the much better choice. If the predictor <em>does</em> relate to the data then <span class="math notranslate nohighlight">\(RSS_{\text{full}}\)</span> will be the correct magnitude, but if the predictor <em>does not</em> relate to the data then <span class="math notranslate nohighlight">\(RSS_{\text{full}}\)</span> will be similar to <span class="math notranslate nohighlight">\(RSS_{\text{null}}\)</span>. So either way, <span class="math notranslate nohighlight">\(RSS_{\text{full}}\)</span> becomes the better measure of <em>error</em> or <em>noise</em>.</p>
+<p>Within the context of an ANOVA model, <span class="math notranslate nohighlight">\(RSS_{\text{full}}\)</span> is more usually known as the <em>within-group sum-of-squares</em>, or <span class="math notranslate nohighlight">\(SS_{W}\)</span> for short, because it effectively measures variability in terms of individual subjects around the group means. In other words, how well do the group means fit the data? Within our example in <code class="docutils literal notranslate"><span class="pre">R</span></code>, we already calculated <span class="math notranslate nohighlight">\(RSS_{\text{full}}\)</span> and so can simply copy it to a new variable with a different name.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">SS.W</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">full.SS</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">SS.W</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">full.RSS</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">SS.W</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -529,11 +537,12 @@ SS_{\text{effect}} = RSS_{\text{null}} - RSS_{\text{full}}.
 <section id="the-f-ratio">
 <h3>The <span class="math notranslate nohighlight">\(F\)</span>-ratio<a class="headerlink" href="#the-f-ratio" title="Link to this heading">#</a></h3>
 <p>Given what we have discussed above, we could just eye-ball the magnitude of <span class="math notranslate nohighlight">\(SS_{B}\)</span> relative to <span class="math notranslate nohighlight">\(SS_{W}\)</span>. However, a more principled approach is to combine these values into some sort of <em>test statistic</em>, akin to the <span class="math notranslate nohighlight">\(t\)</span>-statistic we have discussed previously. In doing so, we can combine the two sources of information into a single standardised value that can be interpreted across different datasets. Much in the same way that a <span class="math notranslate nohighlight">\(t\)</span>-statistic is formed by dividing an <em>effect</em> by <em>error</em>, we could similarly form a statistic by calculating <span class="math notranslate nohighlight">\(\frac{SS_{B}}{SS_{W}}\)</span>. This would tell us how large the improvement in model fit is, relative to the amount of error left over.</p>
-<p>As an example, if <span class="math notranslate nohighlight">\(\frac{SS_{B}}{SS_{W}} = 1\)</span> then the model improvement has the same magnitude as the error. In other words, the improvement is no bigger than what you would expect just from noise. In this situation we would typically <em>discount</em> any improvement as evidence of a genuine effect<a class="footnote-reference brackets" href="#noise-foot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. However, if <span class="math notranslate nohighlight">\(\frac{SS_{B}}{SS_{W}} = 2\)</span> then the amount we have reduced the error is <em>twice</em> the amount left over. In other words, the improvement is much larger than we would expect just from noise. In this situation, we would typically conclude that a genuine effect has been found because the possibility that we are only seeing noise becomes less and less plausible.</p>
-<p>The statistic we use for this purpose is known as <span class="math notranslate nohighlight">\(F\)</span> (after <em>Fisher</em>). Given the description above, it may seem like we could calculate <span class="math notranslate nohighlight">\(F = \frac{SS_{B}}{SS_{W}}\)</span>. However, there is some additional complexity. As calculated above, <span class="math notranslate nohighlight">\(SS_{B}\)</span> and <span class="math notranslate nohighlight">\(SS_{W}\)</span> are not directly comparable, for reasons we will now discuss.</p>
-<section id="mean-squares-and-the-f-ratio">
-<h4>Mean-squares and the <span class="math notranslate nohighlight">\(F\)</span>-ratio<a class="headerlink" href="#mean-squares-and-the-f-ratio" title="Link to this heading">#</a></h4>
-<p>Beginning with <span class="math notranslate nohighlight">\(SS_{B}\)</span>, we can interpret this value as the improvement in model fit (the reduction in error) after adding a certain number of parameters to the model. Unfortunately, this value will always scale with the number of parameters we add This is because the more parameters we add, the better the fit can become<a class="footnote-reference brackets" href="#params-foot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. Because of this, we do not know whether <span class="math notranslate nohighlight">\(SS_{B}\)</span> is large because of a genuine improvement, or simply because we have added many more parameters. To make this value more meaningful, we can therefore divide it by the number of parameters we have added to give an <em>average improvement per-parameter</em>. The number of additional parameters is known as the <em>numerator degrees of freedom</em> (or <span class="math notranslate nohighlight">\(df_{1}\)</span>) and the scaled version of <span class="math notranslate nohighlight">\(SS_{B}\)</span> is known as the <em>between-group mean square</em>, or <span class="math notranslate nohighlight">\(MS_{B}\)</span> for short. As such</p>
+<p>As an example, if <span class="math notranslate nohighlight">\(\frac{SS_{B}}{SS_{W}} = 1\)</span> then the model improvement has the same magnitude as the error. In other words, the improvement is no bigger than what you would expect just from noise. In this situation we would typically <em>discount</em> any improvement as evidence of a genuine effect. However, if <span class="math notranslate nohighlight">\(\frac{SS_{B}}{SS_{W}} = 2\)</span> then the amount we have reduced the error is <em>twice</em> the amount left over. In other words, the improvement is much larger than we would expect just from noise. In this situation, we would typically conclude that a genuine effect has been found because the possibility that we are only seeing noise becomes less and less plausible.</p>
+<p>The statistic we use for this purpose is known as <span class="math notranslate nohighlight">\(F\)</span> (named after <em>Fisher</em>). Given the description above, it may seem like we could calculate <span class="math notranslate nohighlight">\(F = \frac{SS_{B}}{SS_{W}}\)</span>. However, there is some additional complexity. Although both <span class="math notranslate nohighlight">\(SS_{B}\)</span> and <span class="math notranslate nohighlight">\(SS_{W}\)</span> appear to be compatible, because they are both sums-of-squares, they cannot be directly compared. This is because they are both <em>sums</em>, and so their magnitude is dependant upon whatever we are summing over. If they were both summed over the same element of the model, there would be no problem. But this is not the case. As we will see below, the magnitude of <span class="math notranslate nohighlight">\(SS_{B}\)</span> depends upon the number of model parameters, yet the magnitude of <span class="math notranslate nohighlight">\(SS_{W}\)</span> depends upon the sample size. So both terms need to be <em>scaled</em> first, to make them truly comparable. These scaled values are known as <em>mean squares</em>.</p>
+<section id="mean-squares">
+<h4>Mean-squares<a class="headerlink" href="#mean-squares" title="Link to this heading">#</a></h4>
+<p>Starting with <span class="math notranslate nohighlight">\(SS_{B}\)</span>, this value can be interpreted as the improvement in model fit after adding a certain number of parameters to the model. Unfortunately, this value will always scale with the number of parameters we add. This is because the more parameters we add, the better the fit can become. The most extreme example of this is having one parameter for every observation. In this case, we could make the model fit <em>perfectly</em> with no error. Thus, we can always make the model better and better by adding more and more parameters<a class="footnote-reference brackets" href="#overfit-foot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. The problem is that we do not know whether <span class="math notranslate nohighlight">\(SS_{B}\)</span> is large because of a genuine improvement to the model fit, or simply because we have added more parameters.</p>
+<p>To make this value more meaningful, we can therefore divide it by the number of parameters we have added to give an <em>average improvement per-parameter</em>. This has the advantage of turning the sums-of-squares back into a measure of variance, but one that is now correctly calculated as <span class="math notranslate nohighlight">\(\sigma^{2}_{\text{effect}}\)</span>. The number of additional parameters is known as the <em>numerator degrees of freedom</em> (or <span class="math notranslate nohighlight">\(df_{1}\)</span>) and the scaled version of <span class="math notranslate nohighlight">\(SS_{B}\)</span> is known as the <em>between-group mean square</em>, or <span class="math notranslate nohighlight">\(MS_{B}\)</span> for short. As such</p>
 <div class="math notranslate nohighlight">
 \[
 MS_{B} = \frac{SS_{B}}{df_{1}}.
@@ -632,7 +641,7 @@ F = \frac{\text{Improvement in error (scaled by } df_{1})}{\text{Error remaining
 </div>
 </div>
 </div>
-<p>In order to compare the <span class="math notranslate nohighlight">\(SS_{B}\)</span> and <span class="math notranslate nohighlight">\(SS_{W}\)</span>, we typically calculate a <em>test statistic</em> called <span class="math notranslate nohighlight">\(F\)</span> (named after <em>Fisher</em>), which has a known distribution under the null. This test statistic takes the form of a <em>ratio</em> between two variance terms. The logic is to compare the amount of variance we have <em>explained</em> to the amount of variance that remains <em>unexplained</em>. This effectively gives a <em>signal-to-noise</em> ratio. The larger the value of <span class="math notranslate nohighlight">\(F\)</span>, the larger the “signal” is (the variance we have explained) relative to the “noise” (the variance we have not explained). In the context of the one-way ANOVA, this “signal” is based on assuming that the group means actually differ. If this assumption results in a much larger improvement in terms of explained variance relative to error variance, it suggests that the full model fits the data better than the null model. The alternative is that the improvement in explained variance is of a similar magnitude to the error variance. In this situation, we cannot tell whether any “improvement” is just noise, because it looks effectively the same as the error. As such, if the null were true, we would expect <span class="math notranslate nohighlight">\(F \approx 1\)</span>. This is because there are no differences between the group means and so both <span class="math notranslate nohighlight">\(SS_{B}\)</span> and <span class="math notranslate nohighlight">\(SS_{W}\)</span> are capturing noise. The larger the value of <span class="math notranslate nohighlight">\(F\)</span> becomes, the less we believe the null because the magnitude of improvement is much greater than we would expect if it were just noise. In this case, <span class="math notranslate nohighlight">\(SS_{W}\)</span> is still capturing noise, but <span class="math notranslate nohighlight">\(SS_{B}\)</span> is capturing something more systematic about the data. Any time we get <span class="math notranslate nohighlight">\(F &gt; 1\)</span> this is suggestive that the null may not be correct<a class="footnote-reference brackets" href="#nhst-foot" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. The larger <span class="math notranslate nohighlight">\(F\)</span> becomes, the greater this suggestion becomes and the smaller the associated <span class="math notranslate nohighlight">\(p\)</span>-value.</p>
+<p>In order to compare the <span class="math notranslate nohighlight">\(SS_{B}\)</span> and <span class="math notranslate nohighlight">\(SS_{W}\)</span>, we typically calculate a <em>test statistic</em> called <span class="math notranslate nohighlight">\(F\)</span> (named after <em>Fisher</em>), which has a known distribution under the null. This test statistic takes the form of a <em>ratio</em> between two variance terms. The logic is to compare the amount of variance we have <em>explained</em> to the amount of variance that remains <em>unexplained</em>. This effectively gives a <em>signal-to-noise</em> ratio. The larger the value of <span class="math notranslate nohighlight">\(F\)</span>, the larger the “signal” is (the variance we have explained) relative to the “noise” (the variance we have not explained). In the context of the one-way ANOVA, this “signal” is based on assuming that the group means actually differ. If this assumption results in a much larger improvement in terms of explained variance relative to error variance, it suggests that the full model fits the data better than the null model. The alternative is that the improvement in explained variance is of a similar magnitude to the error variance. In this situation, we cannot tell whether any “improvement” is just noise, because it looks effectively the same as the error. As such, if the null were true, we would expect <span class="math notranslate nohighlight">\(F \approx 1\)</span>. This is because there are no differences between the group means and so both <span class="math notranslate nohighlight">\(SS_{B}\)</span> and <span class="math notranslate nohighlight">\(SS_{W}\)</span> are capturing noise. The larger the value of <span class="math notranslate nohighlight">\(F\)</span> becomes, the less we believe the null because the magnitude of improvement is much greater than we would expect if it were just noise. In this case, <span class="math notranslate nohighlight">\(SS_{W}\)</span> is still capturing noise, but <span class="math notranslate nohighlight">\(SS_{B}\)</span> is capturing something more systematic about the data. Any time we get <span class="math notranslate nohighlight">\(F &gt; 1\)</span> this is suggestive that the null may not be correct[^NHST-foot]. The larger <span class="math notranslate nohighlight">\(F\)</span> becomes, the greater this suggestion becomes and the smaller the associated <span class="math notranslate nohighlight">\(p\)</span>-value.</p>
 </section>
 </section>
 </section>
@@ -661,9 +670,29 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 <p>Within this table, we should see all the values that we calculated manually above, alongside the <span class="math notranslate nohighlight">\(p\)</span>-value for the <span class="math notranslate nohighlight">\(F\)</span>-ratio.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">drop1</span><span class="p">(</span><span class="n">full.mod</span><span class="p">,</span><span class="w"> </span><span class="n">test</span><span class="o">=</span><span class="s">&quot;F&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Single term deletions
+
+Model:
+mpg ~ origin
+       Df Sum of Sq     RSS    AIC F value   Pr(&gt;F)   
+&lt;none&gt;               732.17 106.17                    
+origin  2    393.88 1126.05 115.94  7.8003 0.001947 **
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+</pre></div>
+</div>
+</div>
+</div>
 </section>
-<section id="id4">
-<h3>The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<section id="id2">
+<h3>The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
@@ -692,108 +721,11 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 <h2>The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test<a class="headerlink" href="#the-regression-anova-f-test" title="Link to this heading">#</a></h2>
 <p>… In fact, this test is already provided at the bottom of the regression table…</p>
 <p>Note that this will not always align with the ANOVA tests we want. For simple models that only contain a single factor and <em>nothing else</em>, the regression ANOVA test will be equivalent to an omnibus test on that single factor. For models that contain <em>multiple</em> factors and/or continuous predictors, this will not be equivalent. As such, it can be good practise to produce the ANOVA table anyway, even if in some cases it is redundant.</p>
-</section>
-<section id="follow-up-tests">
-<h2>Follow-up Tests<a class="headerlink" href="#follow-up-tests" title="Link to this heading">#</a></h2>
-</section>
-<section id="the-general-anova-procedure">
-<h2>The General ANOVA Procedure<a class="headerlink" href="#the-general-anova-procedure" title="Link to this heading">#</a></h2>
-<p>At this point, we have examined a lot of theory and output releated to ANOVA models. This can make these models look very complicated, whereas the actual procedure inside <code class="docutils literal notranslate"><span class="pre">R</span></code> is actually very simple. As shown below, we generally just follow 5 steps:</p>
-<ol class="arabic simple">
-<li><p>Convert categorical variables from strings into factors.</p></li>
-<li><p>Fit and summarise the model using <code class="docutils literal notranslate"><span class="pre">lm()</span></code>.</p></li>
-<li><p>Generate omnibus tests using the <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">car</span></code> package.</p></li>
-<li><p>Generate follow-up tests using the <code class="docutils literal notranslate"><span class="pre">emmeans</span></code> package.</p></li>
-<li><p>Extract and plot the fitted values using the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package.</p></li>
-</ol>
-<p>Indeed, these same 5 steps can be followed for <em>every linear model you ever use</em>. The only differences are that steps 1, 3 and 4 are not needed when there are no categorical predictors in the model. Obviously, you also need to check assumptions, consider transformations and do all the other things we discussed last week. In addition, we have options at different stages in terms of the exact output we need. For instance, we can choose to generate NHST results from <code class="docutils literal notranslate"><span class="pre">emmeans</span></code>, or generate confidence intervals instead. However, the core of the modelling procedure exists within these 5 steps.</p>
-<p>To see this in action, consider the following summary of the complete <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> analysis</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">emmeans</span><span class="p">)</span>
-
-<span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
-<span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span>
-<span class="w">                   </span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span>
-<span class="w">                   </span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span>
-<span class="w">                   </span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">)</span>
-
-<span class="c1"># Step 1 - convert categorical predictors</span>
-<span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.factor</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="p">)</span>
-
-<span class="c1"># Step 2 - fit the model</span>
-<span class="n">origin.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="nf">summary</span><span class="p">(</span><span class="n">origin.mod</span><span class="p">))</span>
-
-<span class="c1"># Step 3 - generate the ANOVA table</span>
-<span class="n">anova.tbl</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Anova</span><span class="p">(</span><span class="n">origin.mod</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">anova.tbl</span><span class="p">)</span>
-
-<span class="c1"># Step 4 - generate follow-up tests</span>
-<span class="n">follow.up</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">emmeans</span><span class="p">(</span><span class="n">origin.mod</span><span class="p">,</span><span class="w"> </span><span class="n">specs</span><span class="o">=</span><span class="n">pairwise</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">adjust</span><span class="o">=</span><span class="s">&#39;holm&#39;</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">follow.up</span><span class="o">$</span><span class="n">contrasts</span><span class="p">)</span>
-
-<span class="c1"># Step 5 - extract and plot effects</span>
-<span class="n">effs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">allEffects</span><span class="p">(</span><span class="n">origin.mod</span><span class="p">)</span>
-<span class="nf">plot</span><span class="p">(</span><span class="n">effs</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
-lm(formula = mpg ~ origin, data = mtcars)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--6.8071 -4.1718 -0.7885  3.3444 10.5929 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   21.807      1.343  16.239 4.26e-16 ***
-originJapan    3.753      2.618   1.434  0.16238    
-originUSA     -5.669      1.935  -2.929  0.00656 ** 
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-Residual standard error: 5.025 on 29 degrees of freedom
-Multiple R-squared:  0.3498,	Adjusted R-squared:  0.3049 
-F-statistic:   7.8 on 2 and 29 DF,  p-value: 0.001947
-
-Anova Table (Type II tests)
-
-Response: mpg
-          Sum Sq Df F value   Pr(&gt;F)   
-origin    393.88  2  7.8003 0.001947 **
-Residuals 732.17 29                    
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
- contrast       estimate   SE df t.ratio p.value
- Europe - Japan    -3.75 2.62 29  -1.434  0.1624
- Europe - USA       5.67 1.94 29   2.929  0.0131
- Japan - USA        9.42 2.64 29   3.563  0.0039
-
-P value adjustment: holm method for 3 tests 
-</pre></div>
-</div>
-<a class="reference internal image-reference" href="_images/5364699f54430767e1af94a1c04a307a4949867ea873b08bf6ee48922ed084ad.png"><img alt="_images/5364699f54430767e1af94a1c04a307a4949867ea873b08bf6ee48922ed084ad.png" src="_images/5364699f54430767e1af94a1c04a307a4949867ea873b08bf6ee48922ed084ad.png" style="width: 420px; height: 420px;" /></a>
-</div>
-</div>
-<p>This leads to a reasonable amount of output, but which contains everything we need to reach conclusions. Indeed, the summarising of the results of <code class="docutils literal notranslate"><span class="pre">lm()</span></code> is not strictly necessary. However, it is good practice to always look at this to make sure the model is correct, otherwise we can miss important misspecifications that will cause issues later on. It is also notable that the actual reference level of the dummy variables does not matter here, nor does even understanding the coding used for the dummy variables. These are <em>implementation details</em> that matter for understanding the theory, but should not influence the final results.</p>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="noise-foot" role="note">
+<aside class="footnote brackets" id="overfit-foot" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
-<p>You may wonder why we cannot just conclude that the improvement is very small, rather than assuming it is noise simply because it is of the same magnitude. The point here is the ability to <em>distinguish</em> genuine effects from noise. If they are similar magnitude then we cannot know which is which. As such, even if the effect is genuine but small, we cannot be certain that it is not just noise and thus cannot reject the null.</p>
-</aside>
-<aside class="footnote brackets" id="params-foot" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
-<p>One way to think about this is the extreme example of having one parameter for every observation. In this case, we could make the model fit <em>perfectly</em> as each parameter can make sure that the exact value of the raw data is predicted. If we do this, there will be 0 error. Thus, we can always make the model better and better by adding more and more parameters. However, this is an extreme example of <em>over-fitting</em>, where the model will be capturing <em>noise</em> and not any universal truth about the data in question.</p>
-</aside>
-<aside class="footnote brackets" id="nhst-foot" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
-<p>With all the caveats around the logic of NHST still in place.</p>
+<p>You may wonder what the problem is with this. Surely we want the model to fit as well as possible? However, a <em>perfect</em> fit suggests <em>over-fitting</em>. Remember, our aim is to use our model to separate those effects that are universal to our population of interest from the noise. A model that fits one specific dataset does not do this. In fact, it will be fitting <em>both</em> the effects we are interested in <em>and</em> the noise. This may result in a perfect fit for that specific dataset, but it tells us nothing about our population of interest and certainly would not fit another sample very well.</p>
 </aside>
 </aside>
 </section>
@@ -869,7 +801,7 @@ P value adjustment: holm method for 3 tests
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#omnibus-tests-from-model-comparisons">Omnibus Tests From Model Comparisons</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-comparisons-using-sums-of-squares">Model Comparisons Using Sums-of-Squares</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-f-ratio">The <span class="math notranslate nohighlight">\(F\)</span>-ratio</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-squares-and-the-f-ratio">Mean-squares and the <span class="math notranslate nohighlight">\(F\)</span>-ratio</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-squares">Mean-squares</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-definition-of-f">The Definition of <span class="math notranslate nohighlight">\(F\)</span></a></li>
 </ul>
 </li>
@@ -877,12 +809,10 @@ P value adjustment: holm method for 3 tests
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anova-tables-in-r">ANOVA Tables in <code class="docutils literal notranslate"><span class="pre">R</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-anova-function">The <code class="docutils literal notranslate"><span class="pre">anova()</span></code> Function</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#follow-up-tests">Follow-up Tests</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-general-anova-procedure">The General ANOVA Procedure</a></li>
 </ul>
   </nav></div>
 
