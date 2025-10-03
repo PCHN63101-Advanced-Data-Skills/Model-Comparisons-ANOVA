@@ -384,7 +384,7 @@
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anova-tables-in-r">ANOVA Tables in <code class="docutils literal notranslate"><span class="pre">R</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-anova-function">The <code class="docutils literal notranslate"><span class="pre">anova()</span></code> Function</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> Function</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test</a></li>
@@ -673,8 +673,10 @@ F = \frac{\text{Improvement in error between the null and full models}}{\text{Er
 </section>
 <section id="anova-tables-in-r">
 <h2>ANOVA Tables in <code class="docutils literal notranslate"><span class="pre">R</span></code><a class="headerlink" href="#anova-tables-in-r" title="Link to this heading">#</a></h2>
+<p>As should now be clear, the calculation of <span class="math notranslate nohighlight">\(F\)</span> as a metric for comparing two models is somewhat involved. As such, it would be a bit unreasonable if we were expected to perform all this arithmetic manually every time we wanted to compare two models. Luckily, <code class="docutils literal notranslate"><span class="pre">R</span></code> can do all of this very easily for us using the <code class="docutils literal notranslate"><span class="pre">anova()</span></code> function. All we do is provide the function with two models (or more) and <code class="docutils literal notranslate"><span class="pre">R</span></code> will produce an ANOVA table of all the calculations, along with an <span class="math notranslate nohighlight">\(F\)</span>-statistic and <span class="math notranslate nohighlight">\(p\)</span>-value.</p>
 <section id="the-anova-function">
 <h3>The <code class="docutils literal notranslate"><span class="pre">anova()</span></code> Function<a class="headerlink" href="#the-anova-function" title="Link to this heading">#</a></h3>
+<p>The built-in <code class="docutils literal notranslate"><span class="pre">anova()</span></code> function can be used in many different contexts to compare different models. For our current use case, providing two models fit using <code class="docutils literal notranslate"><span class="pre">lm()</span></code> will produce the expected ANOVA table. For example</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">anova</span><span class="p">(</span><span class="n">null.mod</span><span class="p">,</span><span class="w"> </span><span class="n">full.mod</span><span class="p">))</span>
@@ -695,21 +697,20 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 </div>
-<p>Within this table, we should see all the values that we calculated manually above, alongside the <span class="math notranslate nohighlight">\(p\)</span>-value for the <span class="math notranslate nohighlight">\(F\)</span>-ratio.</p>
+<p>Within this table, we should see all the values that we calculated manually above, alongside the <span class="math notranslate nohighlight">\(p\)</span>-value for the <span class="math notranslate nohighlight">\(F\)</span>-ratio. Given the discussions above, you should be able to explain what <em>all</em> the numbers in this table mean. If you cannot, we would suggest going back and re-reading the section above. The <code class="docutils literal notranslate"><span class="pre">anova()</span></code> function can also automate the model comparisons procedure if we simply provide the full model, producing something closer to a traditional ANOVA table.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">drop1</span><span class="p">(</span><span class="n">full.mod</span><span class="p">,</span><span class="w"> </span><span class="n">test</span><span class="o">=</span><span class="s">&quot;F&quot;</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">anova</span><span class="p">(</span><span class="n">full.mod</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Single term deletions
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Analysis of Variance Table
 
-Model:
-mpg ~ origin
-       Df Sum of Sq     RSS    AIC F value   Pr(&gt;F)   
-&lt;none&gt;               732.17 106.17                    
-origin  2    393.88 1126.05 115.94  7.8003 0.001947 **
+Response: mpg
+          Df Sum Sq Mean Sq F value   Pr(&gt;F)   
+origin     2 393.88 196.938  7.8003 0.001947 **
+Residuals 29 732.17  25.247                    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 </pre></div>
@@ -718,7 +719,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </section>
 <section id="id2">
-<h3>The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<h3>The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> Function<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>Although the default <code class="docutils literal notranslate"><span class="pre">anova()</span></code> function is useful for model comparisons, things start to get more complicated once we consider <em>unbalanced</em> ANOVA models that contain interactions. We will discuss all this later, but for now we just want to recommend the use of the <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">car</span></code> package as the most flexible method of producing an ANOVA table that can accommodate unbalanced models in different ways. For example</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
@@ -727,9 +729,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: carData
-</pre></div>
-</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Anova Table (Type II tests)
 
 Response: mpg
@@ -742,14 +741,44 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 </div>
-<p>… Notice that this table says <code class="docutils literal notranslate"><span class="pre">Type</span> <span class="pre">II</span> <span class="pre">tests</span></code> at the top. This is something we will explore in more detail in the associated synchronous session next week.</p>
-<p>… So, the core understanding here is that the ANOVA is simply a <em>model comparison procedure</em>. The ANOVA effects usually reported within an ANOVA table are really comparisons between a model that contains that effect and a model that does not contain that effect. The <em>variance</em> within the name ANOVA is a comparison between the error variances of these models. In other words, the ANOVA is asking the question “how much does the error reduce when we include this effect in the model?” The table is just a helpful way of organising all these comparisons. So we can see that the ANOVA model is in fact just a form of multiple regression, and the tests associated with the ANOVA are summaries of model comparisons. This is the true way to conceptualise an ANOVA.</p>
+<p>For this example, there is no difference between <code class="docutils literal notranslate"><span class="pre">anove()</span></code> and <code class="docutils literal notranslate"><span class="pre">Anova()</span></code>. However, this will not always be true and so we would always recommend defaulting to <code class="docutils literal notranslate"><span class="pre">Anova()</span></code>. Notice that this table says <code class="docutils literal notranslate"><span class="pre">Type</span> <span class="pre">II</span> <span class="pre">tests</span></code> at the top. This is related to how the <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function deals with unablanced data, which <code class="docutils literal notranslate"><span class="pre">anova()</span></code> does not do. This is a complicated topic we will leave for another day. For the moment, just try and remember that whatever form of ANOVA table we produce, this is the result of comparing multiple models, with the <span class="math notranslate nohighlight">\(F\)</span>-statistic reflecting the degree of model improvement relative to the error.</p>
 </section>
 </section>
 <section id="the-regression-anova-f-test">
 <h2>The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test<a class="headerlink" href="#the-regression-anova-f-test" title="Link to this heading">#</a></h2>
-<p>… In fact, this test is already provided at the bottom of the regression table…</p>
-<p>Note that this will not always align with the ANOVA tests we want. For simple models that only contain a single factor and <em>nothing else</em>, the regression ANOVA test will be equivalent to an omnibus test on that single factor. For models that contain <em>multiple</em> factors and/or continuous predictors, this will not be equivalent. As such, it can be good practise to produce the ANOVA table anyway, even if in some cases it is redundant.</p>
+<p>As a final point, it is interesting to note that we did not actually need to do any of the calculations above, because the results were provided all along at the bottom of the summary table for the full model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">summary</span><span class="p">(</span><span class="n">full.mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = mpg ~ origin, data = mtcars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.8071 -4.1718 -0.7885  3.3444 10.5929 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   21.807      1.343  16.239 4.26e-16 ***
+originJapan    3.753      2.618   1.434  0.16238    
+originUSA     -5.669      1.935  -2.929  0.00656 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 5.025 on 29 degrees of freedom
+Multiple R-squared:  0.3498,	Adjusted R-squared:  0.3049 
+F-statistic:   7.8 on 2 and 29 DF,  p-value: 0.001947
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice that the very last line says:</p>
+<p><code class="docutils literal notranslate"><span class="pre">F-statistic:</span> <span class="pre">7.8</span> <span class="pre">on</span> <span class="pre">2</span> <span class="pre">and</span> <span class="pre">29</span> <span class="pre">DF,</span>&#160; <span class="pre">p-value:</span> <span class="pre">0.001947</span></code></p>
+<p>which is exactly the results from the ANOVA table. In general, it is customary to always provide an omnibus test of the <em>whole</em> regression model, by comparing the full model to a model containing an intercept. Because this model only contains a single term, this is then equivalent to the one-way ANOVA. In general, if there are multiple terms, this will not be the same. However, the omnibus regression test is useful as a single way of asking the question “is our model actually doing anything?”</p>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="overfit-foot" role="note">
@@ -839,7 +868,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anova-tables-in-r">ANOVA Tables in <code class="docutils literal notranslate"><span class="pre">R</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-anova-function">The <code class="docutils literal notranslate"><span class="pre">anova()</span></code> Function</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> Function</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test</a></li>
