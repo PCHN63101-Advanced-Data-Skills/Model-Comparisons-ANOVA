@@ -6,7 +6,7 @@ root: 0.intro
 chapters:
 - file: 1.dummy-variables
 - file: 2.oneway-ANOVA
-- file: 3.omnibus-tests-model-comps
+- file: 3.omnibus-tests-model-comps-ed
 - file: 4.higher-order-ANOVA
 - file: 5.follow-up
 #- file: 6.general-procedure
