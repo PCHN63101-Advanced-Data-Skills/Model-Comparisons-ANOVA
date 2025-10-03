@@ -545,7 +545,7 @@ SS_{\text{effect}} = RSS_{\text{null}} - RSS_{\text{full}}.
 <p>To make this value more meaningful, we can therefore divide it by the number of parameters we have added to give an <em>average improvement per-parameter</em>. This has the advantage of turning the sums-of-squares back into a measure of variance, but one that is now correctly calculated as <span class="math notranslate nohighlight">\(\sigma^{2}_{\text{effect}}\)</span>. The number of additional parameters is known as the <em>numerator degrees of freedom</em> (or <span class="math notranslate nohighlight">\(df_{1}\)</span>) and the scaled version of <span class="math notranslate nohighlight">\(SS_{B}\)</span> is known as the <em>between-group mean square</em>, or <span class="math notranslate nohighlight">\(MS_{B}\)</span> for short. As such</p>
 <div class="math notranslate nohighlight">
 \[
-MS_{B} = \frac{SS_{B}}{df_{1}}.
+MS_{B} = \frac{SS_{B}}{df_{1}} = \frac{SS_{B}}{k - 1}.
 \]</div>
 <p>In the case of the <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> example, we need to add <span class="math notranslate nohighlight">\(k - 1 = 2\)</span> parameters to the model to capture the different group means. As such, we divide <span class="math notranslate nohighlight">\(SS_{B}\)</span> by <span class="math notranslate nohighlight">\(df_{1} = 2\)</span> to produce the <span class="math notranslate nohighlight">\(MS_{B}\)</span></p>
 <div class="cell docutils container">
@@ -567,11 +567,12 @@ MS_{B} = \frac{SS_{B}}{df_{1}}.
 <p>Using a similar logic to above, it would seem that we could just divide <span class="math notranslate nohighlight">\(SS_{W}\)</span> by <span class="math notranslate nohighlight">\(n\)</span>. However, there is a catch. Remember that dividing a sums-of-squares by some value gives us a <em>mean-square</em>, but that mean-squares are effectively <em>variances</em>. So what variance do we get from the residual sum-of-squares? As covered in previous weeks, this is simply the estimated<em>error variance</em> of the model, <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}\)</span>. However, we also know from previous weeks that dividing by <span class="math notranslate nohighlight">\(n\)</span> leads to a <em>biased</em> estimate of the population variance and that, as a generalisation of Bessel’s correction, we must divide by <span class="math notranslate nohighlight">\(n-p\)</span>. As such, rather than dividing <span class="math notranslate nohighlight">\(SS_{W}\)</span> by <span class="math notranslate nohighlight">\(n\)</span>, we divide by <span class="math notranslate nohighlight">\(n-p\)</span>, which gives the <em>denominator</em> degrees of freedom <span class="math notranslate nohighlight">\(df_{2} = n - p\)</span>. This gives the <em>within-groups mean-square</em>, or <span class="math notranslate nohighlight">\(MS_{W}\)</span> for short</p>
 <div class="math notranslate nohighlight">
 \[
-MS_{W} = \frac{SS_{W}}{df_{2}}.
+MS_{W} = \frac{SS_{W}}{df_{2}} = \frac{SS_{W}}{n-p}.
 \]</div>
+<p>We can see this in our <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> example</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df.2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">full.mod</span><span class="o">$</span><span class="n">df.residual</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df.2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">full.mod</span><span class="o">$</span><span class="n">df.residual</span><span class="w"> </span><span class="c1"># this is always n - p</span>
 <span class="n">MS.W</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">SS.W</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">df.2</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">MS.W</span><span class="p">)</span>
 </pre></div>
@@ -596,6 +597,10 @@ MS_{W} = \frac{SS_{W}}{df_{2}}.
 </pre></div>
 </div>
 </div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">What is in a name?</p>
+<p>As we can see, some of the confusion around ANOVAs and ANOVA calculations simply comes down to using <em>different names</em> for familiar quantities. The name ANOVA tells us that the method involves comparing variances, yet those variances are called <em>mean-squares</em>. Usually, we would not give a name to the intermediate quantities produced during the calculation of variances, but the ANOVA names them as <em>sums-of-squares</em>. These quantities take on more importance within an ANOVA, because the sums-of-squares are the only meaningful way to compare two model fits, before they can be scaled back into variances. However, this creates a confusing collection of sums-of-squares, mean squares and degrees of freedom. <em>Remember</em>, all we are doing is comparing two models using their residuals. That is it. Try not to get too lost in the specifics of <em>how</em> this is done and keep focus on the very simple aim of the ANOVA. Remember as well that the ANOVA table was introduced by Fisher as a convenient way of organising all the arithmetic. The table was designed to make the calculations less confusing, but the table is <em>not</em> the ANOVA itself.</p>
 </div>
 </section>
 <section id="the-definition-of-f">
