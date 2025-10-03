@@ -516,7 +516,7 @@ SS_{\text{effect}} = RSS_{\text{null}} - RSS_{\text{full}}.
 </div>
 </div>
 </div>
-<p>How do we interpret this value? Generally, we cannot on its own because the units are not very interpretable. However, what we can do is compare this value <em>relative</em> to some other measure on the same scale. What measure to use? Well, at present, the <span class="math notranslate nohighlight">\(SS_{B}\)</span> gives us a sense of how much we have reduced the error of the null model by including a specific predictor. What we want to know is whether this is <em>large</em> or <em>small</em>? More generally, we want to know whether any improvement we have seen is likely to be random noise (in which case the predictor has done <em>nothing</em> to help the model) or whether it implies something more systematic about the data (i.e. that the population means differ across the groups).</p>
+<p>How do we interpret this value? Generally, we cannot because the units are not any sort of standardised scale. However, what we can do is compare this value <em>relative</em> to some other measure on the same scale. What measure to use? Well, at present, the <span class="math notranslate nohighlight">\(SS_{B}\)</span> gives us a sense of how much we have reduced the error of the null model by including a specific predictor. What we want to know is whether this is <em>large</em> or <em>small</em>? More generally, we want to know whether any improvement we have seen is likely to be random noise (in which case the predictor has done <em>nothing</em> to help the model) or whether it implies something more systematic about the data (i.e. that the population means differ across the groups).</p>
 <p>In order to do this, we have to consider whether the <em>magnitude</em> of this improvement is similar to what we would expect from noise, or whether it is <em>meaningfully larger</em>. If it looks similar to noise, we cannot say with any certainty that it is <em>not</em> noise, and thus would have to conclude that we cannot tell if the predictor has helped. If it is much larger than noise then it would be an unusal occurrance if the predictor had no relationship to the data.</p>
 <p>So, we need some measure of noise to compare <span class="math notranslate nohighlight">\(SS_{B}\)</span> to. In general, we have two options: <span class="math notranslate nohighlight">\(RSS_{\text{null}}\)</span> or <span class="math notranslate nohighlight">\(RSS_{\text{full}}\)</span>. These are both sums-of-sqaures that reflect the <em>error</em> or <em>noise</em>, as they capture the degree of variability that is left-over within each model. If it were the case that the predictor was <em>not</em> related to the data then these quantities would be similar. However, if the predictor <em>was</em> related to the data then the null model would be missing a key component and its error would be larger than it should be. This would make <span class="math notranslate nohighlight">\(RSS_{\text{null}}\)</span> a poor comparison. Because of this, <span class="math notranslate nohighlight">\(RSS_{\text{full}}\)</span> becomes the much better choice. If the predictor <em>does</em> relate to the data then <span class="math notranslate nohighlight">\(RSS_{\text{full}}\)</span> will be the correct magnitude, but if the predictor <em>does not</em> relate to the data then <span class="math notranslate nohighlight">\(RSS_{\text{full}}\)</span> will be similar to <span class="math notranslate nohighlight">\(RSS_{\text{null}}\)</span>. So either way, <span class="math notranslate nohighlight">\(RSS_{\text{full}}\)</span> becomes the better measure of <em>error</em> or <em>noise</em>.</p>
 <p>Within the context of an ANOVA model, <span class="math notranslate nohighlight">\(RSS_{\text{full}}\)</span> is more usually known as the <em>within-group sum-of-squares</em>, or <span class="math notranslate nohighlight">\(SS_{W}\)</span> for short, because it effectively measures variability in terms of individual subjects around the group means. In other words, how well do the group means fit the data? Within our example in <code class="docutils literal notranslate"><span class="pre">R</span></code>, we already calculated <span class="math notranslate nohighlight">\(RSS_{\text{full}}\)</span> and so can simply copy it to a new variable with a different name.</p>
@@ -563,9 +563,12 @@ MS_{B} = \frac{SS_{B}}{df_{1}}.
 </div>
 </div>
 <p>So, we have an improvement in model fit in terms of reducing the error variance by an average of 196.94 for each parameter we have added.</p>
-<p>Moving on to <span class="math notranslate nohighlight">\(SS_{W}\)</span>, we have a similar problem because this value always scales with sample size. …</p>
-<p>We can therefore think of the two mean-square values as directly comparable, because they both represent <em>average variances</em> after taking into account the elements of the model that scale their magnitude.</p>
-<p>So, in actual fact, <span class="math notranslate nohighlight">\(MS_{W}\)</span> is simply estimating <span class="math notranslate nohighlight">\(\sigma^{2}\)</span>, Bessel’s correction and all.</p>
+<p>Moving on to <span class="math notranslate nohighlight">\(SS_{W}\)</span>, we have a similar problem because this value always scales with <em>sample size</em>. Remember, this is simply the residual sum-of-sqaures for the full model. As such, the more residuals we have, the larger the sum will be. As noted above for <span class="math notranslate nohighlight">\(SS_{B}\)</span>, we therefore do not know whether <span class="math notranslate nohighlight">\(SS_{W}\)</span> is large because the model fit is poor, or because we have a large <span class="math notranslate nohighlight">\(n\)</span>.</p>
+<p>Using a similar logic to above, it would seem that we could just divide <span class="math notranslate nohighlight">\(SS_{W}\)</span> by <span class="math notranslate nohighlight">\(n\)</span>. However, there is a catch. Remember that dividing a sums-of-squares by some value gives us a <em>mean-square</em>, but that mean-squares are effectively <em>variances</em>. So what variance do we get from the residual sum-of-squares? As covered in previous weeks, this is simply the estimated<em>error variance</em> of the model, <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}\)</span>. However, we also know from previous weeks that dividing by <span class="math notranslate nohighlight">\(n\)</span> leads to a <em>biased</em> estimate of the population variance and that, as a generalisation of Bessel’s correction, we must divide by <span class="math notranslate nohighlight">\(n-p\)</span>. As such, rather than dividing <span class="math notranslate nohighlight">\(SS_{W}\)</span> by <span class="math notranslate nohighlight">\(n\)</span>, we divide by <span class="math notranslate nohighlight">\(n-p\)</span>, which gives the <em>denominator</em> degrees of freedom <span class="math notranslate nohighlight">\(df_{2} = n - p\)</span>. This gives the <em>within-groups mean-square</em>, or <span class="math notranslate nohighlight">\(MS_{W}\)</span> for short</p>
+<div class="math notranslate nohighlight">
+\[
+MS_{W} = \frac{SS_{W}}{df_{2}}.
+\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df.2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">full.mod</span><span class="o">$</span><span class="n">df.residual</span>
@@ -580,7 +583,7 @@ MS_{B} = \frac{SS_{B}}{df_{1}}.
 </div>
 </div>
 </div>
-<p>Compared with</p>
+<p>Which, as already indicated, is <em>identical</em> to the error variance from the full model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">sigma</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="n">full.mod</span><span class="p">)</span><span class="o">$</span><span class="n">sigma</span>
@@ -701,6 +704,9 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: carData
+</pre></div>
+</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Anova Table (Type II tests)
 
 Response: mpg
