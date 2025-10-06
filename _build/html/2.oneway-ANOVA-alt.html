@@ -396,8 +396,8 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="one-way-anova">
 <h1>One-way ANOVA<a class="headerlink" href="#one-way-anova" title="Link to this heading">#</a></h1>
-<p>In the previous section, we saw how dummy variables can be incorporated into a regression model to represent a categorical predictor. We also saw how this can produce <em>identical</em> results to a traditional <span class="math notranslate nohighlight">\(t\)</span>-test. Now it is time to take this further and see how dummy variable regression can also be equivalent to a traditional Analysis of Variance (ANOVA). The starting point for this is the basic <em>One-way ANOVA</em>, where we have a <em>single</em> categorical predictor with <span class="math notranslate nohighlight">\(&gt; 2\)</span> levels. As we will see, this is simply a generalisation of the <span class="math notranslate nohighlight">\(t\)</span>-test we saw in the previous part of this lesson.</p>
-<p>When you think of an ANOVA, you may be more used to thinking of an ANOVA <em>table</em>, like the one shown below</p>
+<p>In the previous section, we saw how dummy variables can be incorporated into a regression model to represent a categorical predictor. We also saw how this can produce <em>identical</em> results to a traditional <span class="math notranslate nohighlight">\(t\)</span>-test. Now it is time to take this further and see how dummy variable regression can also be equivalent to a traditional Analysis of Variance (ANOVA). The starting point for this is the basic <em>One-way ANOVA</em>, where we have a <em>single</em> categorical predictor with <span class="math notranslate nohighlight">\(&gt; 2\)</span> levels. As we will see, this is simply a generalisation of the <span class="math notranslate nohighlight">\(t\)</span>-test we have already seen.</p>
+<p>Before we begin, it is important to set expectations and address a common misunderstanding. When you think of an ANOVA, you may automatically think of an ANOVA <em>table</em>, like the one shown below</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Source</p></th>
@@ -433,10 +433,10 @@
 </tbody>
 </table>
 </div>
-<p>However, in reality, it is more accurate to think of an ANOVA as a very basic <em>linear model</em>. The ANOVA table is a convenient way to organise the arithmetic of hypothesis tests, but the table is <em>not</em> the model itself. Traditional statistical education in Psychology tends to skip the actual model and go straight to the hypothesis tests. This is not what we are going to do. Instead, we will ignore the ANOVA table for the moment and start by focusing on the <em>true form</em> of the ANOVA as a very basic linear model of <em>group means</em>.</p>
+<p>However, this is <em>not</em> the ANOVA. In reality, an ANOVA is a very basic <em>linear model</em> concerned with <em>group means</em>. The ANOVA table is simply a convenient way to organise the arithmetic of hypothesis tests. The term <em>Analysis of Variance</em> comes from the way that these hypothesis tests are determined, but the estimates that these hypotheses are actually about come from a <em>model</em>. Traditional statistical education in Psychology tends to skip the actual model and go straight to the hypothesis tests. But this is not what we are going to do. Instead, we will ignore the ANOVA table for the moment and start by focusing on the <em>true form</em> of the ANOVA as a <em>basic linear model of group means</em>.</p>
 <section id="one-way-anova-as-a-linear-model">
 <h2>One-way ANOVA as a Linear Model<a class="headerlink" href="#one-way-anova-as-a-linear-model" title="Link to this heading">#</a></h2>
-<p>In the case of a One-way ANOVA, there is only a <em>single</em> categorical predictor with a certain number of levels. The linear model at the heart of the one-way ANOVA is</p>
+<p>The linear model at the heart of the one-way ANOVA is</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
@@ -449,7 +449,7 @@
 \[
 y_{ij} \sim \mathcal{N}\left(\mu + \alpha_{j},\sigma^{2}\right).
 \]</div>
-<p>Here, <span class="math notranslate nohighlight">\(\mu\)</span> represents the <em>grand mean</em> (the overall mean of all the data) and <span class="math notranslate nohighlight">\(\alpha_{j}\)</span> represents the <em>deviation</em> from the grand mean to the mean of group <span class="math notranslate nohighlight">\(j\)</span>. This is akin to the <em>intercept</em> and <em>slope</em> of a regression model. For instance, say our categorical predictor had 3 levels (<span class="math notranslate nohighlight">\(j = 1,2,3\)</span>). The <span class="math notranslate nohighlight">\(i\)</span> th observation from the first level would be denoted <span class="math notranslate nohighlight">\(y_{i1}\)</span>, the <span class="math notranslate nohighlight">\(i\)</span> th observation from the second level would be denoted <span class="math notranslate nohighlight">\(y_{i2}\)</span> and the <span class="math notranslate nohighlight">\(i\)</span> th observation from the third level would be denoted <span class="math notranslate nohighlight">\(y_{i3}\)</span>. As such, this implies that there are 3 unique model predictions, one for each level of the categorical predictor. So, when <span class="math notranslate nohighlight">\(j = 1,2,3\)</span>, we have</p>
+<p>Here, <span class="math notranslate nohighlight">\(\mu\)</span> represents the <em>grand mean</em> (the overall mean of all the data) and <span class="math notranslate nohighlight">\(\alpha_{j}\)</span> represents the <em>deviation</em> from the grand mean to the mean of group <span class="math notranslate nohighlight">\(j\)</span>. If our categorical predictor has <span class="math notranslate nohighlight">\(k\)</span> levels (<span class="math notranslate nohighlight">\(j = 1,2,..,k\)</span>), then the <span class="math notranslate nohighlight">\(i\text{th}\)</span> observation from the first level would be denoted <span class="math notranslate nohighlight">\(y_{i1}\)</span>, the <span class="math notranslate nohighlight">\(i\text{th}\)</span> observation from the second level would be denoted <span class="math notranslate nohighlight">\(y_{i2}\)</span> and so on. The model given above has <span class="math notranslate nohighlight">\(k\)</span> unique model predictions, because <span class="math notranslate nohighlight">\(\alpha\)</span> has <span class="math notranslate nohighlight">\(k\)</span> different values, one for each level of the categorical predictor. For example, if <span class="math notranslate nohighlight">\(k=3\)</span> then <span class="math notranslate nohighlight">\(j = 1,2,3\)</span> and we have</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
@@ -458,15 +458,16 @@ y_{ij} \sim \mathcal{N}\left(\mu + \alpha_{j},\sigma^{2}\right).
     E\left(y_{i3}\right) &amp;= \mu + \alpha_{3} = \mu_{3}
 \end{align*}
 \end{split}\]</div>
-<p>When written this way, the <em>effect</em> of the categorical predictor is encoded as deviations from the grand mean. When the group means are very similar, they will all be close to the grand mean and these deviations will be <em>small</em>. However, if the groups means are quite different from each other, they will be much further away from the grand mean and the deviations will be <em>larger</em>. So, the magnitude of the <span class="math notranslate nohighlight">\(\alpha_{j}\)</span>’s tells us precisely how different the group means are from each other.</p>
-<p>The most important element of this model is that the grand mean plus the effect of the predictor will always equal the group mean. This makes the model <em>very simple</em>. Every data point has a predicted value that is equal to the mean of the group that data point belongs to. The errors then reflect the differences between the group means and the raw data. To make this even clearer, if we say that there are 4 data point per-group then <span class="math notranslate nohighlight">\(i = 1,2,3,4\)</span> and the model for the whole dataset is</p>
+<p>When written this way, the term <span class="math notranslate nohighlight">\(\alpha\)</span> captures the <em>effect</em> of the categorical predictor. This is encoded as deviations from the grand mean. When the group means are very similar, they will all be close to the grand mean and these deviations will be <em>small</em>. However, if the group means are quite different from each other, they will be much further away from the grand mean and the deviations will be <em>larger</em>. So, the magnitude of the <span class="math notranslate nohighlight">\(\alpha_{j}\)</span>’s tells us precisely how different the group means are from each other. Indeed, if there were <em>no</em> differences between the means then the group means would be the same as the grand mean and <span class="math notranslate nohighlight">\(\alpha_{1} = \alpha_{2} = \dots = \alpha_{k} = 0\)</span>.</p>
+<p>The most important element of this model is that the grand mean plus the effect of the predictor will always equal the group mean. Much like we saw for regression models, we can think of the model equation as a set of <em>instructions</em>. For every observation, our starting point is the grand mean <span class="math notranslate nohighlight">\(\mu\)</span>. The <span class="math notranslate nohighlight">\(\alpha_{j}\)</span> then tells us how far we have to travel to reach the mean of group <span class="math notranslate nohighlight">\(j\)</span>. So <span class="math notranslate nohighlight">\(\mu + \alpha_{j} = \mu_{j}\)</span>, the mean of group <span class="math notranslate nohighlight">\(j\)</span>. In order to reach observation <span class="math notranslate nohighlight">\(i\)</span> from that point, we need to walk a final <span class="math notranslate nohighlight">\(\epsilon_{ij}\)</span> number of steps. So think of the model equation as a map that takes you from the grand mean to the actual data value, via the group means.</p>
+<p>This makes the model <em>very simple</em>. Every data point has a predicted value that is equal to the mean of the group that data point belongs to. The errors then reflect the differences between the group means and the raw data. To make this even clearer, if we say that there are <span class="math notranslate nohighlight">\(n = 4\)</span> data point per-group then <span class="math notranslate nohighlight">\(i = 1,2,3,4\)</span> and the model for the whole dataset is</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
 &amp;\text{Group 1} \begin{cases}
         y_{11} &amp;= \mu + \alpha_{1} + \epsilon_{11} = \mu_{1} + \epsilon_{11} \\
         y_{21} &amp;= \mu + \alpha_{1} + \epsilon_{21} = \mu_{1} + \epsilon_{21} \\
-        y_{31} &amp;= \mu + \alpha_{1} + \epsilon_{31} = \mu_{1} + \epsilon_{31} \\\
+        y_{31} &amp;= \mu + \alpha_{1} + \epsilon_{31} = \mu_{1} + \epsilon_{31} \\
         y_{41} &amp;= \mu + \alpha_{1} + \epsilon_{41} = \mu_{1} + \epsilon_{41} \\
 \end{cases} \\
 &amp;\text{Group 2} \begin{cases}
@@ -483,7 +484,13 @@ y_{ij} \sim \mathcal{N}\left(\mu + \alpha_{j},\sigma^{2}\right).
 \end{cases}
 \end{align*}.
 \end{split}\]</div>
-<p>So, <span class="math notranslate nohighlight">\(\mu\)</span> is common across all the model equations (like an intercept), with <span class="math notranslate nohighlight">\(\alpha_{j}\)</span> encoding the unique effect of level <span class="math notranslate nohighlight">\(j\)</span> of the categorical predictor. Together, these values will always equal the <em>group mean</em> and thus all the ANOVA is doing is using the mean of each group as the predicted value. The magnitude of the errors within each group will then reflect how good a prediction the mean actually is.</p>
+<p>So, <span class="math notranslate nohighlight">\(\mu\)</span> is common across all the model equations (a <em>constant</em>), with <span class="math notranslate nohighlight">\(\alpha_{j}\)</span> encoding the unique effect of level <span class="math notranslate nohighlight">\(j\)</span> of the categorical predictor. Together, these values will always equal the <em>group mean</em> and thus all the ANOVA is doing is using the mean of each group as the predicted value. The magnitude of the errors within each group will then reflect how far the actual data is from the group mean.</p>
+<div class="tip admonition">
+<p class="admonition-title">Why write the ANOVA this way?</p>
+<p>At first glance, it may seem unnecessarily complicated to write the ANOVA model as <span class="math notranslate nohighlight">\(y_{ij} = \mu + \alpha_{j} + \epsilon_{ij}\)</span>, rather than <span class="math notranslate nohighlight">\(y_{ij} = \mu_{j} + \epsilon_{ij}\)</span>. …</p>
+<p>In the context of our analogy about the model equation providing travel instructions to each data point, the model <span class="math notranslate nohighlight">\(y_{ij} = \mu_{j} + \epsilon_{ij}\)</span> is like starting from 0 and then travelling <span class="math notranslate nohighlight">\(\mu_{j}\)</span> to reach the group mean. The problem here is that most of that journey relates to the <em>units</em> of the data, rather than anything meaningful about our experiment. For instance, if we have measured reaction time in milliseconds, we will need to travel thousands of units to reach the data, but most of that journey has nothing to do with our experimental manipulations. If instead we <em>start</em> at the grand mean, then this scaling has already been taken care of and we start in a more reasonable position. In a way, the grand mean simply serves to start us in a reasonable place, separating out the experimental effects from the magnitude of the units. At the risk of stretching this metaphor too far, it is the difference between instructions for climbing a mountain starting from the base of the mountain, or including all the steps to travel to the base of the mountain from your own front door. Neither is wrong, but the version that splits the model up so that the scaling is separated from the effects of the predictor is potentially more useful.</p>
+<p>In addition, thinking about elements of a model as <em>deflections</em> from a constant will be helpful for more complex circumstances, such as mixed-effects model, which we will cover later in the course.</p>
+</div>
 <section id="numeric-example">
 <h3>Numeric Example<a class="headerlink" href="#numeric-example" title="Link to this heading">#</a></h3>
 <p>To make this idea even clear, let us insert some actual numbers. In the table below, we list 3 groups with 3 observations each.</p>
@@ -534,7 +541,7 @@ y_{ij} \sim \mathcal{N}\left(\mu + \alpha_{j},\sigma^{2}\right).
 \[\begin{split}
 \begin{align*}
 &amp;\text{Group 1} \begin{cases}
-        5 &amp;= 8 + (-2) + (-1) \\
+        5 &amp;= \overbrace{8 + \left(-2\right)}^{\mu + \alpha_{1}} + \overbrace{(-1)}^{\epsilon_{i1}} \\
         6 &amp;= 8 + (-2) + 0  \\
         7 &amp;= 8 + (-2) + 1 \\
 \end{cases} \\
@@ -550,7 +557,7 @@ y_{ij} \sim \mathcal{N}\left(\mu + \alpha_{j},\sigma^{2}\right).
 \end{cases}
 \end{align*}.
 \end{split}\]</div>
-<p>So here we can see how the grand mean and factor effects play out. In each case, adding the grand mean to the factor effect will equal the group mean, which is ultimately the value that matters in terms of the model prediction and the expected values of the data from each group.</p>
+<p>Here we have placed the <em>model</em> (i.e. <span class="math notranslate nohighlight">\(\mu + \alpha_{j}\)</span>) within square brackets to try and make the structure clearer. In each case, adding the grand mean to the factor effect will equal the group mean, which is ultimately the value that matters in terms of the model prediction and the expected values of the data from each group.</p>
 </section>
 <section id="one-sample-and-two-sample-equivalents">
 <h3>One-sample and Two-sample Equivalents<a class="headerlink" href="#one-sample-and-two-sample-equivalents" title="Link to this heading">#</a></h3>
