@@ -372,11 +372,12 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-way-anova-as-a-linear-model">One-way ANOVA as a Linear Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-example">Numeric Example</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-sample-and-two-sample-equivalents">One-sample and Two-sample Equivalents</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-dummy-variable-regression-to-the-linear-model">Connecting Dummy Variable Regression to the Linear Model</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#model-parameterisation-and-constraints">Model Parameterisation and Constraints</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-dummy-variable-regression-to-the-linear-model">Connecting Dummy Variable Regression to the Linear Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-sample-and-two-sample-equivalents">One-sample and Two-sample Equivalents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-parameterisation-and-constraints">Model Parameterisation and Constraints</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dummy-variable-anova-model">The Dummy Variable ANOVA Model</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dummy-variables-coding-2-levels">Dummy Variables Coding &gt; 2 Levels</a><ul class="nav section-nav flex-column">
@@ -459,41 +460,51 @@ y_{ij} \sim \mathcal{N}\left(\mu + \alpha_{j},\sigma^{2}\right).
 \end{align*}
 \end{split}\]</div>
 <p>When written this way, the term <span class="math notranslate nohighlight">\(\alpha\)</span> captures the <em>effect</em> of the categorical predictor. This is encoded as deviations from the grand mean. When the group means are very similar, they will all be close to the grand mean and these deviations will be <em>small</em>. However, if the group means are quite different from each other, they will be much further away from the grand mean and the deviations will be <em>larger</em>. So, the magnitude of the <span class="math notranslate nohighlight">\(\alpha_{j}\)</span>’s tells us precisely how different the group means are from each other. Indeed, if there were <em>no</em> differences between the means then the group means would be the same as the grand mean and <span class="math notranslate nohighlight">\(\alpha_{1} = \alpha_{2} = \dots = \alpha_{k} = 0\)</span>.</p>
-<p>The most important element of this model is that the grand mean plus the effect of the predictor will always equal the group mean. Much like we saw for regression models, we can think of the model equation as a set of <em>instructions</em>. For every observation, our starting point is the grand mean <span class="math notranslate nohighlight">\(\mu\)</span>. The <span class="math notranslate nohighlight">\(\alpha_{j}\)</span> then tells us how far we have to travel to reach the mean of group <span class="math notranslate nohighlight">\(j\)</span>. So <span class="math notranslate nohighlight">\(\mu + \alpha_{j} = \mu_{j}\)</span>, the mean of group <span class="math notranslate nohighlight">\(j\)</span>. In order to reach observation <span class="math notranslate nohighlight">\(i\)</span> from that point, we need to walk a final <span class="math notranslate nohighlight">\(\epsilon_{ij}\)</span> number of steps. So think of the model equation as a map that takes you from the grand mean to the actual data value, via the group means.</p>
-<p>This makes the model <em>very simple</em>. Every data point has a predicted value that is equal to the mean of the group that data point belongs to. The errors then reflect the differences between the group means and the raw data. To make this even clearer, if we say that there are <span class="math notranslate nohighlight">\(n = 4\)</span> data point per-group then <span class="math notranslate nohighlight">\(i = 1,2,3,4\)</span> and the model for the whole dataset is</p>
+<p>The most important element of this model is that the grand mean plus the effect of the predictor will always equal the group mean. Much like we saw for regression models, we can think of the model equation as a set of <em>instructions</em>. For every observation, our starting point is the grand mean <span class="math notranslate nohighlight">\(\mu\)</span>. The <span class="math notranslate nohighlight">\(\alpha_{j}\)</span> then tells us how far we have to travel to reach the mean of group <span class="math notranslate nohighlight">\(j\)</span>. So <span class="math notranslate nohighlight">\(\mu + \alpha_{j} = \mu_{j}\)</span>, the mean of group <span class="math notranslate nohighlight">\(j\)</span>. In order to reach observation <span class="math notranslate nohighlight">\(i\)</span> from that point, we need to walk a final <span class="math notranslate nohighlight">\(\epsilon_{ij}\)</span> number of steps. So think of the model equation as a map that takes you from the grand mean to the actual data value, via the group means. This makes the model <em>very simple</em>. Every data point has a predicted value that is equal to the mean of the group that data point belongs to. The errors then reflect the differences between the group means and the raw data.</p>
+<p>To make this even clearer, if we say that there are <span class="math notranslate nohighlight">\(n = 4\)</span> data point per-group then <span class="math notranslate nohighlight">\(i = 1,2,3,4\)</span> and the model for the whole dataset is</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
 &amp;\text{Group 1} \begin{cases}
-        y_{11} &amp;= \mu + \alpha_{1} + \epsilon_{11} = \mu_{1} + \epsilon_{11} \\
-        y_{21} &amp;= \mu + \alpha_{1} + \epsilon_{21} = \mu_{1} + \epsilon_{21} \\
-        y_{31} &amp;= \mu + \alpha_{1} + \epsilon_{31} = \mu_{1} + \epsilon_{31} \\
-        y_{41} &amp;= \mu + \alpha_{1} + \epsilon_{41} = \mu_{1} + \epsilon_{41} \\
+        y_{11} &amp;= \mu + \alpha_{1} + \epsilon_{11} &amp;= \mu_{1} + \epsilon_{11} \\
+        y_{21} &amp;= \mu + \alpha_{1} + \epsilon_{21} &amp;= \mu_{1} + \epsilon_{21} \\
+        y_{31} &amp;= \mu + \alpha_{1} + \epsilon_{31} &amp;= \mu_{1} + \epsilon_{31} \\
+        y_{41} &amp;= \mu + \alpha_{1} + \epsilon_{41} &amp;= \mu_{1} + \epsilon_{41} \\
 \end{cases} \\
 &amp;\text{Group 2} \begin{cases}
-        y_{12} &amp;= \mu + \alpha_{2} + \epsilon_{12} = \mu_{2} + \epsilon_{12} \\
-        y_{22} &amp;= \mu + \alpha_{2} + \epsilon_{22} = \mu_{2} + \epsilon_{22} \\
-        y_{32} &amp;= \mu + \alpha_{2} + \epsilon_{32} = \mu_{2} + \epsilon_{32} \\
-        y_{42} &amp;= \mu + \alpha_{2} + \epsilon_{42} = \mu_{2} + \epsilon_{42} \\
+        y_{12} &amp;= \mu + \alpha_{2} + \epsilon_{12} &amp;= \mu_{2} + \epsilon_{12} \\
+        y_{22} &amp;= \mu + \alpha_{2} + \epsilon_{22} &amp;= \mu_{2} + \epsilon_{22} \\
+        y_{32} &amp;= \mu + \alpha_{2} + \epsilon_{32} &amp;= \mu_{2} + \epsilon_{32} \\
+        y_{42} &amp;= \mu + \alpha_{2} + \epsilon_{42} &amp;= \mu_{2} + \epsilon_{42} \\
 \end{cases} \\
 &amp;\text{Group 3} \begin{cases}
-        y_{13} &amp;= \mu + \alpha_{3} + \epsilon_{13} = \mu_{3} + \epsilon_{13} \\
-        y_{23} &amp;= \mu + \alpha_{3} + \epsilon_{23} = \mu_{3} + \epsilon_{23} \\
-        y_{33} &amp;= \mu + \alpha_{3} + \epsilon_{33} = \mu_{3} + \epsilon_{33} \\
-        y_{43} &amp;= \mu + \alpha_{3} + \epsilon_{43} = \mu_{3} + \epsilon_{43} \\
+        y_{13} &amp;= \mu + \alpha_{3} + \epsilon_{13} &amp;= \mu_{3} + \epsilon_{13} \\
+        y_{23} &amp;= \mu + \alpha_{3} + \epsilon_{23} &amp;= \mu_{3} + \epsilon_{23} \\
+        y_{33} &amp;= \mu + \alpha_{3} + \epsilon_{33} &amp;= \mu_{3} + \epsilon_{33} \\
+        y_{43} &amp;= \mu + \alpha_{3} + \epsilon_{43} &amp;= \mu_{3} + \epsilon_{43} \\
 \end{cases}
 \end{align*}.
 \end{split}\]</div>
-<p>So, <span class="math notranslate nohighlight">\(\mu\)</span> is common across all the model equations (a <em>constant</em>), with <span class="math notranslate nohighlight">\(\alpha_{j}\)</span> encoding the unique effect of level <span class="math notranslate nohighlight">\(j\)</span> of the categorical predictor. Together, these values will always equal the <em>group mean</em> and thus all the ANOVA is doing is using the mean of each group as the predicted value. The magnitude of the errors within each group will then reflect how far the actual data is from the group mean.</p>
-<div class="tip admonition">
+<p>So, <span class="math notranslate nohighlight">\(\mu\)</span> is common across all the model equations (a <em>constant</em>), with <span class="math notranslate nohighlight">\(\alpha_{j}\)</span> encoding the unique effect of level <span class="math notranslate nohighlight">\(j\)</span> of the categorical predictor. Together, these values will always equal the <em>group mean</em> and thus all the ANOVA is doing is using the mean of each group as the predicted value.</p>
+<div class="tip dropdown admonition">
 <p class="admonition-title">Why write the ANOVA this way?</p>
-<p>At first glance, it may seem unnecessarily complicated to write the ANOVA model as <span class="math notranslate nohighlight">\(y_{ij} = \mu + \alpha_{j} + \epsilon_{ij}\)</span>, rather than <span class="math notranslate nohighlight">\(y_{ij} = \mu_{j} + \epsilon_{ij}\)</span>. …</p>
-<p>In the context of our analogy about the model equation providing travel instructions to each data point, the model <span class="math notranslate nohighlight">\(y_{ij} = \mu_{j} + \epsilon_{ij}\)</span> is like starting from 0 and then travelling <span class="math notranslate nohighlight">\(\mu_{j}\)</span> to reach the group mean. The problem here is that most of that journey relates to the <em>units</em> of the data, rather than anything meaningful about our experiment. For instance, if we have measured reaction time in milliseconds, we will need to travel thousands of units to reach the data, but most of that journey has nothing to do with our experimental manipulations. If instead we <em>start</em> at the grand mean, then this scaling has already been taken care of and we start in a more reasonable position. In a way, the grand mean simply serves to start us in a reasonable place, separating out the experimental effects from the magnitude of the units. At the risk of stretching this metaphor too far, it is the difference between instructions for climbing a mountain starting from the base of the mountain, or including all the steps to travel to the base of the mountain from your own front door. Neither is wrong, but the version that splits the model up so that the scaling is separated from the effects of the predictor is potentially more useful.</p>
-<p>In addition, thinking about elements of a model as <em>deflections</em> from a constant will be helpful for more complex circumstances, such as mixed-effects model, which we will cover later in the course.</p>
+<p>At first glance, it may seem unnecessarily complicated to write the ANOVA model as <span class="math notranslate nohighlight">\(y_{ij} = \mu + \alpha_{j} + \epsilon_{ij}\)</span>, rather than <span class="math notranslate nohighlight">\(y_{ij} = \mu_{j} + \epsilon_{ij}\)</span>. The second form is actually more intuitive and makes it much more explicit that the ANOVA is using <em>means</em> as its predicted values. However, there are more subtle benefits to a model that uses <em>deviations</em> from the grand mean to parameterise the model.</p>
+<p>To begin with, there is a clearer link here with regression models that constain an intercept (constant) and a slope. This will make mapping the ANOVA on to a regression model simpler. In addition, when we come to add <em>more predictors</em> to the ANOVA, each one can be conceptualised as a separate deviation from the grand mean. So, a model with an additional factor can be written as</p>
+<div class="math notranslate nohighlight">
+\[
+y_{ijk} = \mu + \alpha_{j} + \beta_{k} + \epsilon_{ijk}
+\]</div>
+<p>as opposed to</p>
+<div class="math notranslate nohighlight">
+\[
+y_{ijk} = \mu_{jk} + \epsilon_{ijk},
+\]</div>
+<p>where the additional factor is hidden within the subscripts. This becomes even more important when we talk about an ANOVA as a model comparison procedure, because we need to add and remove different predictors from the model. This is much clearer to do when the predictors are represented by explicit terms, rather than hidden in the definition of a mean. Finally, thinking about elements of a model as <em>deviations</em> from a constant will be helpful for more complex circumstances, such as mixed-effects model, which we will cover later in the course.</p>
+<p>Aside from practical considerations, there are also some conceptual advantages to spelling the ANOVA out this way. To see why, consider the analogy of the model equation providing travel instructions to reach each data point. From this perspective, the model <span class="math notranslate nohighlight">\(y_{ij} = \mu_{j} + \epsilon_{ij}\)</span> is like starting from 0 and then travelling <span class="math notranslate nohighlight">\(\mu_{j}\)</span> steps to reach the group mean. The problem here is that most of that journey relates to the <em>units</em> of the data, rather than anything meaningful about our experiment. For instance, if we have measured reaction time in milliseconds, we will need to travel thousands of units to reach the data, but most of that journey has nothing to do with our experimental manipulations. If instead we <em>start</em> at the grand mean, then this scaling has already been taken care of and we start in a more reasonable position. In a way, the grand mean serves to start us in a decent place, separating out the experimental effects from the magnitude of the units. At the risk of stretching this metaphor too far, it is the difference between instructions for climbing a mountain starting from the base of the mountain, or including all the steps to travel to the base of the mountain from your own front door.</p>
 </div>
 <section id="numeric-example">
 <h3>Numeric Example<a class="headerlink" href="#numeric-example" title="Link to this heading">#</a></h3>
-<p>To make this idea even clear, let us insert some actual numbers. In the table below, we list 3 groups with 3 observations each.</p>
+<p>To make this particular model parameterisation even clearer, let us insert some actual numbers. In the table below, we list 3 groups with 3 observations each.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Group</p></th>
@@ -502,63 +513,77 @@ y_{ij} \sim \mathcal{N}\left(\mu + \alpha_{j},\sigma^{2}\right).
 </thead>
 <tbody>
 <tr class="row-even"><td><p>A</p></td>
-<td><p>5, 6, 7</p></td>
+<td><p>2, 7, 4</p></td>
 </tr>
 <tr class="row-odd"><td><p>B</p></td>
-<td><p>7, 8, 9</p></td>
+<td><p>8, 6, 9</p></td>
 </tr>
 <tr class="row-even"><td><p>C</p></td>
-<td><p>9, 10, 11</p></td>
+<td><p>10, 12, 8</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>The mean of each group is</p>
+<p>The estimated group means are then simply the sample means</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
-    \bar{\mu}_{1} &amp;= \frac{5 + 6 + 7}{3} = 6 \\
-    \bar{\mu}_{2} &amp;= \frac{7 + 8 + 9}{3} = 8 \\
-    \bar{\mu}_{3} &amp;= \frac{9 + 10 + 11}{3} = 10
+    \hat{\mu}_{1} &amp;= \frac{2 + 7 + 4}{3} = 4.33 \\
+    \hat{\mu}_{2} &amp;= \frac{8 + 6 + 9}{3} = 7.66 \\
+    \hat{\mu}_{3} &amp;= \frac{10 + 12 + 8}{3} = 10
 \end{align*}
 \end{split}\]</div>
-<p>and the grand mean is</p>
+<p>and the estimated grand mean is</p>
 <div class="math notranslate nohighlight">
 \[
-\mu = \frac{6 + 8 + 10}{3} = 8.
+\hat{\mu} = \frac{4.33 + 7.66 + 10}{3} = 7.33.
 \]</div>
 <p>In terms of the factor effects, we therefore have</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
-    \alpha_{1} &amp;= \mu_{1} - \mu = 6 - 8  =  -2 \\
-    \alpha_{2} &amp;= \mu_{2} - \mu = 8 - 8  =  0 \\
-    \alpha_{3} &amp;= \mu_{3} - \mu = 10 - 8 = 2
+    \hat{\alpha}_{1} = \hat{\mu}_{1} - \hat{\mu} = 4.33 - 7.33 &amp;= -3   \\
+    \hat{\alpha}_{2} = \hat{\mu}_{2} - \hat{\mu} = 7.66 - 7.33 &amp;= 0.33 \\
+    \hat{\alpha}_{3} = \hat{\mu}_{3} - \hat{\mu} = 10.0 - 7.33 &amp;= 2.67 
 \end{align*}
 \end{split}\]</div>
-<p>Notice as well that <span class="math notranslate nohighlight">\(\sum{\alpha_{j}} = 0\)</span>, which is an important feature we will come back to later. Inserting all of this into the model equations, we have</p>
+<p>Notice as well that <span class="math notranslate nohighlight">\(\sum{\hat{\alpha}_{j}} = 0\)</span>, which is an important feature we will come back to later. Inserting all of this into the model equations, we have</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
 &amp;\text{Group 1} \begin{cases}
-        5\phantom{0} &amp;= \overbrace{8 + \left(-2\right)}^{\mu + \alpha_{1}} + \overbrace{(-1)}^{\epsilon_{i1}} \\
-        6\phantom{0} &amp;= 8 + (-2) + 0  \\
-        7\phantom{0} &amp;= 8 + (-2) + 1 \\
+        2\phantom{0} &amp;= \overbrace{7.33 + (-3)}^{\mu + \alpha_{1}} + \overbrace{(-2.33)}^{\epsilon_{i1}} \\
+        7\phantom{0} &amp;= 7.33 + (-3) + \phantom{(-}2.67  \\
+        4\phantom{0} &amp;= 7.33 + (-3) + (-0.33) \\
 \end{cases} \\
 &amp;\text{Group 2} \begin{cases}
-        7\phantom{0} &amp;= \overbrace{8 + \phantom{(-}0}^{\mu + \alpha_{2}} + \overbrace{(-1)}^{\epsilon_{i2}} \\
-        8\phantom{0} &amp;= 8 + \phantom{(-}0 + 0 \\
-        9\phantom{0} &amp;= 8 + \phantom{(-}0 + 1 \\
+        8\phantom{0} &amp;= \overbrace{7.33 + 0.33}^{\mu + \alpha_{2}} + \overbrace{\phantom{(-}0.34\phantom{)}}^{\epsilon_{i2}} \\
+        6\phantom{0} &amp;= 7.33 + 0.33 + (-1.66) \\
+        9\phantom{0} &amp;= 7.33 + 0.33 + \phantom{(-}1.34 \\
 \end{cases} \\
 &amp;\text{Group 3} \begin{cases}
-        9\phantom{0}  &amp;= 8 + \phantom{(-}2 + (-1) \\
-        10 &amp;= 8 + \phantom{(-}2 + 0 \\
-        11 &amp;= 8 + \phantom{(-}2 + 1 \\
+        9\phantom{0} &amp;= \overbrace{7.33 + 2.67}^{\mu + \alpha_{3}} + \overbrace{(-1.00)}^{\epsilon_{i3}} \\
+        10 &amp;= 7.33 + 2.67 + \phantom{(-}0.00 \\
+        11 &amp;= 7.33 + 2.67 + \phantom{(-}1.00 \\
 \end{cases}
 \end{align*}.
 \end{split}\]</div>
-<p>Here we have placed the <em>model</em> (i.e. <span class="math notranslate nohighlight">\(\mu + \alpha_{j}\)</span>) within square brackets to try and make the structure clearer. In each case, adding the grand mean to the factor effect will equal the group mean, which is ultimately the value that matters in terms of the model prediction and the expected values of the data from each group.</p>
+<p>It is hopefully now clear that <span class="math notranslate nohighlight">\(\mu\)</span> is constant across all observations, <span class="math notranslate nohighlight">\(\alpha_{j}\)</span> is unique to each group and <span class="math notranslate nohighlight">\(\epsilon_{ij}\)</span> is unique to each observation. In other words, <span class="math notranslate nohighlight">\(\mu\)</span> captures a univeral truth of the outcome variable, <span class="math notranslate nohighlight">\(\alpha_{j}\)</span> captures how this truth changes across the different groups and <span class="math notranslate nohighlight">\(\epsilon_{ij}\)</span> captures the random abberations from this truth that are unique to each measurement.</p>
 </section>
+</section>
+<section id="connecting-dummy-variable-regression-to-the-linear-model">
+<h2>Connecting Dummy Variable Regression to the Linear Model<a class="headerlink" href="#connecting-dummy-variable-regression-to-the-linear-model" title="Link to this heading">#</a></h2>
+<p>Seeing that the two-sample <span class="math notranslate nohighlight">\(t\)</span>-test is equivalent to a simplified one-way ANOVA provides us a good opportunity to make a more explicit connection between the one-way ANOVA model</p>
+<div class="math notranslate nohighlight">
+\[
+y_{ij} = \mu + \alpha_{j} + \epsilon_{ij}
+\]</div>
+<p>and the simple regression model</p>
+<div class="math notranslate nohighlight">
+\[
+y_{i} = \beta_{0} + \beta_{1}x_{i} + \epsilon_{i}.
+\]</div>
+<p>You may <em>almost</em> be able to see it, as these two models are very close to each other, save for the use of <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\alpha\)</span> instead of <span class="math notranslate nohighlight">\(\beta\)</span>. However, we need to do a little bit more work before these specifications become <em>identical</em>.</p>
 <section id="one-sample-and-two-sample-equivalents">
 <h3>One-sample and Two-sample Equivalents<a class="headerlink" href="#one-sample-and-two-sample-equivalents" title="Link to this heading">#</a></h3>
 <p>Notice that there is nothing in the definition above that states how many values <span class="math notranslate nohighlight">\(j\)</span> should take. This is important because both the one-sample and two-sample <span class="math notranslate nohighlight">\(t\)</span>-tests are <em>sepecial cases</em> of the one-way ANOVA model given above. In the <em>one-sample</em> case, we set <span class="math notranslate nohighlight">\(j = 1\)</span> and we have</p>
@@ -576,20 +601,8 @@ y_{i} = \mu + \epsilon_{i},
 \end{split}\]</div>
 <p>which is even more clearly a simplification of the one-way ANOVA. From a modelling perspective, there is therefore <em>no difference</em> between a <span class="math notranslate nohighlight">\(t\)</span>-test and an ANOVA. In fact, giving these two procedures different names is almost entirely unnecessary.</p>
 </section>
-<section id="connecting-dummy-variable-regression-to-the-linear-model">
-<h3>Connecting Dummy Variable Regression to the Linear Model<a class="headerlink" href="#connecting-dummy-variable-regression-to-the-linear-model" title="Link to this heading">#</a></h3>
-<p>Seeing that the two-sample <span class="math notranslate nohighlight">\(t\)</span>-test is equivalent to a simplified one-way ANOVA provides us a good opportunity to make a more explicit connection between the one-way ANOVA model</p>
-<div class="math notranslate nohighlight">
-\[
-y_{ij} = \mu_{j} + \epsilon_{ij}
-\]</div>
-<p>and the simple regression model</p>
-<div class="math notranslate nohighlight">
-\[
-y_{i} = \beta_{0} + \beta_{1}x_{i} + \epsilon_{i}.
-\]</div>
 <section id="model-parameterisation-and-constraints">
-<h4>Model Parameterisation and Constraints<a class="headerlink" href="#model-parameterisation-and-constraints" title="Link to this heading">#</a></h4>
+<h3>Model Parameterisation and Constraints<a class="headerlink" href="#model-parameterisation-and-constraints" title="Link to this heading">#</a></h3>
 <p>… One constraint we imposed above was that <span class="math notranslate nohighlight">\(\sum{\alpha_{j}} = 0\)</span>. Without this, there are literally an <em>infinite</em> number of possible values for the model parameters. After all, all we need is for two numbers that add up to the mean of each group. Without any other constraint, we could pick anything we like. For instance, if <span class="math notranslate nohighlight">\(\mu_{1} = 6\)</span>, we could choose <span class="math notranslate nohighlight">\(\mu = 5\)</span> and <span class="math notranslate nohighlight">\(\alpha_{1} = 1\)</span>, or <span class="math notranslate nohighlight">\(\mu = 200\)</span> and <span class="math notranslate nohighlight">\(\alpha_{1} = -194\)</span>, or <span class="math notranslate nohighlight">\(\mu = -3467\)</span> and <span class="math notranslate nohighlight">\(\alpha_{1} = 3473\)</span> and so on. This is know as the model being <em>overparameterised</em> or <em>unidentifiable</em>. If we try to use this model in a computer, the computer will not be able to find a unique single set of parameters because the options are, quite literally, <em>limitless</em>.</p>
 <p>The solution is that we have to impose some additional <em>constraint</em>. Think of this as adding some rule to finding parameters that allows the computer to settle on one possible solution. Although these constraints could, again, be <em>anything</em>, we typically choose between constraints that lead to useful values of the parameters. Whilst <span class="math notranslate nohighlight">\(\mu = -3467\)</span> and <span class="math notranslate nohighlight">\(\alpha_{1} = 3473\)</span> would work (because the predicted value is still <span class="math notranslate nohighlight">\(\mu_{1}\)</span>), neither of these values are particularly useful or meaningful. However, if we say that <span class="math notranslate nohighlight">\(\sum{\alpha_{j}} = 0\)</span>, then the <em>only</em> choice is that <span class="math notranslate nohighlight">\(\mu\)</span> is the grand mean and the <span class="math notranslate nohighlight">\(\alpha_{j}\)</span> are deflections from the grand mean. These are much more useful parameters because they actually tell us something about the data that we are interested in.</p>
 <p>Imposing <span class="math notranslate nohighlight">\(\sum{\alpha_{j}} = 0\)</span> is one constraint we can use, but there are many others. The use of dummy variables, as we saw earlier, is actually a different form of constraint. Instead of imposing <span class="math notranslate nohighlight">\(\sum{\alpha_{j}} = 0\)</span>, the dummy variables actually impose that one of the factor effects is equal to 0. For instance, if we have <span class="math notranslate nohighlight">\(j = (1,2)\)</span> and set <span class="math notranslate nohighlight">\(\alpha_{1} = 0\)</span>, then we have</p>
@@ -601,7 +614,9 @@ y_{i} = \beta_{0} + \beta_{1}x_{i} + \epsilon_{i}.
 \end{align*}
 \end{split}\]</div>
 <p>This means that <span class="math notranslate nohighlight">\(\mu\)</span> <em>has</em> to be the mean of the first group, which then forces <span class="math notranslate nohighlight">\(\alpha_{2}\)</span> to be the <em>mean difference</em>. Again, this is simply imposing a constraint that forces the infinite number of possible parameter values to be something useful.</p>
-<p>…</p>
+</section>
+<section id="the-dummy-variable-anova-model">
+<h3>The Dummy Variable ANOVA Model<a class="headerlink" href="#the-dummy-variable-anova-model" title="Link to this heading">#</a></h3>
 <p>We know already that the dummy variable representation of the two-sample <span class="math notranslate nohighlight">\(t\)</span>-test creates <em>two</em> equations for the <em>two</em> different categories</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -626,8 +641,7 @@ y_{i} = \beta_{0} + \beta_{1}x_{i} + \epsilon_{i}.
     y_{i2} &amp;= \beta_{0} + \beta_{1} + \epsilon_{i2} \\ &amp;= \mu_{2} + \epsilon_{i2}
 \end{aligned}
 \end{split}\]</div>
-<p>As such, the dummy variable representation in the regression model simplifies to the traditional linear model specification. In other words, we can turn a regression model into a model of the group means through the use of dummy variables.</p>
-</section>
+<p>As such, the dummy variable representation in the regression model simplifies to the traditional linear model specification. In other words, we can turn a regression model into a model of the group means through the use of dummy variables. Furthermore, this dummy variable regression model is then <em>identical</em> to a one-way ANOVA model with the constraint that the <span class="math notranslate nohighlight">\(\alpha_{j}\)</span> associated with our <em>reference category</em> is equal to 0.</p>
 </section>
 </section>
 <section id="dummy-variables-coding-2-levels">
@@ -1008,11 +1022,12 @@ origin
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-way-anova-as-a-linear-model">One-way ANOVA as a Linear Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-example">Numeric Example</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-sample-and-two-sample-equivalents">One-sample and Two-sample Equivalents</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-dummy-variable-regression-to-the-linear-model">Connecting Dummy Variable Regression to the Linear Model</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#model-parameterisation-and-constraints">Model Parameterisation and Constraints</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-dummy-variable-regression-to-the-linear-model">Connecting Dummy Variable Regression to the Linear Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-sample-and-two-sample-equivalents">One-sample and Two-sample Equivalents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-parameterisation-and-constraints">Model Parameterisation and Constraints</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dummy-variable-anova-model">The Dummy Variable ANOVA Model</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dummy-variables-coding-2-levels">Dummy Variables Coding &gt; 2 Levels</a><ul class="nav section-nav flex-column">
