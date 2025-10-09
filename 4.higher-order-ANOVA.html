@@ -67,7 +67,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Follow-up Tests and Visualisations" href="5.follow-up.html" />
-    <link rel="prev" title="Omnibus Tests and Model Comparisons" href="3.omnibus-tests-model-comps-ed.html" />
+    <link rel="prev" title="Omnibus Tests and Model Comparisons" href="3.omnibus-tests-model-comps-alt.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -174,7 +174,7 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1.dummy-variables.html">Dummy Variable Regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2.oneway-ANOVA-alt.html">One-way ANOVA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.omnibus-tests-model-comps-ed.html">Omnibus Tests and Model Comparisons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.omnibus-tests-model-comps-alt.html">Omnibus Tests and Model Comparisons</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Higher-order ANOVA Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="5.follow-up.html">Follow-up Tests and Visualisations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
@@ -370,9 +370,14 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-different-linear-model-specification">A Different Linear Model Specification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-another-factor-to-the-model">Adding Another Factor to the Model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#main-effects">Main Effects</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-effects">Interaction Effects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions">Interactions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-means-and-marginal-means">Cell Means and Marginal Means</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-notation">Interaction Notation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions-as-multiplicative-effects">Interactions as Multiplicative Effects</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -386,19 +391,40 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="higher-order-anova-models">
 <h1>Higher-order ANOVA Models<a class="headerlink" href="#higher-order-anova-models" title="Link to this heading">#</a></h1>
-<p>…</p>
-<section id="a-different-linear-model-specification">
-<h2>A Different Linear Model Specification<a class="headerlink" href="#a-different-linear-model-specification" title="Link to this heading">#</a></h2>
+<p>… For instance, the most basic higher-order ANOVA is the two-way ANOVA, that contains two factors. IF each factor had two levels, we would write this as a <span class="math notranslate nohighlight">\(2 \times 2\)</span> ANOVA. If the second factor had three levels, we would call it a <span class="math notranslate nohighlight">\(2 \times 3\)</span> ANOVA. If there were <em>three</em> factors, we would have a three-way ANOVA. If each factor had two levels we could call it a <span class="math notranslate nohighlight">\(2 \times 2 \times 2\)</span> ANOVA, and so on.</p>
+<section id="adding-another-factor-to-the-model">
+<h2>Adding Another Factor to the Model<a class="headerlink" href="#adding-another-factor-to-the-model" title="Link to this heading">#</a></h2>
 <div class="math notranslate nohighlight">
 \[
-y_{ijk} = \mu + \alpha_{i} + \beta_{j} + \left(\alpha\beta\right)_{jk} + \epsilon_{ijk}
+y_{ijk} = \mu + \alpha_{i} + \beta_{j} + \epsilon_{ijk}
 \]</div>
 </section>
 <section id="main-effects">
 <h2>Main Effects<a class="headerlink" href="#main-effects" title="Link to this heading">#</a></h2>
 </section>
-<section id="interaction-effects">
-<h2>Interaction Effects<a class="headerlink" href="#interaction-effects" title="Link to this heading">#</a></h2>
+<section id="interactions">
+<h2>Interactions<a class="headerlink" href="#interactions" title="Link to this heading">#</a></h2>
+<section id="cell-means-and-marginal-means">
+<h3>Cell Means and Marginal Means<a class="headerlink" href="#cell-means-and-marginal-means" title="Link to this heading">#</a></h3>
+</section>
+<section id="interaction-notation">
+<h3>Interaction Notation<a class="headerlink" href="#interaction-notation" title="Link to this heading">#</a></h3>
+<p>There are different conventions for writing an interaction into a model. Some authors like to add an additional symbol to denote the interaction, leaving the subscripts to imply that the term is an interaction rather than a main effect. For instance</p>
+<div class="math notranslate nohighlight">
+\[
+y_{ijk} = \mu +\alpha_{i} + \beta_{j} + \gamma_{ij} + \epsilon_{ijk},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\gamma_{ij}\)</span> is the interaction. Personally, we like to use the following notation as it makes the interaction terms much more explicit, particularly in terms of which effects the interaction corresponds to</p>
+<div class="math notranslate nohighlight">
+\[
+y_{ijk} = \mu +\alpha_{i} + \beta_{j} + (\alpha\beta)_{ij} + \epsilon_{ijk}.
+\]</div>
+<p>For a model containing multiple interactions, this helps to make the meaning of the terms clearer, rather than somewhat hiding it in the subscripts.</p>
+<p>Note that you do not <em>have</em> to include an interaction. A typical approach in Psychology is always to specify a <em>full factorial</em> model containing every main effect and every possible interaction. In general, this is probably the approach you should take, otherwise you make strong assumptions that all interactions are 0. However, there is nothing that says you <em>have</em> to do this. You have the flexibility to only include the effects that you want in the model. You just have to be aware of the consequences of doing so.</p>
+</section>
+<section id="interactions-as-multiplicative-effects">
+<h3>Interactions as Multiplicative Effects<a class="headerlink" href="#interactions-as-multiplicative-effects" title="Link to this heading">#</a></h3>
+</section>
 </section>
 </section>
 
@@ -433,7 +459,7 @@ y_{ijk} = \mu + \alpha_{i} + \beta_{j} + \left(\alpha\beta\right)_{jk} + \epsilo
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="3.omnibus-tests-model-comps-ed.html"
+       href="3.omnibus-tests-model-comps-alt.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
@@ -467,9 +493,14 @@ y_{ijk} = \mu + \alpha_{i} + \beta_{j} + \left(\alpha\beta\right)_{jk} + \epsilo
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-different-linear-model-specification">A Different Linear Model Specification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-another-factor-to-the-model">Adding Another Factor to the Model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#main-effects">Main Effects</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-effects">Interaction Effects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions">Interactions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-means-and-marginal-means">Cell Means and Marginal Means</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-notation">Interaction Notation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions-as-multiplicative-effects">Interactions as Multiplicative Effects</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

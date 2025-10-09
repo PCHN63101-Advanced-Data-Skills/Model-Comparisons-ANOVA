@@ -63,7 +63,7 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '3.omnibus-tests-model-comps-ed';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '3.omnibus-tests-model-comps-alt';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Higher-order ANOVA Models" href="4.higher-order-ANOVA.html" />
@@ -254,7 +254,7 @@
       
       
       
-      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Model-Comparisons-ANOVA/issues/new?title=Issue%20on%20page%20%2F3.omnibus-tests-model-comps-ed.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Model-Comparisons-ANOVA/issues/new?title=Issue%20on%20page%20%2F3.omnibus-tests-model-comps-alt.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -284,7 +284,7 @@
       
       
       
-      <li><a href="_sources/3.omnibus-tests-model-comps-ed.ipynb" target="_blank"
+      <li><a href="_sources/3.omnibus-tests-model-comps-alt.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -401,23 +401,23 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="omnibus-tests-and-model-comparisons">
 <h1>Omnibus Tests and Model Comparisons<a class="headerlink" href="#omnibus-tests-and-model-comparisons" title="Link to this heading">#</a></h1>
-<p>In the previous section, we saw how to use dummy variables with multiple categorical levels and then specify a subsequent regression model that fits group means and mean differeces. Although we called this a One-way ANOVA model, it probably does not look much like an ANOVA to you yet. In this section, we will complete the picture by discussing the nature of the ANOVA omnibus tests and showing how these are effectively <em>model comparisons</em>. The familiar ANOVA table is simply a way of displaying the results of several model comparisons. We will show how to generate this within <code class="docutils literal notranslate"><span class="pre">R</span></code> and also show how the values within this table relate to comparing different regression models.</p>
+<p>In the previous section, we saw how to use dummy variables with multiple categorical levels and then specify a subsequent regression model that fits group means and mean differeces. Although we called this a One-way ANOVA model, we have yet to connect what we have done with the familiar ANOVA table. In this section, we will complete the picture by discussing the nature of the ANOVA omnibus tests and showing how these are effectively <em>model comparisons</em>. The familiar ANOVA table is simply a way of displaying the results of model comparisons.</p>
 <section id="anova-as-a-model-comparison-procedure">
 <h2>ANOVA as a Model Comparison Procedure<a class="headerlink" href="#anova-as-a-model-comparison-procedure" title="Link to this heading">#</a></h2>
 <p>In order to understand the ANOVA within the framework of linear models, we need to demonstrate how the ANOVA results are simply the outcomes from comparing different linear models in a specific way. To begin, we need to consider the logic of an <em>omnibus test</em>.</p>
 <section id="omnibus-tests">
 <h3>Omnibus Tests<a class="headerlink" href="#omnibus-tests" title="Link to this heading">#</a></h3>
-<p>An omnibus test is a test that contains <em>multiple</em> comparisons between means. In comparison to a procedure such as a <span class="math notranslate nohighlight">\(t\)</span>-test, which only compares <em>two</em> means, an omnibus test can compare <em>multiple</em> means. In our example of a One-way ANOVA where <span class="math notranslate nohighlight">\(k = 3\)</span>, the omnibus null hypothesis is</p>
+<p>An omnibus test is a test that contains <em>multiple</em> comparisons between the model parameters. In context, we can think of this as multiple comparisons between the group means. In contrast to a procedure such as a <span class="math notranslate nohighlight">\(t\)</span>-test, which only compares <em>two</em> means, an omnibus test can compare <em>multiple</em> means. In our example of a One-way ANOVA where <span class="math notranslate nohighlight">\(k = 3\)</span>, the omnibus null hypothesis would be</p>
 <div class="math notranslate nohighlight">
 \[
 \mathcal{H}_{0} : \mu_{1} = \mu_{2} = \mu_{3}.
 \]</div>
-<p>In other words, the null is that <em>all</em> the means are identical. Or, to put it another way, that all the mean differences are 0. An omnibus test of this hypothesis is able to simultaneously compare <em>all possible mean differences</em>. Within the NHST framework, a significant omnibus effect suggests that <em>at least one</em> of all possible mean differences is significant. Traditionally, we would then drill-down to see which of the differences is driving the omnibus effect[^omnibus-foot].</p>
+<p>In other words, the null is that <em>all</em> the means are identical. Or, to put it another way, that all the mean differences are 0. An omnibus test of this hypothesis is able to simultaneously compare <em>all possible mean differences</em>. Within the NHST framework, a significant omnibus effect suggests that <em>at least one</em> of all possible mean differences is significant. Traditionally, we would then drill-down to see which of the differences is driving the omnibus effect.</p>
 <div class="tip dropdown admonition">
 <p class="admonition-title">What is the point of an omnibus test?</p>
 <p>At this point, you may well ask: what is the point of an omnibus test? If we just end up drilling-down to work out which differences are significant, why not just start there? Why even both with the omnibus test?</p>
 <p>The traditional argument is one of <em>error control</em> in relation to the problem of <em>multiple testing</em> or <em>multiple comparisons</em>. If our categorical variable has <span class="math notranslate nohighlight">\(k\)</span> levels, then there are <span class="math notranslate nohighlight">\(m = \frac{k(k-1)}{2}\)</span> comparisons we can make between the levels. If our desired error level is given by <span class="math notranslate nohighlight">\(\alpha\)</span>, then across all tests the probability of <em>at least one</em> being significant is <span class="math notranslate nohighlight">\(1 - (1 - \alpha)^{m}\)</span>. This is known as the <em>familywise error rate</em> (FWER). So, notice that whenever <span class="math notranslate nohighlight">\(m &gt; 1\)</span> our desired error-rate will be scaled by the number of tests and therefore get <em>bigger</em>.</p>
-<p>As an example, if we take <span class="math notranslate nohighlight">\(k = 5\)</span>, <span class="math notranslate nohighlight">\(m = 10\)</span> and <span class="math notranslate nohighlight">\(\alpha = 0.05\)</span>, the FWER is</p>
+<p>As an example, if we take <span class="math notranslate nohighlight">\(k = 5\)</span> and <span class="math notranslate nohighlight">\(\alpha = 0.05\)</span>, we have <span class="math notranslate nohighlight">\(m = 10\)</span> comparisons between means that we can make and the FWER is</p>
 <div class="math notranslate nohighlight">
 \[
 \text{FWER} = 1 - (1 - \alpha)^{m} = 1 - 0.95^{10} = 0.40.
@@ -441,16 +441,16 @@ y_{i} \sim \mathcal{N}\left(\mu,\sigma^{2}\right).
 <p>Here we have <em>two different models</em>. One that just assumes a single mean for all the data and one that assumes <em>different</em> means for the different groups. In the context of a regression model, this is a comparison between a model that only contains an intercept, and a model containing an intercept <em>and</em> dummy variables for the categories. Typically, these are called the <em>null model</em> and the <em>full model</em>, so we have</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\begin{align*}
-    \mathcal{M}_{0} &amp;: y_{i\phantom{j}}  = \mu_{\phantom{j}}     + \epsilon_{i}  &amp;\quad \text{Null Model} \\
-    \mathcal{M}_{1} &amp;: y_{ij} = \mu_{j} + \epsilon_{ij} &amp;\quad \text{Full Model} \\
-\end{align*}
+\begin{alignat*}{3}
+    \mathcal{M}_{0} &amp;: y_{i}  &amp;&amp;= \mu  + \epsilon_{i}  &amp;&amp;\quad \text{Null Model} \\
+    \mathcal{M}_{1} &amp;: y_{ij} &amp;&amp;= \mu + \alpha_{j} + \epsilon_{ij} &amp;&amp;\quad \text{Full Model} \\
+\end{alignat*}
 \end{split}\]</div>
-<p>In <code class="docutils literal notranslate"><span class="pre">R</span></code>, sticking with our <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> example, we could specify these in the following way</p>
+<p>Hopefully it is clear that this is simply comparing a model with and without the <span class="math notranslate nohighlight">\(\alpha_{j}\)</span> term. In <code class="docutils literal notranslate"><span class="pre">R</span></code>, sticking with our <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> example, we could specify these in the following way</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">null.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w">      </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span><span class="w"> </span><span class="c1"># null model</span>
-<span class="n">full.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span><span class="w"> </span><span class="c1"># full model</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">null.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w">      </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span><span class="w"> </span><span class="c1"># null model (intercept only)</span>
+<span class="n">full.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span><span class="w"> </span><span class="c1"># full model (intercept + factor)</span>
 </pre></div>
 </div>
 </div>
