@@ -370,10 +370,17 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-another-factor-to-the-model">Adding Another Factor to the Model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#main-effects">Main Effects</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions">Interactions</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-higher-order-anova-framework">The Higher-order ANOVA Framework</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-and-mean-tables">Terminology and Mean Tables</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-means-and-marginal-means">Cell Means and Marginal Means</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-another-factor-the-additive-model">Adding Another Factor - The Additive Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#main-effects">Main Effects</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-an-interaction-term-the-full-factorial-model">Adding an Interaction Term - The Full Factorial Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Cell Means and Marginal Means</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions-as-multiplicative-effects">Interactions as Multiplicative Effects</a></li>
 </ul>
 </li>
@@ -390,12 +397,21 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="higher-order-anova-models">
 <h1>Higher-order ANOVA Models<a class="headerlink" href="#higher-order-anova-models" title="Link to this heading">#</a></h1>
+<section id="the-higher-order-anova-framework">
+<h2>The Higher-order ANOVA Framework<a class="headerlink" href="#the-higher-order-anova-framework" title="Link to this heading">#</a></h2>
+<section id="terminology-and-mean-tables">
+<h3>Terminology and Mean Tables<a class="headerlink" href="#terminology-and-mean-tables" title="Link to this heading">#</a></h3>
+</section>
+<section id="cell-means-and-marginal-means">
+<h3>Cell Means and Marginal Means<a class="headerlink" href="#cell-means-and-marginal-means" title="Link to this heading">#</a></h3>
 <div class="tip admonition">
 <p class="admonition-title">Higher-order terminology</p>
 <p>… For instance, the most basic higher-order ANOVA is the two-way ANOVA, that contains two factors. IF each factor had two levels, we would write this as a <span class="math notranslate nohighlight">\(2 \times 2\)</span> ANOVA. If the second factor had three levels, we would call it a <span class="math notranslate nohighlight">\(2 \times 3\)</span> ANOVA. If there were <em>three</em> factors, we would have a three-way ANOVA. If each factor had two levels we could call it a <span class="math notranslate nohighlight">\(2 \times 2 \times 2\)</span> ANOVA, and so on.</p>
 </div>
-<section id="adding-another-factor-to-the-model">
-<h2>Adding Another Factor to the Model<a class="headerlink" href="#adding-another-factor-to-the-model" title="Link to this heading">#</a></h2>
+</section>
+</section>
+<section id="adding-another-factor-the-additive-model">
+<h2>Adding Another Factor - The Additive Model<a class="headerlink" href="#adding-another-factor-the-additive-model" title="Link to this heading">#</a></h2>
 <p>Let us start with the most simple approach, which is to simply add an additional factor to the model. In terms of notation, this is a simple extension of what we already known</p>
 <div class="math notranslate nohighlight">
 \[
@@ -539,9 +555,8 @@ origin  straight v-shaped
 <div class="cell_output docutils container">
 <div class="output text_html">25.5909090909091</div></div>
 </div>
-</section>
 <section id="main-effects">
-<h2>Main Effects<a class="headerlink" href="#main-effects" title="Link to this heading">#</a></h2>
+<h3>Main Effects<a class="headerlink" href="#main-effects" title="Link to this heading">#</a></h3>
 <p>Notice in this model that there is a constant difference between the rows and a constant difference between the columns</p>
 <div class="math notranslate nohighlight">
 \[
@@ -549,21 +564,23 @@ SS_{\text{model}} = SS_{A} + SS_{B}
 \]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">beta</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">add.mod</span><span class="p">)</span>
-<span class="n">mu.OtherStraight</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span>
-<span class="n">mu.USAStraight</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">2</span><span class="p">]</span>
-<span class="n">mu.OtherVshaped</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">3</span><span class="p">]</span>
-<span class="n">mu.USAVshaped</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">3</span><span class="p">]</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">beta</span><span class="w">       </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">add.mod</span><span class="p">)</span>
+<span class="n">mu.Other_S</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span>
+<span class="n">mu.USA_S</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">2</span><span class="p">]</span>
+<span class="n">mu.Other_V</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">3</span><span class="p">]</span>
+<span class="n">mu.USA_V</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">3</span><span class="p">]</span>
 
-<span class="n">add.cell.means</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="s">&quot;straight&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;v-shaped&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">),</span><span class="w"> </span><span class="n">row.names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Other&quot;</span><span class="p">,</span><span class="s">&quot;USA&quot;</span><span class="p">))</span>
+<span class="n">add.cell.means</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="s">&quot;straight&quot;</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">mu.Other_S</span><span class="p">,</span><span class="n">mu.USA_S</span><span class="p">),</span><span class="w"> </span>
+<span class="w">                             </span><span class="s">&quot;v.shaped&quot;</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">mu.Other_V</span><span class="p">,</span><span class="n">mu.USA_V</span><span class="p">),</span><span class="w"> </span>
+<span class="w">                             </span><span class="n">row.names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Other&quot;</span><span class="p">,</span><span class="s">&quot;USA&quot;</span><span class="p">))</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">add.cell.means</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      straight v.shaped
-Other        0        0
-USA          0        0
+Other 25.50350 19.07019
+USA   21.08716 14.65385
 </pre></div>
 </div>
 </div>
@@ -571,15 +588,17 @@ USA          0        0
 <p>This also explains why it is possible to get the final cell mean by using <span class="math notranslate nohighlight">\(\beta_{0} + \beta_{1} + \beta_{2}\)</span>, because this starts at the baseline cell, moves down a row (using the row difference <span class="math notranslate nohighlight">\(\beta_{1}\)</span>) and then across a column (using the column difference <span class="math notranslate nohighlight">\(\beta_{2}\)</span>).</p>
 <p>However, notice that these estimated means are <em>not</em> the actual cell means. If all the effects in the data truly were <em>additive</em> then the estimated means would be the same as the cell means. However, because they are not this suggests that something else is going on here. The additive assumption has placed a <em>constraint</em> on the model, producing adjusted cell means that allow this assumption to work. Because these differ from the actual cells, the model will not fit as well as a model that lifts this constraint. As we saw above, the additive model assumes that there is a <em>constant</em> row difference and a <em>constant</em> column difference. But what if that was not true? What is the row difference actually depends upon the column, or if the column difference actually depends upon the row? The fact that the additive model had to use cell means that are different to the true means suggests that this is in fact what is going on. This effect is known as an <em>interaction</em>.</p>
 </section>
-<section id="interactions">
-<h2>Interactions<a class="headerlink" href="#interactions" title="Link to this heading">#</a></h2>
+</section>
+<section id="adding-an-interaction-term-the-full-factorial-model">
+<h2>Adding an Interaction Term - The Full Factorial Model<a class="headerlink" href="#adding-an-interaction-term-the-full-factorial-model" title="Link to this heading">#</a></h2>
+<p>So, the interaction terms represents that “bit extra” that we need in order to allow the fitted means to be the same as the sample means. The additive model only gets us so far. The interaction terms allows for a cell-specific adjustment to shift the additive model means so that they are the actual cell means. The larger this adjustment, the larger the interaction effect. In other words, the more that effect of one factor depends upon the levels of the other.</p>
 <p>Note that you do not <em>have</em> to include an interaction. A typical approach in Psychology is always to specify a <em>full factorial</em> model containing every main effect and every possible interaction. In general, this is probably the approach you should take, otherwise you make strong assumptions that all interactions are 0. However, there is nothing that says you <em>have</em> to do this. You have the flexibility to only include the effects that you want in the model. You just have to be aware of the consequences of doing so.</p>
 <div class="math notranslate nohighlight">
 \[
 SS_{\text{model}} = SS_{A} + SS_{B} + SS_{AB}
 \]</div>
-<section id="cell-means-and-marginal-means">
-<h3>Cell Means and Marginal Means<a class="headerlink" href="#cell-means-and-marginal-means" title="Link to this heading">#</a></h3>
+<section id="id1">
+<h3>Cell Means and Marginal Means<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <div class="tip admonition">
 <p class="admonition-title">Interaction notation</p>
 <p>There are different conventions for writing an interaction into a model. Some authors like to add an additional symbol to denote the interaction, leaving the subscripts to imply that the term is an interaction rather than a main effect. For instance</p>
@@ -671,10 +690,17 @@ y_{ijkl} = \mu +\alpha_{i} + \beta_{j} + \gamma_{k} + (\alpha\beta)_{ij} + (\bet
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-another-factor-to-the-model">Adding Another Factor to the Model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#main-effects">Main Effects</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions">Interactions</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-higher-order-anova-framework">The Higher-order ANOVA Framework</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-and-mean-tables">Terminology and Mean Tables</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-means-and-marginal-means">Cell Means and Marginal Means</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-another-factor-the-additive-model">Adding Another Factor - The Additive Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#main-effects">Main Effects</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-an-interaction-term-the-full-factorial-model">Adding an Interaction Term - The Full Factorial Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Cell Means and Marginal Means</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions-as-multiplicative-effects">Interactions as Multiplicative Effects</a></li>
 </ul>
 </li>
