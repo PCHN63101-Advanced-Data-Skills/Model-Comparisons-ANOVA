@@ -383,6 +383,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-full-factorial-model">The Full Factorial Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Cell Means and Marginal Means</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions-as-multiplicative-effects">Interactions as Multiplicative Effects</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-main-effects-in-the-presence-of-an-interaction">Interpreting Main Effects in the Presence of an Interaction</a></li>
 </ul>
 </li>
 </ul>
@@ -841,6 +842,11 @@ y_{ijkl} = \mu +\alpha_{i} + \beta_{j} + \gamma_{k} + (\alpha\beta)_{ij} + (\bet
 <section id="interactions-as-multiplicative-effects">
 <h3>Interactions as Multiplicative Effects<a class="headerlink" href="#interactions-as-multiplicative-effects" title="Link to this heading">#</a></h3>
 </section>
+<section id="interpreting-main-effects-in-the-presence-of-an-interaction">
+<h3>Interpreting Main Effects in the Presence of an Interaction<a class="headerlink" href="#interpreting-main-effects-in-the-presence-of-an-interaction" title="Link to this heading">#</a></h3>
+<p>… We can see that averaging over either the rows or columns of the means table only makes sense when additivity is assumed. If we do this when there is not a constant row or column effect, the very meaning of the main effect breaks down. If we want to think of a main effect as the consistent effect of a factor irrespective of other factors, this is no longer valid when those effects are <em>not</em> consistent. As such, main effects must assume additivity to make any sense. If there is a large interaction effect, the very concept of a main effects no longer make sense.</p>
+<p>Indeed, you do not need to know anything about the model to see this. The interaction tells us that the main effect depends upon the level of another factor. Why would we then try to look at a main effect <em>ignoring</em> that factor? We know that other factor matters. That is what the interaction tells us. Unfortuantely, it is common practise in Psychology to ignore this and try to interpret main effects in the presence of significant interactions. Hopefully it is clear how meaningless this actually is.</p>
+</section>
 </section>
 </section>
 
@@ -922,6 +928,7 @@ y_{ijkl} = \mu +\alpha_{i} + \beta_{j} + \gamma_{k} + (\alpha\beta)_{ij} + (\bet
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-full-factorial-model">The Full Factorial Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Cell Means and Marginal Means</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions-as-multiplicative-effects">Interactions as Multiplicative Effects</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-main-effects-in-the-presence-of-an-interaction">Interpreting Main Effects in the Presence of an Interaction</a></li>
 </ul>
 </li>
 </ul>
