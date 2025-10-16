@@ -806,36 +806,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 <p>We will discuss the reasons why later on the unit. For now, this should be evidence enough for always using <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> instead of <code class="docutils literal notranslate"><span class="pre">anova()</span></code>.</p>
-<p>Notice in this model that there is a constant difference between the rows and a constant difference between the columns</p>
-<div class="math notranslate nohighlight">
-\[
-SS_{\text{model}} = SS_{A} + SS_{B}
-\]</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">beta</span><span class="w">       </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">add.mod</span><span class="p">)</span>
-<span class="n">mu.Other_S</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span>
-<span class="n">mu.USA_S</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">2</span><span class="p">]</span>
-<span class="n">mu.Other_V</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">3</span><span class="p">]</span>
-<span class="n">mu.USA_V</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">3</span><span class="p">]</span>
-
-<span class="n">add.cell.means</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="s">&quot;straight&quot;</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">mu.Other_S</span><span class="p">,</span><span class="n">mu.USA_S</span><span class="p">),</span><span class="w"> </span>
-<span class="w">                             </span><span class="s">&quot;v.shaped&quot;</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">mu.Other_V</span><span class="p">,</span><span class="n">mu.USA_V</span><span class="p">),</span><span class="w"> </span>
-<span class="w">                             </span><span class="n">row.names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Other&quot;</span><span class="p">,</span><span class="s">&quot;USA&quot;</span><span class="p">))</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">add.cell.means</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      straight v.shaped
-Other 25.50350 19.07019
-USA   21.08716 14.65385
-</pre></div>
-</div>
-</div>
-</div>
-<p>This also explains why it is possible to get the final cell mean by using <span class="math notranslate nohighlight">\(\beta_{0} + \beta_{1} + \beta_{2}\)</span>, because this starts at the baseline cell, moves down a row (using the row difference <span class="math notranslate nohighlight">\(\beta_{1}\)</span>) and then across a column (using the column difference <span class="math notranslate nohighlight">\(\beta_{2}\)</span>).</p>
-<p>However, notice that these estimated means are <em>not</em> the actual cell means. If all the effects in the data truly were <em>additive</em> then the estimated means would be the same as the cell means. However, because they are not this suggests that something else is going on here. The additive assumption has placed a <em>constraint</em> on the model, producing adjusted cell means that allow this assumption to work. Because these differ from the actual cells, the model will not fit as well as a model that lifts this constraint. As we saw above, the additive model assumes that there is a <em>constant</em> row difference and a <em>constant</em> column difference. But what if that was not true? What is the row difference actually depends upon the column, or if the column difference actually depends upon the row? The fact that the additive model had to use cell means that are different to the true means suggests that this is in fact what is going on. This effect is known as an <em>interaction</em>.</p>
 </section>
 </section>
 <section id="the-full-factorial-model">
