@@ -375,11 +375,12 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-means-and-marginal-means">Cell Means and Marginal Means</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-another-factor-the-additive-model">Adding Another Factor - The Additive Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-additive-model">The Additive Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#additive-model-example-in-r">Additive Model Example in <code class="docutils literal notranslate"><span class="pre">R</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#main-effects">Main Effects</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-an-interaction-term-the-full-factorial-model">Adding an Interaction Term - The Full Factorial Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-full-factorial-model">The Full Factorial Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Cell Means and Marginal Means</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions-as-multiplicative-effects">Interactions as Multiplicative Effects</a></li>
 </ul>
@@ -410,27 +411,81 @@
 </div>
 </section>
 </section>
-<section id="adding-another-factor-the-additive-model">
-<h2>Adding Another Factor - The Additive Model<a class="headerlink" href="#adding-another-factor-the-additive-model" title="Link to this heading">#</a></h2>
-<p>Let us start with the most simple approach, which is to simply add an additional factor to the model. In terms of notation, this is a simple extension of what we already known</p>
+<section id="the-additive-model">
+<h2>The Additive Model<a class="headerlink" href="#the-additive-model" title="Link to this heading">#</a></h2>
+<p>Let us start with the simplest approach, which is to just add another factor to the model. In terms of notation, this is a basic extension of what we already known</p>
 <div class="math notranslate nohighlight">
 \[
 y_{ijk} = \mu + \alpha_{i} + \beta_{j} + \epsilon_{ijk},
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(\alpha_{i}\)</span> is the effect associated with Factor A and <span class="math notranslate nohighlight">\(\beta_{j}\)</span> is the effect associated with Factor B. The simplest form of this model would be one that represents a <span class="math notranslate nohighlight">\(2 \times 2\)</span> design, with <span class="math notranslate nohighlight">\(i = 1,2\)</span> and <span class="math notranslate nohighlight">\(j = 1,2\)</span>.</p>
+<p>where <span class="math notranslate nohighlight">\(\alpha_{i}\)</span> is the effect associated with Factor A and <span class="math notranslate nohighlight">\(\beta_{j}\)</span> is the effect associated with Factor B. The most basic form of this model would be one that represents a <span class="math notranslate nohighlight">\(2 \times 2\)</span> design, with <span class="math notranslate nohighlight">\(i = 1,2\)</span> and <span class="math notranslate nohighlight">\(j = 1,2\)</span>.</p>
+<p>It is important to recognise at this point the assumptions that this model makes. If we stick with a <span class="math notranslate nohighlight">\(2 \times 2\)</span> design then we have 4 cell means</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Factor B: Level 1</p></th>
+<th class="head"><p>Factor B: Level 2</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Factor A: Level 1</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu_{11}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu_{12}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Factor A: Level 2</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu_{21}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu_{22}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>and thus 4 unique predicted values formed from:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{alignat*}{1}
+    \mu_{11} &amp;= \mu + \alpha_{1} + \beta_{1} \\
+    \mu_{21} &amp;= \mu + \alpha_{2} + \beta_{1} \\
+    \mu_{12} &amp;= \mu + \alpha_{1} + \beta_{2} \\
+    \mu_{22} &amp;= \mu + \alpha_{2} + \beta_{2}. 
+\end{alignat*}
+\end{split}\]</div>
+<p>Although probably not immediately obvious, this model makes the assumption that the difference between the levels of each factor is the <em>same</em> irrespective of the levels of the other factor. In other words, the model assumes a <em>constant</em> difference between the rows or the columns of the means table, no matter which cell you start in. For instance, the two differences between the 1st and 2nd levels of Factor A are</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{alignat*}{2}
+    \mu_{11} - \mu_{21} &amp;= \left(\mu + \alpha_{1} + \beta_{1}\right) - \left(\mu + \alpha_{2} + \beta_{1}\right) &amp;&amp;= \alpha_{1} - \alpha_{2} \\
+    \mu_{12} - \mu_{22} &amp;= \left(\mu + \alpha_{1} + \beta_{2}\right) - \left(\mu + \alpha_{2} + \beta_{2}\right) &amp;&amp;= \alpha_{1} - \alpha_{2}
+\end{alignat*}
+\end{split}\]</div>
+<p>As such, no matter the level of Factor B, <span class="math notranslate nohighlight">\(\alpha_{1} - \alpha_{2}\)</span> is always the same. The same is true across the levels of Factor A, where <span class="math notranslate nohighlight">\(\beta_{1} - \beta_{2}\)</span> is always the same. In other words, this model make the strong assumption that the two factors are entirely <em>independant</em> and do not affect each other in any way.</p>
+<div class="tip admonition">
+<p class="admonition-title">Grounding ANOVA Examples</p>
+<p>It can be difficult at times to conceptualise what an ANOVA model is saying when working in abstract terms such as “Factor A” or <span class="math notranslate nohighlight">\(\mu_{12}\)</span>. Often, it is useful to have a concrete example to drive the point home. For instance, imagine that Factor A is <em>depression diagnosis</em> with two levels: <em>depressed</em> and <em>non-depressed</em>. Now imagine that Factor B is <em>anxiety status</em> with two levels: <em>high-anxiety</em> and <em>low-anxiety</em>. Our <span class="math notranslate nohighlight">\(2 \times 2\)</span> table of means would be</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Depression: Non-Depressed</p></th>
+<th class="head"><p>Depression: Depressed</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Anxiety: Low</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu_{11}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu_{12}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Anxiety: High</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu_{21}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu_{22}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Remembering that the additive model assumes a <em>constant</em> row difference and a <em>constant</em> column difference, this is the same as assuming that the difference between those with and without depression is the same, irrespective of their anxiety. Similarly, this is the same as assuming that the difference between those with high and low anxiety is the same, irrespective of whether they are depressed. Of course, this depends entirely on what our outcome measure actually is. However, in the real world, it would seem unlikely that depression and anxiety are two completely independant conditions that do not influence each other in any way. As such, this assumption of the additive model is somewhat questionable.</p>
+</div>
+<p>It is important to recognise that this assumption of additivity is actually a <em>constraint</em> on the fitting procedure. By specifying the model in this fashion, either least-squares or maximum likelihood will produce estimated means that adhere to additivity. The estimated cell means will therefore have a constant difference between the rows and the columns of the table. However, if this assumption is not true, the estimated call means and the sample cell means will be <em>different</em>. The degree to which the model does not fit the actual sample means is therefore indicative of the degree to which the additivity assumption does not hold. We will see this in the example below and will be the starting point for justifying the concept of an <em>interaction</em> a little later.</p>
+<section id="additive-model-example-in-r">
+<h3>Additive Model Example in <code class="docutils literal notranslate"><span class="pre">R</span></code><a class="headerlink" href="#additive-model-example-in-r" title="Link to this heading">#</a></h3>
 <p>As an example, let us expand our <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> example with an addition categorical predictor. Within <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> there already exists a factor called <code class="docutils literal notranslate"><span class="pre">vs</span></code> which indicates whether the engine is V-shaped or straight. This is already coded as a dummy variable, but we will label it so that it is clearer what it means before turning it into a factor.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
-<span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;Other&#39;</span><span class="p">,</span><span class="s">&#39;Other&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;Other&#39;</span><span class="p">,</span><span class="s">&#39;Other&#39;</span><span class="p">,</span><span class="s">&#39;Other&#39;</span><span class="p">,</span>
-<span class="w">                   </span><span class="s">&#39;Other&#39;</span><span class="p">,</span><span class="s">&#39;Other&#39;</span><span class="p">,</span><span class="s">&#39;Other&#39;</span><span class="p">,</span><span class="s">&#39;Other&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;Other&#39;</span><span class="p">,</span><span class="s">&#39;Other&#39;</span><span class="p">,</span>
-<span class="w">                   </span><span class="s">&#39;Other&#39;</span><span class="p">,</span><span class="s">&#39;Other&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;Other&#39;</span><span class="p">,</span><span class="s">&#39;Other&#39;</span><span class="p">,</span><span class="s">&#39;Other&#39;</span><span class="p">,</span>
-<span class="w">                   </span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;Other&#39;</span><span class="p">,</span><span class="s">&#39;Other&#39;</span><span class="p">,</span><span class="s">&#39;Other&#39;</span><span class="p">)</span>
-<span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.factor</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">vs.lab</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="nf">length</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">mpg</span><span class="p">))</span><span class="w"> </span>
@@ -449,7 +504,27 @@ y_{ijk} = \mu + \alpha_{i} + \beta_{j} + \epsilon_{ijk},
 </div>
 </div>
 </div>
-<p>We can now see how both <code class="docutils literal notranslate"><span class="pre">vs</span></code> and <code class="docutils literal notranslate"><span class="pre">origin</span></code> are coded.</p>
+<p>We will also work with the simpler version of <code class="docutils literal notranslate"><span class="pre">origin</span></code>, where we only had 2 levels: <code class="docutils literal notranslate"><span class="pre">USA</span></code> and <code class="docutils literal notranslate"><span class="pre">Other</span></code>. Our table of means is therefore</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Origin: Other</p></th>
+<th class="head"><p>Origin: USA</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>VS: Straight</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu_{11}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu_{12}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>VS: V-shaped</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu_{21}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu_{22}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We can now examine how <code class="docutils literal notranslate"><span class="pre">R</span></code> has coded both <code class="docutils literal notranslate"><span class="pre">vs</span></code> and <code class="docutils literal notranslate"><span class="pre">origin</span></code> as dummy variables.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">contrasts</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="p">))</span>
@@ -468,35 +543,42 @@ v-shaped        1
 </div>
 </div>
 </div>
+<p>So there are now 4 unique combinations of dummy values that lead to the 4 cell means. This leads to</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\begin{align*}
-    \mu_{\text{Other,Straight}} &amp;= \beta_{0} + (\beta_{1} \times \mathbf{0}) + (\beta_{2} \times \mathbf{0}) = \beta_{0} \\
-    \mu_{\text{USA,Straight}}   &amp;= \beta_{0} + (\beta_{1} \times \mathbf{1}) + (\beta_{2} \times \mathbf{0}) = \beta_{0} + \beta_{1} \\
-    \mu_{\text{Other,V-shaped}} &amp;= \beta_{0} + (\beta_{1} \times \mathbf{0}) + (\beta_{2} \times \mathbf{1}) = \beta_{0} + \beta_{2} \\
-    \mu_{\text{USA,V-shaped}}   &amp;= \beta_{0} + (\beta_{1} \times \mathbf{1}) + (\beta_{2} \times \mathbf{1}) = \beta_{0} + \beta_{1} + \beta_{2} \\
-\end{align*}
+\begin{alignat*}{2}
+    &amp;\mu^{(\texttt{other},\texttt{straight})} &amp;&amp;= \beta_{0} + (\beta_{1} \times \mathbf{0}) + (\beta_{2} \times \mathbf{0}) = \beta_{0} \\
+    &amp;\mu^{(\texttt{USA},\texttt{straight})}   &amp;&amp;= \beta_{0} + (\beta_{1} \times \mathbf{1}) + (\beta_{2} \times \mathbf{0}) = \beta_{0} + \beta_{1} \\
+    &amp;\mu^{(\texttt{other},\texttt{v-shaped})} &amp;&amp;= \beta_{0} + (\beta_{1} \times \mathbf{0}) + (\beta_{2} \times \mathbf{1}) = \beta_{0} + \beta_{2} \\
+    &amp;\mu^{(\texttt{USA,v-shaped})}   &amp;&amp;= \beta_{0} + \underbrace{(\beta_{1} \times \mathbf{1})}_{\texttt{origin}} + \underbrace{(\beta_{2} \times \mathbf{1})}_{\texttt{vs}} = \beta_{0} + \beta_{1} + \beta_{2} \\
+\end{alignat*}
 \end{split}\]</div>
-<p>Based on this we can see</p>
+<p>Based on this we can summise that</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Meaning</p></th>
 <th class="head"><p>Interpretation</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\beta_{0}\)</span></p></td>
-<td><p>Mean of <code class="docutils literal notranslate"><span class="pre">(Other,Straight)</span></code> cell</p></td>
+<td><p>Mean of <code class="docutils literal notranslate"><span class="pre">(other,straight)</span></code> cell</p></td>
+<td><p>Reference cell</p></td>
 </tr>
 <tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\beta_{1}\)</span></p></td>
-<td><p>Mean difference <code class="docutils literal notranslate"><span class="pre">(USA,Straight)</span> <span class="pre">-</span> <span class="pre">(Other,Straight)</span></code></p></td>
+<td><p>Mean difference <code class="docutils literal notranslate"><span class="pre">(USA,straight)</span> <span class="pre">-</span> <span class="pre">(other,straight)</span></code></p></td>
+<td><p>Constant <em>column</em> effect</p></td>
 </tr>
 <tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\beta_{2}\)</span></p></td>
-<td><p>Mean difference <code class="docutils literal notranslate"><span class="pre">(Other,V-shaped)</span> <span class="pre">-</span> <span class="pre">(Other,Straight)</span></code></p></td>
+<td><p>Mean difference <code class="docutils literal notranslate"><span class="pre">(other,v-shaped)</span> <span class="pre">-</span> <span class="pre">(other,straight)</span></code></p></td>
+<td><p>Constant <em>row</em> effect</p></td>
 </tr>
 </tbody>
 </table>
 </div>
+<p>This also helps make sense of how the model prediction works. If we start at the reference cell (<span class="math notranslate nohighlight">\(\beta_{0} = \mu_{11}\)</span>) and then add the <em>row effect</em> (<span class="math notranslate nohighlight">\(\beta_{1}\)</span>) we move <em>down</em> a row and end up at <span class="math notranslate nohighlight">\(\mu_{21}\)</span>. Instead, if we start at the reference cell (<span class="math notranslate nohighlight">\(\beta_{0} = \mu_{11}\)</span>) and then add the <em>column effect</em> (<span class="math notranslate nohighlight">\(\beta_{2}\)</span>) we move <em>across</em> a column and end up at <span class="math notranslate nohighlight">\(\mu_{12}\)</span>. Finally, if we start at the reference cell (<span class="math notranslate nohighlight">\(\beta_{0} = \mu_{11}\)</span>) and then add the <em>row effect</em> (<span class="math notranslate nohighlight">\(\beta_{1}\)</span>) and the <em>column effect</em> (<span class="math notranslate nohighlight">\(\beta_{2}\)</span>) we move down a row and across a column and end up at <span class="math notranslate nohighlight">\(\mu_{22}\)</span>. Note that this only works because of the additive assumptions about contant row and column effects.</p>
+<p>Given all this, we can now see how <code class="docutils literal notranslate"><span class="pre">R</span></code> fits this model and check that it aligns with our understanding</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">add.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">vs</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
@@ -527,36 +609,203 @@ F-statistic: 18.36 on 2 and 29 DF,  p-value: 7.044e-06
 </div>
 </div>
 </div>
+<p>Based on this, we can construct the estimated cell means</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="nf">allEffects</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="o">*</span><span class="n">vs</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> model: mpg ~ origin * vs
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">beta</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">add.mod</span><span class="p">)</span>
 
- origin*vs effect
-       vs
-origin  straight v-shaped
-  Other 25.59091    18.95
-  USA   20.76667    14.75
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">mean</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">mpg</span><span class="p">[</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&#39;Other&#39;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">vs</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&#39;straight&#39;</span><span class="p">])</span>
+<span class="c1"># fitted cell means</span>
+<span class="n">mu.other.straight</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span>
+<span class="n">mu.USA.straight</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">2</span><span class="p">]</span>
+<span class="n">mu.other.vshaped</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">3</span><span class="p">]</span>
+<span class="n">mu.USA.vshaped</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">3</span><span class="p">]</span>
+
+<span class="c1"># means table</span>
+<span class="n">means.tbl</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="s">&quot;origin.other&quot;</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">mu.other.straight</span><span class="p">,</span><span class="n">mu.other.vshaped</span><span class="p">),</span>
+<span class="w">                        </span><span class="s">&quot;origin.USA&quot;</span><span class="w">  </span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">mu.USA.straight</span><span class="p">,</span><span class="w">  </span><span class="n">mu.USA.vshaped</span><span class="p">),</span>
+<span class="w">                        </span><span class="n">row.names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;vs.straight&quot;</span><span class="p">,</span><span class="s">&quot;vs.vshaped&quot;</span><span class="p">))</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">means.tbl</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html">25.5909090909091</div></div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>            origin.other origin.USA
+vs.straight     25.50350   21.08716
+vs.vshaped      19.07019   14.65385
+</pre></div>
 </div>
+</div>
+</div>
+<p>As expected, these fitted values have a constant difference between each row</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">unname</span><span class="p">(</span><span class="n">mu.other.straight</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">mu.other.vshaped</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">unname</span><span class="p">(</span><span class="n">mu.USA.straight</span><span class="w">   </span><span class="o">-</span><span class="w"> </span><span class="n">mu.USA.vshaped</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 6.433314
+[1] 6.433314
+</pre></div>
+</div>
+</div>
+</div>
+<p>and a constant difference between each column</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">unname</span><span class="p">(</span><span class="n">mu.other.straight</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">mu.USA.straight</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">unname</span><span class="p">(</span><span class="n">mu.other.vshaped</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">mu.USA.vshaped</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 4.416336
+[1] 4.416336
+</pre></div>
+</div>
+</div>
+</div>
+<p>Unfortunately, these estimated means do not match the actual sample means</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># sample cell means</span>
+<span class="n">mu.other.straight</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">mpg</span><span class="p">[</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;Other&quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">vs</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;straight&quot;</span><span class="p">])</span>
+<span class="n">mu.USA.straight</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">mpg</span><span class="p">[</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;USA&quot;</span><span class="w">   </span><span class="o">&amp;</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">vs</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;straight&quot;</span><span class="p">])</span>
+<span class="n">mu.other.vshaped</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">mpg</span><span class="p">[</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;Other&quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">vs</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;v-shaped&quot;</span><span class="p">])</span>
+<span class="n">mu.USA.vshaped</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">mpg</span><span class="p">[</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;USA&quot;</span><span class="w">   </span><span class="o">&amp;</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">vs</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;v-shaped&quot;</span><span class="p">])</span>
+
+<span class="c1"># means table</span>
+<span class="n">means.tbl</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="s">&quot;origin.other&quot;</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">mu.other.straight</span><span class="p">,</span><span class="n">mu.other.vshaped</span><span class="p">),</span>
+<span class="w">                        </span><span class="s">&quot;origin.USA&quot;</span><span class="w">  </span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">mu.USA.straight</span><span class="p">,</span><span class="w">  </span><span class="n">mu.USA.vshaped</span><span class="p">),</span>
+<span class="w">                        </span><span class="n">row.names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;vs.straight&quot;</span><span class="p">,</span><span class="s">&quot;vs.vshaped&quot;</span><span class="p">))</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">means.tbl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>            origin.other origin.USA
+vs.straight     25.59091   20.76667
+vs.vshaped      18.95000   14.75000
+</pre></div>
+</div>
+</div>
+</div>
+<p>These are not too far off, however, this does suggest that the assumptions of the additive model may not hold in this example. It is also possible that the fitted values are close enough that we can treat these factors as additive for simplicity. We will come back to this when we explore the Full Factorial model below. First, we need to discuss the ANOVA omnibus effects in an additive <span class="math notranslate nohighlight">\(2 \times 2\)</span> design.</p>
+</section>
 <section id="main-effects">
 <h3>Main Effects<a class="headerlink" href="#main-effects" title="Link to this heading">#</a></h3>
+<p>So, the main effect of Factor A is equivalent to the following model comparison</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{alignat*}{2}
+    \mathcal{M}_{0} &amp;: y_{jk}  &amp;&amp;= \mu + \beta_{j} + \epsilon_{jk} \\
+    \mathcal{M}_{1} &amp;: y_{ijk} &amp;&amp;= \mu + \alpha_{i} + \beta_{j} + \epsilon_{ijk},
+\end{alignat*}
+\end{split}\]</div>
+<p>and the main effect of Factor B is equivalent to the following model comparison</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{alignat*}{2}
+    \mathcal{M}_{0} &amp;: y_{ik}  &amp;&amp;= \mu + \alpha_{i} + \epsilon_{ik} \\
+    \mathcal{M}_{1} &amp;: y_{ijk} &amp;&amp;= \mu + \alpha_{i} + \beta_{j} + \epsilon_{ijk}.
+\end{alignat*}
+\end{split}\]</div>
+<p>In each case, we simply remove the terms associated with the factor of interest and see whether the change in the residual sums-of-squares is large relative to the error.</p>
+<p>As we saw previously, we can do this as explicit model comparisons using the <code class="docutils literal notranslate"><span class="pre">anova()</span></code> function, where the main effect of <code class="docutils literal notranslate"><span class="pre">origin</span></code> would be:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">null.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">vs</span><span class="p">,</span><span class="w">          </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">full.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">vs</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nf">anova</span><span class="p">(</span><span class="n">null.mod</span><span class="p">,</span><span class="n">full.mod</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Analysis of Variance Table
+
+Model 1: mpg ~ vs
+Model 2: mpg ~ origin + vs
+  Res.Df    RSS Df Sum of Sq      F   Pr(&gt;F)   
+1     30 629.52                                
+2     29 496.86  1    132.66 7.7428 0.009386 **
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+</pre></div>
+</div>
+</div>
+</div>
+<p>and the main effect of <code class="docutils literal notranslate"><span class="pre">vs</span></code> would be:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">null.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="p">,</span><span class="w">      </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">full.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">vs</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nf">anova</span><span class="p">(</span><span class="n">null.mod</span><span class="p">,</span><span class="n">full.mod</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Analysis of Variance Table
+
+Model 1: mpg ~ origin
+Model 2: mpg ~ origin + vs
+  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+1     30 784.06                                  
+2     29 496.86  1     287.2 16.763 0.0003096 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+</pre></div>
+</div>
+</div>
+</div>
+<p>Or, we could much more easily give the full model to the <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">car</span></code> package to deal with the model comparisons automatically.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">Anova</span><span class="p">(</span><span class="n">full.mod</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Anova Table (Type II tests)
+
+Response: mpg
+          Sum Sq Df F value    Pr(&gt;F)    
+origin    132.66  1  7.7428 0.0093864 ** 
+vs        287.20  1 16.7628 0.0003096 ***
+Residuals 496.86 29                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+</pre></div>
+</div>
+</div>
+</div>
+<p>Which agrees with the comparisons we ran above. Notice, however, that generating the full ANOVA table using <code class="docutils literal notranslate"><span class="pre">anova()</span></code> gives us a <em>different</em> answer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">anova</span><span class="p">(</span><span class="n">full.mod</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Analysis of Variance Table
+
+Response: mpg
+          Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+origin     1 341.99  341.99  19.961 0.0001110 ***
+vs         1 287.20  287.20  16.763 0.0003096 ***
+Residuals 29 496.86   17.13                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will discuss the reasons why later on the unit. For now, this should be evidence enough for always using <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> instead of <code class="docutils literal notranslate"><span class="pre">anova()</span></code>.</p>
 <p>Notice in this model that there is a constant difference between the rows and a constant difference between the columns</p>
 <div class="math notranslate nohighlight">
 \[
@@ -589,8 +838,8 @@ USA   21.08716 14.65385
 <p>However, notice that these estimated means are <em>not</em> the actual cell means. If all the effects in the data truly were <em>additive</em> then the estimated means would be the same as the cell means. However, because they are not this suggests that something else is going on here. The additive assumption has placed a <em>constraint</em> on the model, producing adjusted cell means that allow this assumption to work. Because these differ from the actual cells, the model will not fit as well as a model that lifts this constraint. As we saw above, the additive model assumes that there is a <em>constant</em> row difference and a <em>constant</em> column difference. But what if that was not true? What is the row difference actually depends upon the column, or if the column difference actually depends upon the row? The fact that the additive model had to use cell means that are different to the true means suggests that this is in fact what is going on. This effect is known as an <em>interaction</em>.</p>
 </section>
 </section>
-<section id="adding-an-interaction-term-the-full-factorial-model">
-<h2>Adding an Interaction Term - The Full Factorial Model<a class="headerlink" href="#adding-an-interaction-term-the-full-factorial-model" title="Link to this heading">#</a></h2>
+<section id="the-full-factorial-model">
+<h2>The Full Factorial Model<a class="headerlink" href="#the-full-factorial-model" title="Link to this heading">#</a></h2>
 <p>So, the interaction terms represents that “bit extra” that we need in order to allow the fitted means to be the same as the sample means. The additive model only gets us so far. The interaction terms allows for a cell-specific adjustment to shift the additive model means so that they are the actual cell means. The larger this adjustment, the larger the interaction effect. In other words, the more that effect of one factor depends upon the levels of the other.</p>
 <p>Note that you do not <em>have</em> to include an interaction. A typical approach in Psychology is always to specify a <em>full factorial</em> model containing every main effect and every possible interaction. In general, this is probably the approach you should take, otherwise you make strong assumptions that all interactions are 0. However, there is nothing that says you <em>have</em> to do this. You have the flexibility to only include the effects that you want in the model. You just have to be aware of the consequences of doing so.</p>
 <div class="math notranslate nohighlight">
@@ -695,11 +944,12 @@ y_{ijkl} = \mu +\alpha_{i} + \beta_{j} + \gamma_{k} + (\alpha\beta)_{ij} + (\bet
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-means-and-marginal-means">Cell Means and Marginal Means</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-another-factor-the-additive-model">Adding Another Factor - The Additive Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-additive-model">The Additive Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#additive-model-example-in-r">Additive Model Example in <code class="docutils literal notranslate"><span class="pre">R</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#main-effects">Main Effects</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-an-interaction-term-the-full-factorial-model">Adding an Interaction Term - The Full Factorial Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-full-factorial-model">The Full Factorial Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Cell Means and Marginal Means</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions-as-multiplicative-effects">Interactions as Multiplicative Effects</a></li>
 </ul>
