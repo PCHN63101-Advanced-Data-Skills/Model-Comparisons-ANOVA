@@ -393,7 +393,37 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="follow-up-tests-and-visualisations">
 <h1>Follow-up Tests and Visualisations<a class="headerlink" href="#follow-up-tests-and-visualisations" title="Link to this heading">#</a></h1>
-<p>… For instance, the typical sequence is that we have fit the model using <code class="docutils literal notranslate"><span class="pre">lm()</span></code>, checked and dealt with all the assumptions to our satisfaction and then generated the ANOVA table using <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> from the <code class="docutils literal notranslate"><span class="pre">car</span></code> package. Now what?</p>
+<p>… For instance, the typical sequence is that we have fit the model using <code class="docutils literal notranslate"><span class="pre">lm()</span></code>, checked and dealt with all the assumptions to our satisfaction and then generated the ANOVA table using <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> from the <code class="docutils literal notranslate"><span class="pre">car</span></code> package. So, despite everything we have covered, the actual analysis is deceptively simple. For instance</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+
+<span class="c1"># Fit model</span>
+<span class="n">mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span><span class="c1">#</span>
+
+<span class="c1"># Check and deal with assumptions</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+
+<span class="c1"># Generate Type II ANOVA table</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">Anova</span><span class="p">(</span><span class="n">mod</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="nb">eval</span><span class="p">(</span><span class="n">predvars</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span> <span class="nb">object</span> <span class="s1">&#39;origin&#39;</span> <span class="ow">not</span> <span class="n">found</span>
+<span class="ne">Traceback</span>:
+
+<span class="mi">1</span><span class="o">.</span> <span class="n">lm</span><span class="p">(</span><span class="n">mpg</span> <span class="o">~</span> <span class="n">origin</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">mtcars</span><span class="p">)</span>
+<span class="mi">2</span><span class="o">.</span> <span class="nb">eval</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">parent</span><span class="o">.</span><span class="n">frame</span><span class="p">())</span>
+<span class="mi">3</span><span class="o">.</span> <span class="nb">eval</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">parent</span><span class="o">.</span><span class="n">frame</span><span class="p">())</span>
+<span class="mi">4</span><span class="o">.</span> <span class="n">stats</span><span class="p">::</span><span class="n">model</span><span class="o">.</span><span class="n">frame</span><span class="p">(</span><span class="n">formula</span> <span class="o">=</span> <span class="n">mpg</span> <span class="o">~</span> <span class="n">origin</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">mtcars</span><span class="p">,</span> <span class="n">drop</span><span class="o">.</span><span class="n">unused</span><span class="o">.</span><span class="n">levels</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+<span class="mi">5</span><span class="o">.</span> <span class="n">model</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">formula</span> <span class="o">=</span> <span class="n">mpg</span> <span class="o">~</span> <span class="n">origin</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">mtcars</span><span class="p">,</span> <span class="n">drop</span><span class="o">.</span><span class="n">unused</span><span class="o">.</span><span class="n">levels</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+<span class="mi">6</span><span class="o">.</span> <span class="nb">eval</span><span class="p">(</span><span class="n">predvars</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
+<span class="mi">7</span><span class="o">.</span> <span class="nb">eval</span><span class="p">(</span><span class="n">predvars</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 <section id="using-the-regression-tests">
 <h2>Using the Regression Tests<a class="headerlink" href="#using-the-regression-tests" title="Link to this heading">#</a></h2>
 </section>
