@@ -377,12 +377,16 @@
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-additive-model">The Additive Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#additive-model-example-in-r">Additive Model Example in <code class="docutils literal notranslate"><span class="pre">R</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#main-effects">Main Effects</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#main-effects">Main Effects</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#main-effects-in-r">Main Effects in <code class="docutils literal notranslate"><span class="pre">R</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-full-factorial-model">The Full Factorial Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions-as-multiplicative-effects">Interactions as Multiplicative Effects</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-full-factorial-anova">The Full Factorial ANOVA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-in-terms-of-cell-means">Interaction in Terms of Cell Means</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-omnibus-interaction-effect">The Omnibus Interaction Effect</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-omnibus-main-effect-tests">The Omnibus Main Effect Tests</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-main-effects-in-the-presence-of-an-interaction">Interpreting Main Effects in the Presence of an Interaction</a></li>
@@ -750,8 +754,9 @@ vs.vshaped      18.95000   14.75000
 \end{alignat*}
 \end{split}\]</div>
 <p>Under additivity, the differences between the marginal means are <em>identical</em> to the constant row or column difference and thus directly capture the overall differences between the levels of a single factor, irrespective or the levels of the other factors in the model. When additivity does not hold, this logic breaks down as the marginal means may not longer capture any effects that reflect the actual data. We will see this later when we discuss <em>interactions</em>.</p>
-<p>Main Effects in <code class="docutils literal notranslate"><span class="pre">R</span></code>
-As we saw previously, we can form omnibus tests from explicit model comparisons using the <code class="docutils literal notranslate"><span class="pre">anova()</span></code> function. Using this method, the main effect of <code class="docutils literal notranslate"><span class="pre">origin</span></code> would be</p>
+<section id="main-effects-in-r">
+<h4>Main Effects in <code class="docutils literal notranslate"><span class="pre">R</span></code><a class="headerlink" href="#main-effects-in-r" title="Link to this heading">#</a></h4>
+<p>As we saw previously, we can form omnibus tests from explicit model comparisons using the <code class="docutils literal notranslate"><span class="pre">anova()</span></code> function. Using this method, the main effect of <code class="docutils literal notranslate"><span class="pre">origin</span></code> would be</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">null.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">vs</span><span class="p">,</span><span class="w">          </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
@@ -808,9 +813,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: carData
-</pre></div>
-</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Anova Table (Type II tests)
 
 Response: mpg
@@ -846,6 +848,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 <p>We will discuss the reasons why in the final lesson of this unit. For now, this should hopefully convince you to always use <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> instead of <code class="docutils literal notranslate"><span class="pre">anova()</span></code>, as the results are not always equivalent.</p>
+</section>
 </section>
 </section>
 <section id="the-full-factorial-model">
@@ -962,6 +965,31 @@ F-statistic: 11.84 on 3 and 28 DF,  p-value: 3.466e-05
 </div>
 </div>
 </div>
+</section>
+<section id="interaction-in-terms-of-cell-means">
+<h3>Interaction in Terms of Cell Means<a class="headerlink" href="#interaction-in-terms-of-cell-means" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">beta</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">int.model</span><span class="p">)</span>
+
+<span class="c1"># fitted cell means</span>
+<span class="n">mu.other.straight</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span>
+<span class="n">mu.USA.straight</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">2</span><span class="p">]</span>
+<span class="n">mu.other.vshaped</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">3</span><span class="p">]</span>
+<span class="n">mu.USA.vshaped</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">3</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">4</span><span class="p">]</span>
+
+<span class="nf">print</span><span class="p">((</span><span class="n">mu.other.straight</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">mu.USA.straight</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">mu.other.vshaped</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">mu.USA.vshaped</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(Intercept) 
+  0.6242424 
+</pre></div>
+</div>
+</div>
+</div>
+<p>Which is <em>precisely</em> the interaction effect given in the summary table above.</p>
 </section>
 <section id="the-omnibus-interaction-effect">
 <h3>The Omnibus Interaction Effect<a class="headerlink" href="#the-omnibus-interaction-effect" title="Link to this heading">#</a></h3>
@@ -1187,12 +1215,16 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-additive-model">The Additive Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#additive-model-example-in-r">Additive Model Example in <code class="docutils literal notranslate"><span class="pre">R</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#main-effects">Main Effects</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#main-effects">Main Effects</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#main-effects-in-r">Main Effects in <code class="docutils literal notranslate"><span class="pre">R</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-full-factorial-model">The Full Factorial Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions-as-multiplicative-effects">Interactions as Multiplicative Effects</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-full-factorial-anova">The Full Factorial ANOVA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-in-terms-of-cell-means">Interaction in Terms of Cell Means</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-omnibus-interaction-effect">The Omnibus Interaction Effect</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-omnibus-main-effect-tests">The Omnibus Main Effect Tests</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-main-effects-in-the-presence-of-an-interaction">Interpreting Main Effects in the Presence of an Interaction</a></li>
