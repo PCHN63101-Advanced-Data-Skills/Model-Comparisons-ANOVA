@@ -826,28 +826,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 </div>
-<p>Compare the <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> output with the outputs from the model comparisons to reassure yourself that these are <em>identical</em>. Importantly, notice that generating the full ANOVA table using <code class="docutils literal notranslate"><span class="pre">anova()</span></code> gives us a <em>different</em> answer for the effect of <code class="docutils literal notranslate"><span class="pre">origin</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">anova</span><span class="p">(</span><span class="n">full.mod</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Analysis of Variance Table
-
-Response: mpg
-          Df Sum Sq Mean Sq F value    Pr(&gt;F)    
-origin     1 341.99  341.99  19.961 0.0001110 ***
-vs         1 287.20  287.20  16.763 0.0003096 ***
-Residuals 29 496.86   17.13                      
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-</pre></div>
-</div>
-</div>
-</div>
-<p>We will discuss the reasons why in the final lesson of this unit. For now, this should hopefully convince you to always use <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> instead of <code class="docutils literal notranslate"><span class="pre">anova()</span></code>, as the results are not always equivalent.</p>
+<p>Compare the <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> output with the outputs from the model comparisons to reassure yourself that these are <em>identical</em>. Based on this result, there are significant differences in <code class="docutils literal notranslate"><span class="pre">mpg</span></code> between the levels of both <code class="docutils literal notranslate"><span class="pre">origin</span></code> and <code class="docutils literal notranslate"><span class="pre">vs</span></code>, assuming the two factors have independent influences on <code class="docutils literal notranslate"><span class="pre">mpg</span></code>. In context, this is assuming that there is nothing about where the car is manufactured that influences the shape of the engine, nor nothing about the shape of the engine that implies where it was manufactured.</p>
 </section>
 </section>
 </section>
@@ -996,7 +975,7 @@ F-statistic: 11.84 on 3 and 28 DF,  p-value: 3.466e-05
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">null.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">vs</span><span class="p">,</span><span class="w">             </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
-<span class="n">full.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">origin</span><span class="o">:</span><span class="n">vs</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">full.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">origin</span><span class="o">:</span><span class="n">vs</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span><span class="w"> </span><span class="c1"># OR mpg ~ origin * vs</span>
 
 <span class="nf">print</span><span class="p">(</span><span class="nf">anova</span><span class="p">(</span><span class="n">null.mod</span><span class="p">,</span><span class="n">full.mod</span><span class="p">))</span>
 </pre></div>
