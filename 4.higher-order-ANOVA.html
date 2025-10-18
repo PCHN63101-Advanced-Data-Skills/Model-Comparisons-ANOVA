@@ -384,9 +384,10 @@
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-full-factorial-model">The Full Factorial Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conceptual-understanding-of-an-interaction">Conceptual Understanding of an Interaction</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions-as-multiplicative-effects">Interactions as Multiplicative Effects</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-full-factorial-anova">The Full Factorial ANOVA</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-in-terms-of-cell-means">Interaction in Terms of Cell Means</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-means-in-the-full-factorial-model">Cell Means in the Full Factorial Model</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-omnibus-interaction-effect">The Omnibus Interaction Effect</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-omnibus-main-effect-tests">The Omnibus Main Effect Tests</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-main-effects-in-the-presence-of-an-interaction">Interpreting Main Effects in the Presence of an Interaction</a></li>
@@ -429,8 +430,7 @@
 \[
 y_{ijk} = \mu + \alpha_{i} + \beta_{j} + \epsilon_{ijk},
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(\alpha_{i}\)</span> is the effect associated with Factor A and <span class="math notranslate nohighlight">\(\beta_{j}\)</span> is the effect associated with Factor B. The most basic form of this model would be one that represents a <span class="math notranslate nohighlight">\(2 \times 2\)</span> design, with <span class="math notranslate nohighlight">\(i = 1,2\)</span> and <span class="math notranslate nohighlight">\(j = 1,2\)</span>.</p>
-<p>It is important to recognise at this point the assumptions that this model makes. If we stick with a <span class="math notranslate nohighlight">\(2 \times 2\)</span> design then we have 4 cell means</p>
+<p>where <span class="math notranslate nohighlight">\(\alpha_{i}\)</span> is the effect associated with Factor A and <span class="math notranslate nohighlight">\(\beta_{j}\)</span> is the effect associated with Factor B. The most basic form of this model would be one that represents a <span class="math notranslate nohighlight">\(2 \times 2\)</span> design, with <span class="math notranslate nohighlight">\(i = 1,2\)</span> and <span class="math notranslate nohighlight">\(j = 1,2\)</span>. We would therefore have 4 cell means</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
@@ -464,14 +464,14 @@ y_{ijk} = \mu + \alpha_{i} + \beta_{j} + \epsilon_{ijk},
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{alignat*}{2}
-    \mu_{11} - \mu_{21} &amp;= \left(\mu + \alpha_{1} + \beta_{1}\right) - \left(\mu + \alpha_{2} + \beta_{1}\right) &amp;&amp;= \alpha_{1} - \alpha_{2} \\
-    \mu_{12} - \mu_{22} &amp;= \left(\mu + \alpha_{1} + \beta_{2}\right) - \left(\mu + \alpha_{2} + \beta_{2}\right) &amp;&amp;= \alpha_{1} - \alpha_{2}
+    \mu_{11} - \mu_{21} &amp;= \left(\mu + \alpha_{1} + \beta_{1}\right) - \left(\mu + \alpha_{2} + \beta_{1}\right) &amp;&amp;= \alpha_{1} - \alpha_{2} \quad\text{Effect of A at Level 1 of B} \\
+    \mu_{12} - \mu_{22} &amp;= \left(\mu + \alpha_{1} + \beta_{2}\right) - \left(\mu + \alpha_{2} + \beta_{2}\right) &amp;&amp;= \alpha_{1} - \alpha_{2} \quad\text{Effect of A at Level 2 of B}
 \end{alignat*}
 \end{split}\]</div>
-<p>As such, no matter the level of Factor B, <span class="math notranslate nohighlight">\(\alpha_{1} - \alpha_{2}\)</span> is always the same. The same is true across the levels of Factor A, where <span class="math notranslate nohighlight">\(\beta_{1} - \beta_{2}\)</span> is always the same. In other words, this model make the strong assumption that the two factors are entirely <em>independant</em> and do not affect each other in any way.</p>
-<p>It is important to recognise that this assumption of additivity is actually a <em>constraint</em> on the fitting procedure. By specifying the model in this fashion, either least-squares or maximum likelihood will produce estimated means that adhere to additivity. The estimated cell means will therefore have a constant difference between the rows and the columns of the table. However, if this assumption is not true, the estimated cell means and the sample cell means will be <em>different</em>. The degree to which the model does not fit the actual sample means is therefore indicative of the degree to which the additivity assumption does not hold. We will see this in the example below and will be the starting point for justifying the concept of an <em>interaction</em> a little later.</p>
+<p>As such, no matter the level of Factor B, the effect of Factor A is always <span class="math notranslate nohighlight">\(\alpha_{1} - \alpha_{2}\)</span>. The same is true across the levels of Factor A, where the effect of Factor B is always <span class="math notranslate nohighlight">\(\beta_{1} - \beta_{2}\)</span>. In other words, this model make the strong assumption that the two factors are entirely <em>independant</em> and do not affect each other in any way. The effects of the factors only <em>add</em> and so this is known as the assumption of <em>additivity</em>.</p>
+<p>It is important to recognise that additivity is actually a <em>constraint</em> on the fitting procedure. By specifying the model in this fashion, either least-squares or maximum likelihood will produce estimated means that adhere to additivity. The estimated cell means will therefore have a constant difference between the rows and the columns of the table. However, if the data does not adhere to additivity, the estimated cell means and the sample cell means will be <em>different</em>. The degree to which the model does not fit the actual sample means is therefore indicative of the degree to which the additivity assumption does not hold. We will see this in the example below and will be the starting point for justifying the concept of an <em>interaction</em> a little later.</p>
 <div class="tip admonition">
-<p class="admonition-title">Grounding ANOVA Examples</p>
+<p class="admonition-title">ANOVA Examples</p>
 <p>It can be difficult to conceptualise what an ANOVA model is saying when working in abstract terms such as “Factor A” or <span class="math notranslate nohighlight">\(\mu_{12}\)</span>. Often, it is useful to have a concrete example to drive the point home. For instance, imagine that Factor A is <em>depression diagnosis</em> with two levels: <em>depressed</em> and <em>non-depressed</em>. Now imagine that Factor B is <em>anxiety status</em> with two levels: <em>high-anxiety</em> and <em>low-anxiety</em>. Our <span class="math notranslate nohighlight">\(2 \times 2\)</span> table of means would be</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
@@ -492,7 +492,8 @@ y_{ijk} = \mu + \alpha_{i} + \beta_{j} + \epsilon_{ijk},
 </tbody>
 </table>
 </div>
-<p>Remembering that the additive model assumes a <em>constant row difference</em> and a <em>constant column difference</em>, this is the same as assuming that the difference between those with and without depression is the same, irrespective of their anxiety (constant <em>column</em> difference). Similarly, this is the same as assuming that the difference between those with high and low anxiety is the same, irrespective of whether they are depressed (constant <em>row</em> difference). Of course, this depends entirely on what our outcome measure actually is. However, in the real world, it would seem unlikely that depression and anxiety are two completely independant conditions that do not influence each other in any way.</p>
+<br>
+<p>Remembering that the additive model assumes a <em>constant row difference</em> and a <em>constant column difference</em>, this is the same as assuming that the difference between those with and without depression is the same, irrespective of their anxiety (constant <em>column</em> difference). Similarly, this is the same as assuming that the difference between those with high and low anxiety is the same, irrespective of whether they are depressed (constant <em>row</em> difference). For this particular example, it would seem unlikely that depression and anxiety are two completely independant conditions that do not influence each other in any way.</p>
 </div>
 <section id="additive-model-example-in-r">
 <h3>Additive Model Example in <code class="docutils literal notranslate"><span class="pre">R</span></code><a class="headerlink" href="#additive-model-example-in-r" title="Link to this heading">#</a></h3>
@@ -514,7 +515,20 @@ y_{ijk} = \mu + \alpha_{i} + \beta_{j} + \epsilon_{ijk},
 </div>
 </div>
 </div>
-<p>We will also work with the simpler version of <code class="docutils literal notranslate"><span class="pre">origin</span></code>, where we only had 2 levels: <code class="docutils literal notranslate"><span class="pre">USA</span></code> and <code class="docutils literal notranslate"><span class="pre">Other</span></code>. Our table of means is therefore</p>
+<p>We will also work with the simpler version of <code class="docutils literal notranslate"><span class="pre">origin</span></code>, where we only had 2 levels: <code class="docutils literal notranslate"><span class="pre">USA</span></code> and <code class="docutils literal notranslate"><span class="pre">Other</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">levels</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Other&quot; &quot;USA&quot;  
+</pre></div>
+</div>
+</div>
+</div>
+<p>Our table of means is therefore</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
@@ -534,7 +548,7 @@ y_{ijk} = \mu + \alpha_{i} + \beta_{j} + \epsilon_{ijk},
 </tbody>
 </table>
 </div>
-<p>So, <span class="math notranslate nohighlight">\(\mu_{11}\)</span> will indicate <code class="docutils literal notranslate"><span class="pre">(Other,Straight)</span></code>, <span class="math notranslate nohighlight">\(\mu_{21}\)</span> will indicate <code class="docutils literal notranslate"><span class="pre">(USA,Straight)</span></code> and so on.</p>
+<p>So, <span class="math notranslate nohighlight">\(\mu_{11}\)</span> is <code class="docutils literal notranslate"><span class="pre">(Other,Straight)</span></code>, <span class="math notranslate nohighlight">\(\mu_{21}\)</span> is <code class="docutils literal notranslate"><span class="pre">(USA,Straight)</span></code>,  <span class="math notranslate nohighlight">\(\mu_{12}\)</span> is <code class="docutils literal notranslate"><span class="pre">(Other,V-shaped)</span></code> and <span class="math notranslate nohighlight">\(\mu_{22}\)</span> is <code class="docutils literal notranslate"><span class="pre">(USA,V-shaped)</span></code>.</p>
 <p>We can now examine how <code class="docutils literal notranslate"><span class="pre">R</span></code> has coded both <code class="docutils literal notranslate"><span class="pre">vs</span></code> and <code class="docutils literal notranslate"><span class="pre">origin</span></code> as dummy variables.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -564,7 +578,7 @@ V-shaped        1
     \mu_{22} &amp;= \beta_{0} + \underbrace{(\beta_{1} \times \mathbf{1})}_{\texttt{origin}} + \underbrace{(\beta_{2} \times \mathbf{1})}_{\texttt{vs}} = \beta_{0} + \beta_{1} + \beta_{2} &amp;&amp;\quad\texttt{(USA,V-shaped)}\\
 \end{alignat*}
 \end{split}\]</div>
-<p>Based on this, we can work out that</p>
+<p>Using the same logic we used in the previous part of this lesson, we can work out that</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -624,7 +638,7 @@ F-statistic: 18.36 on 2 and 29 DF,  p-value: 7.044e-06
 </div>
 </div>
 </div>
-<p>Based on this, we can construct the estimated cell means</p>
+<p>These estimates certainly look like the values we determined in the table above, with the intercept giving us a <em>cell mean</em> and the two slope parameters giving us <em>mean differences</em>. Based on this, we can construct the estimated cell means</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -641,11 +655,11 @@ F-statistic: 18.36 on 2 and 29 DF,  p-value: 7.044e-06
 <span class="n">mu.USA.vshaped</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta</span><span class="p">[</span><span class="m">3</span><span class="p">]</span>
 
 <span class="c1"># means table</span>
-<span class="n">means.tbl</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="s">&quot;origin.other&quot;</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">mu.other.straight</span><span class="p">,</span><span class="n">mu.other.vshaped</span><span class="p">),</span>
-<span class="w">                        </span><span class="s">&quot;origin.USA&quot;</span><span class="w">  </span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">mu.USA.straight</span><span class="p">,</span><span class="w">  </span><span class="n">mu.USA.vshaped</span><span class="p">),</span>
-<span class="w">                        </span><span class="n">row.names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;vs.straight&quot;</span><span class="p">,</span><span class="s">&quot;vs.vshaped&quot;</span><span class="p">))</span>
+<span class="n">est.means.tbl</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="s">&quot;origin.other&quot;</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">mu.other.straight</span><span class="p">,</span><span class="n">mu.other.vshaped</span><span class="p">),</span>
+<span class="w">                            </span><span class="s">&quot;origin.USA&quot;</span><span class="w">  </span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">mu.USA.straight</span><span class="p">,</span><span class="w">  </span><span class="n">mu.USA.vshaped</span><span class="p">),</span>
+<span class="w">                            </span><span class="n">row.names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;vs.straight&quot;</span><span class="p">,</span><span class="s">&quot;vs.vshaped&quot;</span><span class="p">))</span>
 
-<span class="nf">print</span><span class="p">(</span><span class="n">means.tbl</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">est.means.tbl</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -688,7 +702,7 @@ vs.vshaped      19.07019   14.65385
 </div>
 </div>
 </div>
-<p>Unfortunately, these estimated means do not match the actual sample means</p>
+<p>However, these estimated means do not match the actual sample means</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -703,24 +717,32 @@ vs.vshaped      19.07019   14.65385
 <span class="n">mu.USA.vshaped</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">mpg</span><span class="p">[</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;USA&quot;</span><span class="w">   </span><span class="o">&amp;</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">vs</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;V-shaped&quot;</span><span class="p">])</span>
 
 <span class="c1"># means table</span>
-<span class="n">means.tbl</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="s">&quot;origin.other&quot;</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">mu.other.straight</span><span class="p">,</span><span class="n">mu.other.vshaped</span><span class="p">),</span>
-<span class="w">                        </span><span class="s">&quot;origin.USA&quot;</span><span class="w">  </span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">mu.USA.straight</span><span class="p">,</span><span class="w">  </span><span class="n">mu.USA.vshaped</span><span class="p">),</span>
-<span class="w">                        </span><span class="n">row.names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;vs.straight&quot;</span><span class="p">,</span><span class="s">&quot;vs.vshaped&quot;</span><span class="p">))</span>
+<span class="n">samp.means.tbl</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="s">&quot;origin.other&quot;</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">mu.other.straight</span><span class="p">,</span><span class="n">mu.other.vshaped</span><span class="p">),</span>
+<span class="w">                             </span><span class="s">&quot;origin.USA&quot;</span><span class="w">  </span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">mu.USA.straight</span><span class="p">,</span><span class="w">  </span><span class="n">mu.USA.vshaped</span><span class="p">),</span><span class="w">  </span>
+<span class="w">                             </span><span class="n">row.names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;vs.straight&quot;</span><span class="p">,</span><span class="s">&quot;vs.vshaped&quot;</span><span class="p">))</span>
 
-<span class="nf">print</span><span class="p">(</span><span class="n">means.tbl</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="s">&quot;Sample means:&quot;</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">samp.means.tbl</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="s">&quot;Estimated means:&quot;</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">est.means.tbl</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>            origin.other origin.USA
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Sample means:&quot;
+            origin.other origin.USA
 vs.straight     25.59091   20.76667
 vs.vshaped      18.95000   14.75000
+[1] &quot;Estimated means:&quot;
+            origin.other origin.USA
+vs.straight     25.50350   21.08716
+vs.vshaped      19.07019   14.65385
 </pre></div>
 </div>
 </div>
 </div>
-<p>Now, these are not too far off, so there are a few possibilities here. Firstly, it could be that the assumptions of the additive model do not hold in this example. Alternatively, it is possible that these effects are truly additive in the population and any deviation is simply sampling noise. Or, it could be that the degree to which these two factors influence each other is very minor and that we could treat these factors as additive for the sake of simplicity. We will come back to all this when we explore the Full Factorial model below. Firstly, we need to discuss the ANOVA omnibus main effects in a <span class="math notranslate nohighlight">\(2 \times 2\)</span> design.</p>
+<p>Now, the estimates and the true means are not too far off, so there are a few possibilities here. Firstly, it could be that the assumptions of the additive model do not hold in this example. Alternatively, it is possible that these effects are truly additive in the population and any deviation is simply sampling noise. Or, it could be that the degree to which these two factors influence each other is very minor and that we could treat these factors as additive for the sake of simplicity. We will come back to all this when we explore the Full Factorial model below. Firstly, we need to discuss the ANOVA omnibus main effects in a <span class="math notranslate nohighlight">\(2 \times 2\)</span> design.</p>
 </section>
 <section id="main-effects">
 <h3>Main Effects<a class="headerlink" href="#main-effects" title="Link to this heading">#</a></h3>
@@ -750,10 +772,10 @@ vs.vshaped      18.95000   14.75000
 \[\begin{split}
 \begin{alignat*}{1}
     \mathcal{H}_{0}^{\text{A}} &amp;: \mu_{1.} = \mu_{2.} \\
-    \mathcal{H}_{0}^{\text{B}} &amp;: \mu_{.1} = \mu_{.2} \\
+    \mathcal{H}_{0}^{\text{B}} &amp;: \mu_{.1} = \mu_{.2}. \\
 \end{alignat*}
 \end{split}\]</div>
-<p>Under additivity, the differences between the marginal means are <em>identical</em> to the constant row or column difference and thus directly capture the overall differences between the levels of a single factor, irrespective or the levels of the other factors in the model. When additivity does not hold, this logic breaks down as the marginal means may not longer capture any effects that reflect the actual data. We will see this later when we discuss <em>interactions</em>.</p>
+<p>Although both these hypotheses only involve two means, they still remain dissimilar to a <span class="math notranslate nohighlight">\(t\)</span>-test by virtue of taking the <em>other factor</em> into account. This is not something you can do with a simple <span class="math notranslate nohighlight">\(t\)</span>-test. Of course, when dealing with factors that contain <span class="math notranslate nohighlight">\(&gt; 2\)</span> levels, the need for an omnibus tests becomes even clearer.</p>
 <section id="main-effects-in-r">
 <h4>Main Effects in <code class="docutils literal notranslate"><span class="pre">R</span></code><a class="headerlink" href="#main-effects-in-r" title="Link to this heading">#</a></h4>
 <p>As we saw previously, we can form omnibus tests from explicit model comparisons using the <code class="docutils literal notranslate"><span class="pre">anova()</span></code> function. Using this method, the main effect of <code class="docutils literal notranslate"><span class="pre">origin</span></code> would be</p>
@@ -804,11 +826,11 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 </div>
-<p>Or, we could simply give the full model to the <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">car</span></code> package and the model comparisons would be conducted automatically</p>
+<p>Or, more practically, we can simply give the full model to the <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">car</span></code> package.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="nf">Anova</span><span class="p">(</span><span class="n">full.mod</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">Anova</span><span class="p">(</span><span class="n">add.mod</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -826,13 +848,68 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 </div>
-<p>Compare the <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> output with the outputs from the model comparisons to reassure yourself that these are <em>identical</em>. Based on this result, there are significant differences in <code class="docutils literal notranslate"><span class="pre">mpg</span></code> between the levels of both <code class="docutils literal notranslate"><span class="pre">origin</span></code> and <code class="docutils literal notranslate"><span class="pre">vs</span></code>, assuming the two factors have independent influences on <code class="docutils literal notranslate"><span class="pre">mpg</span></code>. In context, this is assuming that there is nothing about where the car is manufactured that influences the shape of the engine, nor nothing about the shape of the engine that implies where it was manufactured.</p>
+<p>Compare the <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> output with the outputs from the model comparisons to reassure yourself that these are <em>identical</em>. Based on this result, there are significant differences in <code class="docutils literal notranslate"><span class="pre">mpg</span></code> between the levels of both <code class="docutils literal notranslate"><span class="pre">origin</span></code> and <code class="docutils literal notranslate"><span class="pre">vs</span></code>, assuming the two factors have independent influences on <code class="docutils literal notranslate"><span class="pre">mpg</span></code>. In context, this is assuming that there is nothing about where the car is manufactured that influences the shape of the engine, nor anything about the shape of the engine that influences where it was manufactured. This is one example where the additive model <em>could</em> be plausible.</p>
 </section>
 </section>
 </section>
 <section id="the-full-factorial-model">
 <h2>The Full Factorial Model<a class="headerlink" href="#the-full-factorial-model" title="Link to this heading">#</a></h2>
-<p>So far, we have looked at the additive model that assumes a constant row and column difference between the cell means. However, as alluded to earlier, this additive assumption may not always hold. Indeed, in many real-world examples, we <em>expect</em> the factors in the model to influence each other. A good example of this would be a basic <span class="math notranslate nohighlight">\(2 \times 2\)</span> model of a clinical trial. If Factor A is <em>diagnosis</em> (<em>patient</em>, <em>control</em>) and Factor B is <em>drug</em> (<em>placebo</em>, <em>medication</em>), then the expectation might be that the effect of the drug (i.e. <em>medication vs placebo</em>) is different depending upon whether you are a <em>control</em> or a <em>patient</em>. For instance, if the drug is very targeted then there may only be a difference between the medication and a placebo if you are patient, but not if you are a control. In this example, the effect of <em>drug</em> depends upon <em>diagnosis</em>. When <em>diagnosis = control</em> there is no effect, but when <em>diagnosis = patient</em> there is an effect. This form of dependence between the levels of multiple factors is known as an <em>interaction</em>.</p>
+<p>So far, we have looked at the additive model that assumes a constant row and column difference between the cell means. However, as alluded to earlier, this additive assumption may not always hold. Indeed, in many real-world examples, we <em>expect</em> the factors in the model to influence each other. We saw an example earlier of <em>depression</em> and <em>anxiety</em>. Another example would be a basic <span class="math notranslate nohighlight">\(2 \times 2\)</span> model of a clinical trial. If Factor A is <em>diagnosis</em> (<em>patient</em>, <em>control</em>) and Factor B is <em>drug</em> (<em>placebo</em>, <em>medication</em>), then the expectation might be that the effect of the drug (i.e. <em>medication vs placebo</em>) is different depending upon whether you are a <em>control</em> or a <em>patient</em>. For instance, if the drug is very targeted then there may only be a difference between the medication and a placebo if you are patient, but not if you are a control. In this example, the effect of <em>drug</em> depends upon <em>diagnosis</em>. When <em>diagnosis = control</em> there is no effect, but when <em>diagnosis = patient</em> there is an effect. This form of dependence between the levels of multiple factors is known as an <em>interaction</em>.</p>
+<section id="conceptual-understanding-of-an-interaction">
+<h3>Conceptual Understanding of an Interaction<a class="headerlink" href="#conceptual-understanding-of-an-interaction" title="Link to this heading">#</a></h3>
+<p>An interaction can most easily be understood conceptually as a <em>difference</em> of a <em>difference</em>. Thinking back to our basic <span class="math notranslate nohighlight">\(2 \times 2\)</span> arrangement, we have the following means table</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Factor B: Level 1</p></th>
+<th class="head"><p>Factor B: Level 2</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Factor A: Level 1</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu_{11}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu_{12}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Factor B: Level 2</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu_{21}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu_{22}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Remembering that the additive model assumes a <em>constant difference</em> between the columns and the rows, such that the level of the second factor does not change the effect of the first factor. In terms of the cell means, this leads to</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{alignat*}{1}
+    \text{Factor A} &amp;: \mu_{11} - \mu_{21} = \mu_{12} - \mu_{22} \quad\text{(row effects are the same)} \\
+    \text{Factor B} &amp;: \mu_{11} - \mu_{12} = \mu_{21} - \mu_{22} \quad\text{(column effects are the same)} \\
+\end{alignat*}
+\end{split}\]</div>
+<p>So how would we test whether this is true? Let us rewrite the additive assumption about Factor A a different way</p>
+<div class="math notranslate nohighlight">
+\[
+\left(\mu_{11} - \mu_{21}\right) - \left(\mu_{12} - \mu_{22}\right) = 0.
+\]</div>
+<p>So we can see that the additive assumption says that this <em>difference</em> of <em>differences</em> is 0. So, in cases where additivity does not hold, we would expect this value to be <em>non-zero</em>. Thus, in order to test an interaction, we calculate</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{alignat*}{1}
+    \text{A $\times$ B} &amp;= \left(\mu_{11} - \mu_{21}\right) - \left(\mu_{12} - \mu_{22}\right) \\
+                        &amp;= \mu_{11} - \mu_{21} - \mu_{12} + \mu_{22},
+\end{alignat*}
+\end{split}\]</div>
+<p>where the second form simply comes from removing the brackets. Of note is that we can also express this in terms of testing the column effects of Factor B</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{alignat*}{1}
+    \text{B $\times$ A} &amp;= \left(\mu_{11} - \mu_{12}\right) - \left(\mu_{21} - \mu_{22}\right) \\
+                        &amp;= \mu_{11} - \mu_{12} - \mu_{21} + \mu_{22},
+\end{alignat*}
+\end{split}\]</div>
+<p>which is <em>exactly the same expression</em>. So, there is only a <em>single</em> interaction effect that simultaneously captures either <em>non-constant row effects</em>, <em>non-constant column effects</em> or <em>both</em>.</p>
+<p>It can also be helpful at this stage to visualise what an interaction looks like. In <code class="docutils literal notranslate"><span class="pre">Fig...</span></code>, the cell means are illustrated …</p>
+<p>…</p>
+</section>
 <section id="interactions-as-multiplicative-effects">
 <h3>Interactions as Multiplicative Effects<a class="headerlink" href="#interactions-as-multiplicative-effects" title="Link to this heading">#</a></h3>
 <p>So, given what we have described above, how do we accommodate an interaction into the additive model? To see this most clearly, we will start from first principles in order to build-up what an interaction <em>actually</em> is. To do so, we will briefly return to a more traditional multiple regression model with two variables</p>
@@ -945,8 +1022,8 @@ F-statistic: 11.84 on 3 and 28 DF,  p-value: 3.466e-05
 </div>
 </div>
 </section>
-<section id="interaction-in-terms-of-cell-means">
-<h3>Interaction in Terms of Cell Means<a class="headerlink" href="#interaction-in-terms-of-cell-means" title="Link to this heading">#</a></h3>
+<section id="cell-means-in-the-full-factorial-model">
+<h3>Cell Means in the Full Factorial Model<a class="headerlink" href="#cell-means-in-the-full-factorial-model" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">beta</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">int.model</span><span class="p">)</span>
@@ -969,6 +1046,26 @@ F-statistic: 11.84 on 3 and 28 DF,  p-value: 3.466e-05
 </div>
 </div>
 <p>Which is <em>precisely</em> the interaction effect given in the summary table above.</p>
+<p>This gets a bit hairy, but we can substitute in our definition of each cell mean from the models given earlier and calculate the interaction effect. For instance, in the full factorial model, we have</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{alignat*}{1}
+    (\mu_{11} - \mu_{21}) - (\mu_{12} - \mu_{22}) &amp;= \overbrace{\left(\beta_{0} - \left[\beta_{0} + \beta_{1}\right]\right)}^{(\mu_{11} - \mu_{21})} - \overbrace{\left(\left[\beta_{0} + \beta_{2}\right] - \left[\beta_{0} + \beta_{1} + \beta_{2} + \beta_{3}\right]\right)}^{(\mu_{12} - \mu_{22})} \\
+    &amp;= \left(\beta_{0} - \beta_{0} - \beta_{1}\right) - \left(\beta_{0} + \beta_{2} - \beta_{0} - \beta_{1} - \beta_{2} - \beta_{3}\right) \\
+    &amp;= \beta_{1} - \beta_{1} + \beta_{3} \\
+    &amp;= \beta_{3}
+\end{alignat*}
+\end{split}\]</div>
+<p>However, in the additive model without the interaction term we have</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{alignat*}{1}
+    (\mu_{11} - \mu_{21}) - (\mu_{12} - \mu_{22}) &amp;= \overbrace{\left[\beta_{0} - \left(\beta_{0} + \beta_{1}\right)\right]}^{(\mu_{11} - \mu_{21})} - \overbrace{\left[\left(\beta_{0} + \beta_{2}\right) - \left(\beta_{0} + \beta_{1} + \beta_{2}\right)\right]}^{(\mu_{12} - \mu_{22})} \\
+    &amp;= \left(\beta_{0} - \beta_{0} - \beta_{1}\right) - \left(\beta_{0} + \beta_{2} - \beta_{0} - \beta_{1} - \beta_{2}\right) \\
+    &amp;= \beta_{1} - \beta_{1} \\
+    &amp;= 0
+\end{alignat*}
+\end{split}\]</div>
 </section>
 <section id="the-omnibus-interaction-effect">
 <h3>The Omnibus Interaction Effect<a class="headerlink" href="#the-omnibus-interaction-effect" title="Link to this heading">#</a></h3>
@@ -1022,6 +1119,10 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>lattice theme set by effectsTheme()
+See ?effectsTheme for details.
+</pre></div>
+</div>
 <a class="reference internal image-reference" href="_images/6bdc59bddc0a746c983394af516b535100f1650e9cb0513e60bf0464ae8959ec.png"><img alt="_images/6bdc59bddc0a746c983394af516b535100f1650e9cb0513e60bf0464ae8959ec.png" src="_images/6bdc59bddc0a746c983394af516b535100f1650e9cb0513e60bf0464ae8959ec.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
@@ -1038,6 +1139,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 <p>…</p>
 <section id="interpreting-main-effects-in-the-presence-of-an-interaction">
 <h4>Interpreting Main Effects in the Presence of an Interaction<a class="headerlink" href="#interpreting-main-effects-in-the-presence-of-an-interaction" title="Link to this heading">#</a></h4>
+<p>Under additivity, the differences between the marginal means are <em>identical</em> to the constant row or column difference and thus directly capture the overall differences between the levels of a single factor, irrespective or the levels of the other factors in the model. When additivity does not hold, this logic breaks down as the marginal means may not longer capture any effects that reflect the actual data. We will see this later when we discuss <em>interactions</em>.</p>
 </section>
 <section id="type-ii-effects">
 <h4>Type II Effects<a class="headerlink" href="#type-ii-effects" title="Link to this heading">#</a></h4>
@@ -1201,9 +1303,10 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-full-factorial-model">The Full Factorial Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conceptual-understanding-of-an-interaction">Conceptual Understanding of an Interaction</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions-as-multiplicative-effects">Interactions as Multiplicative Effects</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-full-factorial-anova">The Full Factorial ANOVA</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-in-terms-of-cell-means">Interaction in Terms of Cell Means</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-means-in-the-full-factorial-model">Cell Means in the Full Factorial Model</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-omnibus-interaction-effect">The Omnibus Interaction Effect</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-omnibus-main-effect-tests">The Omnibus Main Effect Tests</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-main-effects-in-the-presence-of-an-interaction">Interpreting Main Effects in the Presence of an Interaction</a></li>
