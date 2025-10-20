@@ -7,7 +7,8 @@ chapters:
 - file: 1.dummy-variables
 - file: 2.oneway-ANOVA-alt
 - file: 3.omnibus-tests-model-comps-alt
-- file: 4.higher-order-ANOVA
+- file: 4.higher-order-ANOVA-I
+- file: 4.higher-order-ANOVA-II
 - file: 5.follow-up
 #- file: 6.general-procedure
 #- file: 6.unbalanced-ANOVA
