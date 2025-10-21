@@ -384,7 +384,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#main-effect-in-the-full-factorial-model">Main Effect in the Full Factorial Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-main-effects-in-the-presence-of-an-interaction">Interpreting Main Effects in the Presence of an Interaction</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#type-ii-effects">Type II Effects</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Interpreting Main Effects in the Presence of an Interaction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Interpreting Main Effects in the Presence of an Interaction</a></li>
 </ul>
 </li>
 </ul>
@@ -427,7 +427,7 @@
 </tbody>
 </table>
 </div>
-<p>Remembering that the additive model assumes a <em>constant difference</em> between the columns and the rows, such that the level of the second factor does not change the effect of the first factor. In terms of the cell means, this leads to</p>
+<p>Remember that the additive model assumes a <em>constant difference</em> between the columns and the rows, such that the level of the second factor does not change the effect of the first factor. In terms of the cell means, this leads to</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{alignat*}{1}
@@ -456,34 +456,23 @@
                         &amp;= \mu_{11} - \mu_{12} - \mu_{21} + \mu_{22},
 \end{alignat*}
 \end{split}\]</div>
-<p>which is <em>exactly the same expression</em>. So, there is only a <em>single</em> interaction effect that simultaneously captures either <em>non-constant row effects</em>, <em>non-constant column effects</em> or <em>both</em>.</p>
+<p>which is <em>exactly the same expression</em>. So, there is only a <em>single</em> interaction effect that simultaneously captures both <em>non-constant row effects</em> and <em>non-constant column effects</em>.</p>
 <section id="interaction-plots">
 <h3>Interaction Plots<a class="headerlink" href="#interaction-plots" title="Link to this heading">#</a></h3>
-<p>It can also be helpful at this stage to visualise what an interaction looks like. In the plot below, the cell means are illustrated for two factors in a <span class="math notranslate nohighlight">\(2 \times 2\)</span> design. This form of graph is known as an <em>interaction plot</em>. Each cell mean is illustrated as a single point, with lines drawn across the levels of a single factor. In this example, the lines illustrate the differences between Level 1 and 2 of Factor B, with different line types showing this effects at the two levels of Factor A. In this first plot, there is <em>no interaction</em>. So, this represents the pattern of means when additivity holds. As we can see, there is a constant <em>horizontal</em> difference between <code class="docutils literal notranslate"><span class="pre">B1</span></code> and <code class="docutils literal notranslate"><span class="pre">B2</span></code>, irrespective of the level of Factor A. Similarly, there is a constant <em>vertical</em> difference between the <code class="docutils literal notranslate"><span class="pre">A1</span></code> and <code class="docutils literal notranslate"><span class="pre">A2</span></code>, irrespective of the level of Factor B.</p>
-<div class="warning admonition">
-<p class="admonition-title">Important Point</p>
-<p>Additivity holds when we see <em>parallel lines</em> in an interaction plot</p>
-</div>
+<p>It can be helpful at this stage to visualise what an interaction looks like. In the plots below, the cell means are illustrated for two factors in a <span class="math notranslate nohighlight">\(2 \times 2\)</span> design. This form of graph is known as an <em>interaction plot</em>. Each cell mean is illustrated as a single point, with lines drawn across the levels of a single factor. In this example, the lines illustrate the differences between Level 1 and 2 of Factor B, with different line types showing this effects at the two levels of Factor A.</p>
+<p>In this first plot, there is <em>no interaction</em>. So, this represents the pattern of means when additivity holds. As we can see, there is a constant <em>horizontal</em> difference between <code class="docutils literal notranslate"><span class="pre">B1</span></code> and <code class="docutils literal notranslate"><span class="pre">B2</span></code>, irrespective of the level of Factor A. Similarly, there is a constant <em>vertical</em> difference between the <code class="docutils literal notranslate"><span class="pre">A1</span></code> and <code class="docutils literal notranslate"><span class="pre">A2</span></code>, irrespective of the level of Factor B.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
 <a class="reference internal image-reference" href="_images/b35828adde2dcaea4a0a645a108ad2c88645239d83d6d644048a558137345e50.png"><img alt="_images/b35828adde2dcaea4a0a645a108ad2c88645239d83d6d644048a558137345e50.png" src="_images/b35828adde2dcaea4a0a645a108ad2c88645239d83d6d644048a558137345e50.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>In the second example plot below, we see a <em>deviation</em> from parallel lines. This is known as a <em>non-crossover</em> interaction because the lines do not cross. This is indicative of the type of interaction where the <em>magnitude</em> of the effect depends upon the level of one of the factors. For instance, is this were our drug <span class="math notranslate nohighlight">\(\times\)</span> diagnosis clinical trial (where Factor A is <em>diagnosis</em> and Factor B is <em>drug</em>), this sort of pattern could emerge when the drug is <em>more effective</em> in the patient group compared to the control group. So, we see a larger difference between drug and placebo in the patient group compared to the control group.</p>
-<div class="warning admonition">
-<p class="admonition-title">Important Point</p>
-<p>Any deviation from parallel lines implies an interaction. So, in the context of an interaction plot, we can define an interaction as <em>non-parallel lines</em>.</p>
-</div>
+<p>In the second plot, we see a <em>deviation</em> from parallel lines. This is known as a <em>non-crossover</em> interaction because the lines do not cross. This is typical of the type of interaction where the <em>magnitude</em> of the effect depends upon the level of one of the factors. For instance, is this were our drug <span class="math notranslate nohighlight">\(\times\)</span> diagnosis clinical trial, this sort of pattern could emerge when the drug is <em>more effective</em> in the patient group compared to the control group.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
 <a class="reference internal image-reference" href="_images/7bc089982151a2a66b3ded29d048e92e2b4e108a7740d699aaff92f4959be4c4.png"><img alt="_images/7bc089982151a2a66b3ded29d048e92e2b4e108a7740d699aaff92f4959be4c4.png" src="_images/7bc089982151a2a66b3ded29d048e92e2b4e108a7740d699aaff92f4959be4c4.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>In the final example, we see a <em>crossover interaction</em>, so-called because the lines cross to create an x-shape. This form of interaction can be more unusal as it implies a complete reversal of the effect of the factor at different levels of another. In our clinical trial example, this would imply that perhaps the patients <em>improve</em> when taking the drug, whereas the controls get <em>worse</em>. This is not implausible. Perhaps without any clinical benefit, the side-effects of the drug are more pronounced in the control group and thus impact performance negatively? Neverthless, the reasoning behind a complete reversal of an effect (rather than simply negating the effect) can sometimes be difficult to explain. Nevertheless, we are actually better powered to detect cross-over interactions, because the <em>difference</em> of <em>differences</em> is larger than in the non-crossover case<a class="footnote-reference brackets" href="#crosspower-foot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
-<div class="warning admonition">
-<p class="admonition-title">Important Point</p>
-<p>Two types of interaction can be found: <em>crossover</em> or <em>non-crossover</em>. These imply different mechanisms as one indicates a <em>reversal</em> of an effect, whereas the other indicates a <em>dampening</em> of an effect. Importantly, we are better-powered to detect cross-over interactions than non-crossover interactions.</p>
-</div>
+<p>In the final plot, we see a <em>crossover interaction</em>, so-called because the lines create an x-shape. This form of interaction can be more unusal as it implies a complete reversal of the effect of one factor at different levels of another. In our clinical trial example, this could imply that the patients <em>improve</em> when taking the drug, whereas the controls get <em>worse</em>. This is not implausible. Perhaps without any clinical benefit, the side-effects of the drug are more pronounced in the control group. Of note is that we are better powered to detect cross-over interactions compared to non-crossover. This is because the <em>difference</em> of <em>differences</em> is always larger for a crossover than a non-crossover interaction<a class="footnote-reference brackets" href="#crosspower-foot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
 <a class="reference internal image-reference" href="_images/a83918bd6ce9b661fff0a08aa54a4b2413bab3ee4b9ddd4336b1c980b971460d.png"><img alt="_images/a83918bd6ce9b661fff0a08aa54a4b2413bab3ee4b9ddd4336b1c980b971460d.png" src="_images/a83918bd6ce9b661fff0a08aa54a4b2413bab3ee4b9ddd4336b1c980b971460d.png" style="width: 420px; height: 420px;" /></a>
@@ -507,7 +496,7 @@ y_{i} = \beta_{0} + \beta_{1}x_{i1} + \gamma x_{i2} + \epsilon_{i}.
 \[
 \gamma = \beta_{2} + \beta_{3}x_{i1}.
 \]</div>
-<p>So, here, <span class="math notranslate nohighlight">\(\beta_{2}\)</span> represents the <em>independent</em> part of the relationship between <span class="math notranslate nohighlight">\(x_{i1}\)</span> and <span class="math notranslate nohighlight">\(x_{i2}\)</span>, and <span class="math notranslate nohighlight">\(\beta_{3}\)</span> represents the <em>dependent</em> part of the relationship (hence why <span class="math notranslate nohighlight">\(x_{i1}\)</span> appears here). If we insert this new definition of <span class="math notranslate nohighlight">\(\gamma\)</span> into the original regression equation, we get</p>
+<p>So, here, <span class="math notranslate nohighlight">\(\beta_{2}\)</span> represents the part of the relationship between <span class="math notranslate nohighlight">\(x_{i2}\)</span> and <span class="math notranslate nohighlight">\(y_{i}\)</span> that is <em>independent</em> of <span class="math notranslate nohighlight">\(x_{i1}\)</span>, and <span class="math notranslate nohighlight">\(\beta_{3}\)</span> represents the part of the relationship between <span class="math notranslate nohighlight">\(x_{i2}\)</span> and <span class="math notranslate nohighlight">\(y_{i}\)</span> that is <em>dependent</em> on <span class="math notranslate nohighlight">\(x_{i1}\)</span>. If we insert this new definition of <span class="math notranslate nohighlight">\(\gamma\)</span> into the original regression equation, we get</p>
 <div class="math notranslate nohighlight">
 \[
 y_{i} = \beta_{0} + \beta_{1}x_{i1} + (\underbrace{\beta_{2} + \beta_{3}x_{i1}}_{\gamma})x_{i2} + \epsilon_{i}.
@@ -517,7 +506,7 @@ y_{i} = \beta_{0} + \beta_{1}x_{i1} + (\underbrace{\beta_{2} + \beta_{3}x_{i1}}_
 \[
 y_{i} = \beta_{0} + \underbrace{\beta_{1}x_{i1} + \beta_{2}x_{i2}}_{\text{additive model}} + \underbrace{\beta_{3}x_{i1}x_{i2}}_{\text{interaction}} + \epsilon_{i}.
 \]</div>
-<p>So what is an interaction? In modelling terms, it is the effect associated with the <em>multiplication</em> of predictor variables<a class="footnote-reference brackets" href="#interact-foot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. Hence, an interaction effect is often termed a <em>multiplicative</em> effect, rather than an <em>additive</em> effect.</p>
+<p>So what is an interaction? In modelling terms, it is the effect associated with the <em>multiplication</em> of predictor variables<a class="footnote-reference brackets" href="#interact-foot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. Hence, an interaction effect is often termed a <em>multiplicative</em> effect, rather than an <em>additive</em> effect. We will make the intuition behind this a little clearer below. First, let us look at the full factorial ANOVA model and how it can be expressed using dummy variables.</p>
 </section>
 </section>
 <section id="the-full-factorial-anova">
@@ -698,7 +687,7 @@ vs.vshaped      18.95000   14.75000
 </section>
 <section id="the-omnibus-interaction-effect">
 <h2>The Omnibus Interaction Effect<a class="headerlink" href="#the-omnibus-interaction-effect" title="Link to this heading">#</a></h2>
-<p>Given what we have stated above, in the <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> example the interaction effect is only a single value captured by a single model parameter. As such, we could just use the <span class="math notranslate nohighlight">\(t\)</span>-test within the regression table to assess the significant of the interaction term. More generally though, if one (or more) of the interacting factors has <span class="math notranslate nohighlight">\(&gt; 2\)</span> levels, the interaction effect will be split across <em>multiple</em> model parameters. The number of parameters can be easily calculated using the number of dummy variables needed to represent each factor. If Factor A has <span class="math notranslate nohighlight">\((m - 1)\)</span> dummy variables and Factor B has <span class="math notranslate nohighlight">\((n - 1)\)</span> dummy variables, then we will need <span class="math notranslate nohighlight">\((m - 1)(n - 1)\)</span> dummies to represent their interaction. Only when <span class="math notranslate nohighlight">\(m = n = 2\)</span> will this be equal to 1. As such, it is more typical to consider the <em>omnibus</em> interaction effect, as a direct analogue of the main effects tests from the previous part of this lesson.</p>
+<p>Given what we have stated above, in the <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> example the interaction effect is only a single value captured by a single model parameter. As such, we could just use the <span class="math notranslate nohighlight">\(t\)</span>-test within the regression table to assess the significant of the interaction term. More generally though, if one (or more) of the interacting factors has <span class="math notranslate nohighlight">\(&gt; 2\)</span> levels, the interaction effect will be split across <em>multiple</em> dummy variables and thus will be represented by <em>multiple</em> model parameters. The number of parameters can be easily calculated using the number of dummy variables for each factor. If Factor A needs <span class="math notranslate nohighlight">\((m - 1)\)</span> dummy variables and Factor B needs <span class="math notranslate nohighlight">\((n - 1)\)</span> dummy variables, then we will need <span class="math notranslate nohighlight">\((m - 1)(n - 1)\)</span> dummies to represent the interaction. Only when <span class="math notranslate nohighlight">\(m = n = 2\)</span> will this be equal to 1. As such, it is more typical to consider the <em>omnibus</em> interaction effect, as a direct analogue of the main effects tests from the previous part of this lesson.</p>
 <p>Much like we saw with main effects, the omnibus interaction effect can be determined by a simple model comparison</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -751,7 +740,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 </div>
-<p>Either way, we can see that the amount to which the residual sum-of-squares changes after including the interaction effect is very small. Indeed, <span class="math notranslate nohighlight">\(F &lt; 1\)</span>, which suggests that the amount to which the interaction term improves the model fit is even smaller than we would expect from pure error. This would be considered unambiguously non-significant using the standards of NHST with <span class="math notranslate nohighlight">\(p = 0.855\)</span>. We can easily see this if we plot the effect</p>
+<p>Either way, we can see that the amount to which the residual sum-of-squares changes after including the interaction effect is very small. Indeed, <span class="math notranslate nohighlight">\(F &lt; 1\)</span>, which suggests that the amount to which the interaction term improves the model fit is even smaller than we would expect from pure error. With <span class="math notranslate nohighlight">\(F = 0.03\)</span>, this indicates that the model explains only 3% as much variance as would be expected by noise alone<a class="footnote-reference brackets" href="#fsqrt-foot" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. This is essentially <em>no effect</em> and would be considered unambiguously non-significant using the standards of NHST with <span class="math notranslate nohighlight">\(p = 0.855\)</span>. We can easily see this if we plot the effect</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
@@ -760,30 +749,64 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>lattice theme set by effectsTheme()
-See ?effectsTheme for details.
-</pre></div>
-</div>
 <a class="reference internal image-reference" href="_images/6bdc59bddc0a746c983394af516b535100f1650e9cb0513e60bf0464ae8959ec.png"><img alt="_images/6bdc59bddc0a746c983394af516b535100f1650e9cb0513e60bf0464ae8959ec.png" src="_images/6bdc59bddc0a746c983394af516b535100f1650e9cb0513e60bf0464ae8959ec.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>where it is clear that the two lines are basically parallel, for all practical purposes. As such, we would likely conclude that there is nothing about engine shape that informs where a car is manufactured, nor anything about where a car is manufacturered that influences the shape of its engine. In this case, it seems that the additive model is perfectly justified.</p>
 <div class="tip admonition">
 <p class="admonition-title">Removing the Interaction</p>
-<p>It is also worth noting that many statisticians would recommend removing non-significant interaction effects from the model before proceeding. However, this is not typically done in Psychology. Instead, due to the prevalence of NHST, these effects are simply assessed based on their significance and interpreted accordingly. This is largely because the focus of many statisticians is building the best model they can, whereas the focus in Psychology is largely about hypothesis tests. Indeed, as we have made clear across these various lessons, few Psychologists even think about ANOVAs in terms of models.</p>
+<p>It is worth noting that many statisticians would recommend removing non-significant interaction effects from the model before proceeding. This is not typically done in Psychology. Instead, due to the prevalence of NHST, these effects are simply assessed based on their significance and interpreted accordingly. This is largely because the focus of many statisticians is building the best model they can, whereas the focus in Psychology is largely about hypothesis tests. Indeed, as we have made clear across these various lessons, few Psychologists even think about ANOVAs in terms of models. So, with the result above, the statistician would go back to the additive model as the best representation of the data, whereas the psychologist would stick with the full factorial model and just interpret the hypothesis tests. Although the statistician’s approach is generally a better exercise in <em>model building</em> (and a better approach generally), this distinction is important to know when looking at the psychological literature and working with psychologists who typically do not engage with such practices (particularly in the context of an ANOVA).</p>
 </div>
 </section>
 <section id="main-effect-in-the-full-factorial-model">
 <h2>Main Effect in the Full Factorial Model<a class="headerlink" href="#main-effect-in-the-full-factorial-model" title="Link to this heading">#</a></h2>
 <p>When the model contains interaction effects, we need to be more careful about how we define main effects.</p>
 <p>…</p>
+<p>For the purpose of illustration, we will alter the <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> dataset to create an interaction between <code class="docutils literal notranslate"><span class="pre">origin</span></code> and <code class="docutils literal notranslate"><span class="pre">vs</span></code>. To do so, we add a constant to all the data within only a <em>single cell</em> and then rerun the model. The results are shown below.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mpg.fake</span><span class="w">          </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">mpg</span><span class="w">                                         </span><span class="c1"># copy mpg</span>
+<span class="n">mpg.idx</span><span class="w">           </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;Other&quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">mtcars</span><span class="o">$</span><span class="n">vs</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;Straight&quot;</span><span class="w"> </span><span class="c1"># index of Other-Straight cell</span>
+<span class="n">mpg.cell</span><span class="w">          </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mpg.fake</span><span class="p">[</span><span class="n">mpg.idx</span><span class="p">]</span><span class="w">                                  </span><span class="c1"># data from that one cell</span>
+<span class="n">mpg.fake</span><span class="p">[</span><span class="n">mpg.idx</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mpg.cell</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">7</span><span class="w">                                       </span><span class="c1"># add 7 to all data from that cell</span>
+<span class="n">mtcars</span><span class="o">$</span><span class="n">mpg.fake</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mpg.fake</span><span class="w">                                           </span><span class="c1"># save to dataset</span>
+
+<span class="n">fake.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg.fake</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">origin</span><span class="o">:</span><span class="n">vs</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">Anova</span><span class="p">(</span><span class="n">fake.mod</span><span class="p">))</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">effect</span><span class="p">(</span><span class="s">&quot;origin:vs&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">mod</span><span class="o">=</span><span class="n">fake.mod</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Anova Table (Type II tests)
+
+Response: mpg.fake
+          Sum Sq Df F value    Pr(&gt;F)    
+origin    318.42  1 17.9662 0.0002209 ***
+vs        855.82  1 48.2872 1.485e-07 ***
+origin:vs  89.53  1  5.0517 0.0326650 *  
+Residuals 496.26 28                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/d0ed9169dbbcedf062a35a145f5bc075be64ce1ec45bcffa699e607dc8fa9c25.png"><img alt="_images/d0ed9169dbbcedf062a35a145f5bc075be64ce1ec45bcffa699e607dc8fa9c25.png" src="_images/d0ed9169dbbcedf062a35a145f5bc075be64ce1ec45bcffa699e607dc8fa9c25.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>Now, we have a (completely fake) two-way interaction. As we can see from the visualisation, this is a non-crossover interaction where the effect of <code class="docutils literal notranslate"><span class="pre">Straight</span></code> vs <code class="docutils literal notranslate"><span class="pre">V-shaped</span></code> differs between the <code class="docutils literal notranslate"><span class="pre">USA</span></code> and <code class="docutils literal notranslate"><span class="pre">Other</span></code> countries of origin.</p>
 <section id="interpreting-main-effects-in-the-presence-of-an-interaction">
 <h3>Interpreting Main Effects in the Presence of an Interaction<a class="headerlink" href="#interpreting-main-effects-in-the-presence-of-an-interaction" title="Link to this heading">#</a></h3>
 <p>Under additivity, the differences between the marginal means are <em>identical</em> to the constant row or column difference and thus directly capture the overall differences between the levels of a single factor, irrespective or the levels of the other factors in the model. When additivity does not hold, this logic breaks down as the marginal means may not longer capture any effects that reflect the actual data. We will see this later when we discuss <em>interactions</em>.</p>
 </section>
 <section id="type-ii-effects">
 <h3>Type II Effects<a class="headerlink" href="#type-ii-effects" title="Link to this heading">#</a></h3>
-<p>This gets a little tricky, but we will discuss more about Type I, Type II and Type III tests in the final lesson on this unit. For now, just know that Type II main effects are calculated based on assuming that the interaction effect is 0. In other words, they are calculated as if the additive model were true<a class="footnote-reference brackets" href="#type2-foot" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.</p>
+<p>This gets a little tricky, but we will discuss more about Type I, Type II and Type III tests in the final lesson on this unit. For now, just know that Type II main effects are calculated based on assuming that the interaction effect is 0. In other words, they are calculated as if the additive model were true<a class="footnote-reference brackets" href="#type2-foot" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>.</p>
 <p>Why would we want to do this? Well, consider the two situations we may find ourselves in:</p>
 <ol class="arabic simple">
 <li><p>The interaction effect is significant</p>
@@ -836,8 +859,8 @@ See ?effectsTheme for details.
 </div>
 </div>
 </section>
-<section id="id4">
-<h3>Interpreting Main Effects in the Presence of an Interaction<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<section id="id5">
+<h3>Interpreting Main Effects in the Presence of an Interaction<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <p>… We can see that averaging over either the rows or columns of the means table only makes sense when additivity is assumed. If we do this when there is not a constant row or column effect, the very meaning of the main effect breaks down. If we want to think of a main effect as the consistent effect of a factor irrespective of other factors, this is no longer valid when those effects are <em>not</em> consistent. As such, main effects must assume additivity to make any sense. If there is a large interaction effect, the very concept of a main effects no longer make sense.</p>
 <p>Indeed, you do not need to know anything about the model to see this. The interaction tells us that the main effect depends upon the level of another factor. Why would we then try to look at a main effect <em>ignoring</em> that factor? We know that other factor matters. That is what the interaction tells us. Unfortuantely, it is common practise in Psychology to ignore this and try to interpret main effects in the presence of significant interactions. Hopefully it is clear how meaningless this actually is.</p>
 <hr class="footnotes docutils" />
@@ -850,8 +873,12 @@ See ?effectsTheme for details.
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
 <p>This does imply that interactions can occur between <em>any</em> variables, and indeed they can. We can have continuous <span class="math notranslate nohighlight">\(\times\)</span> continuous, categorical <span class="math notranslate nohighlight">\(\times\)</span> continuous, and categroical <span class="math notranslate nohighlight">\(\times\)</span> categorical interactions.</p>
 </aside>
-<aside class="footnote brackets" id="type2-foot" role="note">
+<aside class="footnote brackets" id="fsqrt-foot" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>If you find it difficult conceptualising magnitudes in terms of variances, you can always re-express an <span class="math notranslate nohighlight">\(F\)</span> in standard deviation terms by taking <span class="math notranslate nohighlight">\(t = \sqrt{F}\)</span>. You can then interpret <span class="math notranslate nohighlight">\(F\)</span> in standard deviation terms, exactly like the <span class="math notranslate nohighlight">\(t\)</span>-statistic. However, it is important to note that this only works when <span class="math notranslate nohighlight">\(df_{1} = 1\)</span>. When <span class="math notranslate nohighlight">\(df_{1} &gt; 1\)</span>, there is no such clear analogue.</p>
+</aside>
+<aside class="footnote brackets" id="type2-foot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
 <p>Note that these tests are not identical to simply fitting an additive model, but this is a subtlety we will leave to one side for now.</p>
 </aside>
 </aside>
@@ -937,7 +964,7 @@ See ?effectsTheme for details.
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#main-effect-in-the-full-factorial-model">Main Effect in the Full Factorial Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-main-effects-in-the-presence-of-an-interaction">Interpreting Main Effects in the Presence of an Interaction</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#type-ii-effects">Type II Effects</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Interpreting Main Effects in the Presence of an Interaction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Interpreting Main Effects in the Presence of an Interaction</a></li>
 </ul>
 </li>
 </ul>
