@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>ANOVA Workshop &#8212; Linear Models IV: Model Comparisons and the ANOVA</title>
+    <title>PCHN63101: ANOVA Workshop &#8212; Linear Models IV: Model Comparisons and the ANOVA</title>
   
   
   
@@ -173,10 +173,10 @@
         </ul>
         <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1.dummy-variables.html">Dummy Variable Regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.oneway-ANOVA-alt.html">One-way ANOVA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.omnibus-tests-model-comps-alt.html">Omnibus Tests and Model Comparisons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.oneway-ANOVA.html">One-way ANOVA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.omnibus-tests-model-comps.html">Omnibus Tests and Model Comparisons</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4.higher-order-ANOVA-I.html">Higher-order ANOVA I: The Additive Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4.higher-order-ANOVA-II.html">Higher-order ANOVA II: The Full Factorial Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.higher-order-ANOVA-II.html">Higher-order ANOVA II: The Full Factorial Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
 </ul>
 
@@ -360,7 +360,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>ANOVA Workshop</h1>
+    <h1>PCHN63101: ANOVA Workshop</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -370,11 +370,11 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-the-f-statistic-and-the-t-statistic">Connecting the <span class="math notranslate nohighlight">\(F\)</span>-statistic and the <span class="math notranslate nohighlight">\(t\)</span>-statistic</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-with-2-levels">2-way ANOVA with &gt; 2 Levels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-and-beyond">3-way ANOVA and Beyond</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-general-modelling-procedure">The General Modelling Procedure</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-higher-order-anova-models">Assumptions in Higher-order ANOVA Models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unequal-variance-in-higher-order-anova-models">Unequal Variance in HIgher-order ANOVA Models</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-on-emmeans">More on <code class="docutils literal notranslate"><span class="pre">emmeans</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-model-comparison-methods">Other Model Comparison Methods</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-2"><span class="math notranslate nohighlight">\(R^{2}\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aic-and-bic">AIC and BIC</a></li>
@@ -391,10 +391,13 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="anova-workshop">
-<h1>ANOVA Workshop<a class="headerlink" href="#anova-workshop" title="Link to this heading">#</a></h1>
-<section id="connecting-the-f-statistic-and-the-t-statistic">
-<h2>Connecting the <span class="math notranslate nohighlight">\(F\)</span>-statistic and the <span class="math notranslate nohighlight">\(t\)</span>-statistic<a class="headerlink" href="#connecting-the-f-statistic-and-the-t-statistic" title="Link to this heading">#</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="pchn63101-anova-workshop">
+<h1>PCHN63101: ANOVA Workshop<a class="headerlink" href="#pchn63101-anova-workshop" title="Link to this heading">#</a></h1>
+<section id="way-anova-with-2-levels">
+<h2>2-way ANOVA with &gt; 2 Levels<a class="headerlink" href="#way-anova-with-2-levels" title="Link to this heading">#</a></h2>
+</section>
+<section id="way-anova-and-beyond">
+<h2>3-way ANOVA and Beyond<a class="headerlink" href="#way-anova-and-beyond" title="Link to this heading">#</a></h2>
 </section>
 <section id="the-general-modelling-procedure">
 <h2>The General Modelling Procedure<a class="headerlink" href="#the-general-modelling-procedure" title="Link to this heading">#</a></h2>
@@ -592,9 +595,6 @@ Conf-level adjustment: bonferroni method for 3 estimates
 </div>
 </div>
 </section>
-<section id="more-on-emmeans">
-<h2>More on <code class="docutils literal notranslate"><span class="pre">emmeans</span></code><a class="headerlink" href="#more-on-emmeans" title="Link to this heading">#</a></h2>
-</section>
 <section id="other-model-comparison-methods">
 <h2>Other Model Comparison Methods<a class="headerlink" href="#other-model-comparison-methods" title="Link to this heading">#</a></h2>
 <section id="r-2">
@@ -653,11 +653,11 @@ Conf-level adjustment: bonferroni method for 3 estimates
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-the-f-statistic-and-the-t-statistic">Connecting the <span class="math notranslate nohighlight">\(F\)</span>-statistic and the <span class="math notranslate nohighlight">\(t\)</span>-statistic</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-with-2-levels">2-way ANOVA with &gt; 2 Levels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-and-beyond">3-way ANOVA and Beyond</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-general-modelling-procedure">The General Modelling Procedure</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-higher-order-anova-models">Assumptions in Higher-order ANOVA Models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unequal-variance-in-higher-order-anova-models">Unequal Variance in HIgher-order ANOVA Models</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-on-emmeans">More on <code class="docutils literal notranslate"><span class="pre">emmeans</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-model-comparison-methods">Other Model Comparison Methods</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-2"><span class="math notranslate nohighlight">\(R^{2}\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aic-and-bic">AIC and BIC</a></li>

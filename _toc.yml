@@ -5,12 +5,8 @@ format: jb-book
 root: 0.intro
 chapters:
 - file: 1.dummy-variables
-- file: 2.oneway-ANOVA-alt
-- file: 3.omnibus-tests-model-comps-alt
+- file: 2.oneway-ANOVA
+- file: 3.omnibus-tests-model-comps
 - file: 4.higher-order-ANOVA-I
-- file: 4.higher-order-ANOVA-II
-#- file: 5.follow-up
-#- file: 6.general-procedure
-#- file: 6.unbalanced-ANOVA
-#- file: 7.ANCOVA
+- file: 5.higher-order-ANOVA-II
 - file: summary
