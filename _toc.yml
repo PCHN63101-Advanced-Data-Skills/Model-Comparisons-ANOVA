@@ -9,7 +9,7 @@ chapters:
 - file: 3.omnibus-tests-model-comps-alt
 - file: 4.higher-order-ANOVA-I
 - file: 4.higher-order-ANOVA-II
-- file: 5.follow-up
+#- file: 5.follow-up
 #- file: 6.general-procedure
 #- file: 6.unbalanced-ANOVA
 #- file: 7.ANCOVA
