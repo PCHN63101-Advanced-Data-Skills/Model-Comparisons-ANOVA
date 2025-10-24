@@ -370,11 +370,21 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-with-2-levels">2-way ANOVA with &gt; 2 Levels</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-and-beyond">3-way ANOVA and Beyond</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-general-modelling-procedure">The General Modelling Procedure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-anova-models">Assumptions in ANOVA Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-gls-for-violations-of-homogeneity-of-variance">Using <code class="docutils literal notranslate"><span class="pre">gls()</span></code> for Violations of Homogeneity of Variance</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#one-way-example">One-way Example</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#higher-order-example">Higher-order Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-with-2-levels">2-way ANOVA with &gt; 2 Levels</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-model-matrix">The Model Matrix</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-and-beyond">3-way ANOVA and Beyond</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-higher-order-anova-models">Assumptions in Higher-order ANOVA Models</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unequal-variance-in-higher-order-anova-models">Unequal Variance in HIgher-order ANOVA Models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-model-comparison-methods">Other Model Comparison Methods</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-2"><span class="math notranslate nohighlight">\(R^{2}\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aic-and-bic">AIC and BIC</a></li>
@@ -393,23 +403,16 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="pchn63101-anova-workshop">
 <h1>PCHN63101: ANOVA Workshop<a class="headerlink" href="#pchn63101-anova-workshop" title="Link to this heading">#</a></h1>
-<section id="way-anova-with-2-levels">
-<h2>2-way ANOVA with &gt; 2 Levels<a class="headerlink" href="#way-anova-with-2-levels" title="Link to this heading">#</a></h2>
-</section>
-<section id="way-anova-and-beyond">
-<h2>3-way ANOVA and Beyond<a class="headerlink" href="#way-anova-and-beyond" title="Link to this heading">#</a></h2>
-</section>
 <section id="the-general-modelling-procedure">
 <h2>The General Modelling Procedure<a class="headerlink" href="#the-general-modelling-procedure" title="Link to this heading">#</a></h2>
-<p>At this point, we have examined a lot of theory and output releated to ANOVA models. This can make these models look very complicated, whereas the actual procedure inside <code class="docutils literal notranslate"><span class="pre">R</span></code> is actually very simple. As shown below, we generally just follow 5 steps:</p>
+<p>At this point, we have examined a lot of theory and output releated to ANOVA models. This can make these models look very complicated, whereas the actual procedure inside <code class="docutils literal notranslate"><span class="pre">R</span></code> is actually very simple. As shown below, we generally just follow 4 steps:</p>
 <ol class="arabic simple">
 <li><p>Convert categorical variables from strings into factors.</p></li>
 <li><p>Fit and summarise the model using <code class="docutils literal notranslate"><span class="pre">lm()</span></code>.</p></li>
 <li><p>Generate omnibus tests using the <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">car</span></code> package.</p></li>
-<li><p>Generate follow-up tests using the <code class="docutils literal notranslate"><span class="pre">emmeans</span></code> package.</p></li>
-<li><p>Extract and plot the fitted values using the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package.</p></li>
+<li><p>Plot the fitted values using the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package.</p></li>
 </ol>
-<p>Indeed, these same 5 steps can be followed for <em>every linear model you ever use</em>. The only differences are that steps 1, 3 and 4 are not needed when there are no categorical predictors in the model. Obviously, you also need to check assumptions, consider transformations and do all the other things we discussed last week. In addition, we have options at different stages in terms of the exact output we need. For instance, we can choose to generate NHST results from <code class="docutils literal notranslate"><span class="pre">emmeans</span></code>, or generate confidence intervals instead. However, the core of the modelling procedure exists within these 5 steps.</p>
+<p>We will see an additional step in terms of follow-up tests in the lesson next week. That aside, these same 4 steps can be followed for <em>every linear model you ever use</em>. The only differences are that steps 1 and 3 are not needed when there are no categorical predictors in the model. Obviously, you also need to check assumptions, consider transformations and do all the other things we discussed last week. In addition, we have options at different stages in terms of the exact output we need. However, the core of the modelling procedure exists within these steps.</p>
 <p>To see this in action, consider the following summary of the complete <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> analysis</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -496,11 +499,15 @@ P value adjustment: holm method for 3 tests
 </div>
 <p>This leads to a reasonable amount of output, but which contains everything we need to reach conclusions. Indeed, the summarising of the results of <code class="docutils literal notranslate"><span class="pre">lm()</span></code> is not strictly necessary. However, it is good practice to always look at this to make sure the model is correct, otherwise we can miss important misspecifications that will cause issues later on. It is also notable that the actual reference level of the dummy variables does not matter here, nor does even understanding the coding used for the dummy variables. These are <em>implementation details</em> that matter for understanding the theory, but should not influence the final results.</p>
 </section>
-<section id="assumptions-in-higher-order-anova-models">
-<h2>Assumptions in Higher-order ANOVA Models<a class="headerlink" href="#assumptions-in-higher-order-anova-models" title="Link to this heading">#</a></h2>
+<section id="assumptions-in-anova-models">
+<h2>Assumptions in ANOVA Models<a class="headerlink" href="#assumptions-in-anova-models" title="Link to this heading">#</a></h2>
+<section id="using-gls-for-violations-of-homogeneity-of-variance">
+<h3>Using <code class="docutils literal notranslate"><span class="pre">gls()</span></code> for Violations of Homogeneity of Variance<a class="headerlink" href="#using-gls-for-violations-of-homogeneity-of-variance" title="Link to this heading">#</a></h3>
+<section id="one-way-example">
+<h4>One-way Example<a class="headerlink" href="#one-way-example" title="Link to this heading">#</a></h4>
 </section>
-<section id="unequal-variance-in-higher-order-anova-models">
-<h2>Unequal Variance in HIgher-order ANOVA Models<a class="headerlink" href="#unequal-variance-in-higher-order-anova-models" title="Link to this heading">#</a></h2>
+<section id="higher-order-example">
+<h4>Higher-order Example<a class="headerlink" href="#higher-order-example" title="Link to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">nlme</span><span class="p">)</span>
@@ -595,6 +602,21 @@ Conf-level adjustment: bonferroni method for 3 estimates
 </div>
 </div>
 </section>
+</section>
+</section>
+<section id="way-anova-with-2-levels">
+<h2>2-way ANOVA with &gt; 2 Levels<a class="headerlink" href="#way-anova-with-2-levels" title="Link to this heading">#</a></h2>
+<section id="the-model-matrix">
+<h3>The Model Matrix<a class="headerlink" href="#the-model-matrix" title="Link to this heading">#</a></h3>
+<p>… You don’t need to worry about exactly what a matrix is, nor how this is used. The main idea is just to see how <code class="docutils literal notranslate"><span class="pre">R</span></code> has constructed all the dummy variables in full.</p>
+</section>
+</section>
+<section id="way-anova-and-beyond">
+<h2>3-way ANOVA and Beyond<a class="headerlink" href="#way-anova-and-beyond" title="Link to this heading">#</a></h2>
+</section>
+<section id="assumptions-in-higher-order-anova-models">
+<h2>Assumptions in Higher-order ANOVA Models<a class="headerlink" href="#assumptions-in-higher-order-anova-models" title="Link to this heading">#</a></h2>
+</section>
 <section id="other-model-comparison-methods">
 <h2>Other Model Comparison Methods<a class="headerlink" href="#other-model-comparison-methods" title="Link to this heading">#</a></h2>
 <section id="r-2">
@@ -653,11 +675,21 @@ Conf-level adjustment: bonferroni method for 3 estimates
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-with-2-levels">2-way ANOVA with &gt; 2 Levels</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-and-beyond">3-way ANOVA and Beyond</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-general-modelling-procedure">The General Modelling Procedure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-anova-models">Assumptions in ANOVA Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-gls-for-violations-of-homogeneity-of-variance">Using <code class="docutils literal notranslate"><span class="pre">gls()</span></code> for Violations of Homogeneity of Variance</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#one-way-example">One-way Example</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#higher-order-example">Higher-order Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-with-2-levels">2-way ANOVA with &gt; 2 Levels</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-model-matrix">The Model Matrix</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-and-beyond">3-way ANOVA and Beyond</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-higher-order-anova-models">Assumptions in Higher-order ANOVA Models</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unequal-variance-in-higher-order-anova-models">Unequal Variance in HIgher-order ANOVA Models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-model-comparison-methods">Other Model Comparison Methods</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-2"><span class="math notranslate nohighlight">\(R^{2}\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aic-and-bic">AIC and BIC</a></li>

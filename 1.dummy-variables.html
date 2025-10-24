@@ -376,10 +376,7 @@
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-two-sample-t-test-as-a-regression-model">The Two-sample <span class="math notranslate nohighlight">\(t\)</span>-Test as a Regression Model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-assumptions-with-dummy-variables">Model Assumptions with Dummy Variables</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unequal-variance">Unequal Variance</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-assumptions-with-dummy-variables">Model Assumptions with Dummy Variables</a></li>
 </ul>
             </nav>
         </div>
@@ -674,39 +671,6 @@ USA     1
 <a class="reference internal image-reference" href="_images/81e9c4884de9349416d9d90a88e125c37bb44d0912c73a10295e41c5f9e1b5e7.png"><img alt="_images/81e9c4884de9349416d9d90a88e125c37bb44d0912c73a10295e41c5f9e1b5e7.png" src="_images/81e9c4884de9349416d9d90a88e125c37bb44d0912c73a10295e41c5f9e1b5e7.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>This is also true of extracting the key values for plotting, if we wanted to create this plot using another package (such as <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code>). For instance, we can extract the means for each category,</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">eff</span><span class="w">          </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">allEffects</span><span class="p">(</span><span class="n">dummy.mod</span><span class="p">)</span>
-<span class="n">origin.means</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">eff</span><span class="o">$</span><span class="n">origin</span><span class="o">$</span><span class="n">fit</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">origin.means</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      [,1]
-1 22.79474
-2 16.13846
-</pre></div>
-</div>
-</div>
-</div>
-<p>as well as the lower and upper limits of the 95% CIs</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">origin.CIs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cbind</span><span class="p">(</span><span class="n">eff</span><span class="o">$</span><span class="n">origin</span><span class="o">$</span><span class="n">lower</span><span class="p">,</span><span class="w"> </span><span class="n">eff</span><span class="o">$</span><span class="n">origin</span><span class="o">$</span><span class="n">upper</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">origin.CIs</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      [,1]     [,2]
-1 20.39949 25.18999
-2 13.24274 19.03418
-</pre></div>
-</div>
-</div>
-</div>
 </section>
 </section>
 <section id="the-two-sample-t-test-as-a-regression-model">
@@ -854,76 +818,20 @@ F-statistic: 13.09 on 1 and 30 DF,  p-value: 0.00108
 </div></div>
 </div>
 <p>This is therefore one of the rarer cases where we could easily split the raw data into the two groups and then assess normality within each group. However, this is unnecessary when we can just stick to looking at the standardised residuals as usual. As shown in the QQ-plot, no severe deviations from normality are evident here, though there is evidence of a slightly heavier upper-tail.</p>
-<p>In terms of the <em>Scale-Location</em> plot, this is also of importance because the traditional <span class="math notranslate nohighlight">\(t\)</span>-test assumes homogeneity of variance. In other words, that the variance of the population distribution that each group is sampled from is identical. This can be assessed in the same fashion as any other regression model, where we look for an equal scattering of points around the horizontal line. In this instance, there appears to be larger variance (a more dispersed scattering of points) in the <code class="docutils literal notranslate"><span class="pre">Other</span></code> category compared to the <code class="docutils literal notranslate"><span class="pre">USA</span></code> category.</p>
+<p>In terms of the <em>Scale-Location</em> plot, this is also of importance because the traditional <span class="math notranslate nohighlight">\(t\)</span>-test assumes homogeneity of variance. In other words, that the variance of the population distribution that each group is sampled from is identical. This can be assessed in the same fashion as any other regression model, where we look for an equal scattering of points around the horizontal line. In this instance, there appears to be larger variance (a more dispersed scattering of points) in the <code class="docutils literal notranslate"><span class="pre">Other</span></code> category compared to the <code class="docutils literal notranslate"><span class="pre">USA</span></code> category. We will see how to deal with this during this week’s workshop.</p>
 <p>Finally, for the <em>Residuals vs Leverage</em> plot, our main concern is <em>outliers</em>. Notice that all data points within the same category have the same amount of leverage. As such, there is little sense in trying to interpret leverage in these types of model. If a single category has high leverage, all that means is that the group average is quite different from the other categories. Given that this is what we are interested in, it does not really matter, especially as this will not just be a single datapoint influencing the fit but a whole <em>group</em> of datapoints. Outliers, however, will matter because they will potentially bias the group means. Looking along the vertical axis, however, we can see no points that are particularly extreme, if we use a cut-off of <span class="math notranslate nohighlight">\(|t_{i}| &gt; 3\)</span>.</p>
-<section id="unequal-variance">
-<h3>Unequal Variance<a class="headerlink" href="#unequal-variance" title="Link to this heading">#</a></h3>
-<p>As indicated above, there is some evidence in this example of heterogeneity of variance. One disadvantage of taking a regression approach to the <span class="math notranslate nohighlight">\(t\)</span>-test is that we forego the correction for heterogeneity that is built-in to the <code class="docutils literal notranslate"><span class="pre">t.test()</span></code> function. Switching <code class="docutils literal notranslate"><span class="pre">var.equal=FALSE</span></code> results in what is known as a Welch’s <span class="math notranslate nohighlight">\(t\)</span>-test, named after the originator of the correction. For example</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">t.test</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">,</span><span class="w"> </span><span class="n">var.equal</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	Welch Two Sample t-test
-
-data:  mpg by origin
-t = 3.9125, df = 29.961, p-value = 0.0004862
-alternative hypothesis: true difference in means between group Other and group USA is not equal to 0
-95 percent confidence interval:
-  3.181614 10.130937
-sample estimates:
-mean in group Other   mean in group USA 
-           22.79474            16.13846 
-</pre></div>
-</div>
-</div>
-</div>
-<p>Notice that this had changed the <span class="math notranslate nohighlight">\(t\)</span>-value, degrees of freedom and the <span class="math notranslate nohighlight">\(p\)</span>-value, after accommodating the variance difference between the groups.</p>
-<p>To get the same result using the regression framework, we need to use the <code class="docutils literal notranslate"><span class="pre">gls()</span></code> function from <code class="docutils literal notranslate"><span class="pre">nlme</span></code> to fit a <em>generalised least squares</em> model, as covered in the synchronous session last week. In the example below, we specify the <code class="docutils literal notranslate"><span class="pre">weights</span></code> structure in terms of a separate variance term for each level of <code class="docutils literal notranslate"><span class="pre">origin</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">nlme</span><span class="p">)</span>
-<span class="n">mod.var.unequal</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gls</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">,</span><span class="w"> </span><span class="n">weights</span><span class="o">=</span><span class="nf">varIdent</span><span class="p">(</span><span class="n">form</span><span class="o">=~</span><span class="m">1</span><span class="o">|</span><span class="n">origin</span><span class="p">))</span>
-<span class="nf">summary</span><span class="p">(</span><span class="n">mod.var.unequal</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Generalized least squares fit by REML
-  Model: mpg ~ origin 
-  Data: mtcars 
-       AIC      BIC    logLik
-  194.0976 199.7024 -93.04879
-
-Variance function:
- Structure: Different standard deviations per stratum
- Formula: ~1 | origin 
- Parameter estimates:
-    Other       USA 
-1.0000000 0.6507285 
-
-Coefficients:
-                Value Std.Error   t-value p-value
-(Intercept) 22.794737  1.337110 17.047770   0e+00
-originUSA   -6.656275  1.701277 -3.912517   5e-04
-
- Correlation: 
-          (Intr)
-originUSA -0.786
-
-Standardized residuals:
-       Min         Q1        Med         Q3        Max 
--1.5130449 -0.6496800 -0.2307244  0.6997941  1.9053951 
-
-Residual standard error: 5.828326 
-Degrees of freedom: 32 total; 30 residual
-</pre></div>
-</div>
-</div>
-</div>
-<p>As we can see, the <span class="math notranslate nohighlight">\(t\)</span>-value and associated <span class="math notranslate nohighlight">\(p\)</span>-value are now practically the same as the Welch’s <span class="math notranslate nohighlight">\(t\)</span>-test. This is an important results because it means that, going forward, we have a method to accommodate heterogeneity of variance within regression, <span class="math notranslate nohighlight">\(t\)</span>-test, ANOVA and ANCOVA models.</p>
+<aside class="topic">
+<p class="topic-title">What do you now know?</p>
+<p>In this section, we have explored the concept of a <em>dummy variable</em>, which is used to represent a categorical predictor variable in multiple regression. After reading this section, you should have a good sense of:</p>
+<ul class="simple">
+<li><p>What a dummy variable is and how it can be used to represent a categorical predictor with 2 levels.</p></li>
+<li><p>How adding a dummy variable to a regression model changes the interpretation of the parameters such that the intercept is the <em>mean</em> of the group coded with a 0, and the slope is the <em>mean difference</em> between the groups.</p></li>
+<li><p>The heuristic that in a regression model, we conceptualise effects associated with <em>continuous</em> predictors as <em>slopes</em> and effects associated with <em>categorical</em> predictors as <em>mean differences</em>.</p></li>
+<li><p>The idea that we have to tell <code class="docutils literal notranslate"><span class="pre">R</span></code> that certain variables are categorical by converting them to a specific class of variable called a <code class="docutils literal notranslate"><span class="pre">factor</span></code>.</p></li>
+<li><p>The fact that the humble <span class="math notranslate nohighlight">\(t\)</span>-test is identical to a multiple regression with a single dummy variable.</p></li>
+<li><p>The idea that all the assumptions of the <span class="math notranslate nohighlight">\(t\)</span>-test naturally emerge from the standard multiple regression assumptions.</p></li>
+</ul>
+</aside>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="factor-foot" role="note">
@@ -931,7 +839,6 @@ Degrees of freedom: 32 total; 30 residual
 <p>In the early days of <code class="docutils literal notranslate"><span class="pre">R</span></code>, the humble <code class="docutils literal notranslate"><span class="pre">read.csv()</span></code> function would convert any variable containing text to a factor automatically as the <code class="docutils literal notranslate"><span class="pre">stringsAsFactors</span></code> options was set to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> by default. This is not always desirable behaviour and so more recent versions of <code class="docutils literal notranslate"><span class="pre">R</span></code> changed this so that <code class="docutils literal notranslate"><span class="pre">stringsAsFactors=FALSE</span></code> by default. However, if you know that your dataset contains factors in the form of text variables, you can switch this back on again and save yourself a little bit of time manually converting the variables.</p>
 </aside>
 </aside>
-</section>
 </section>
 </section>
 
@@ -1006,10 +913,7 @@ Degrees of freedom: 32 total; 30 residual
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-two-sample-t-test-as-a-regression-model">The Two-sample <span class="math notranslate nohighlight">\(t\)</span>-Test as a Regression Model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-assumptions-with-dummy-variables">Model Assumptions with Dummy Variables</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unequal-variance">Unequal Variance</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-assumptions-with-dummy-variables">Model Assumptions with Dummy Variables</a></li>
 </ul>
   </nav></div>
 
