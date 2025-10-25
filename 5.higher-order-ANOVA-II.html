@@ -405,11 +405,11 @@
 <p>So far, we have looked at the additive model that assumes a constant row and column difference between the cell means. However, as alluded to earlier, this additive assumption may not always hold. Indeed, in many real-world examples, we <em>expect</em> the factors in the model to influence each other. We saw an example earlier of <em>depression</em> and <em>anxiety</em>. Another example would be a basic <span class="math notranslate nohighlight">\(2 \times 2\)</span> model of a clinical trial. If Factor A is <em>diagnosis</em> (<em>patient</em>, <em>control</em>) and Factor B is <em>drug</em> (<em>placebo</em>, <em>medication</em>), then the expectation might be that the effect of the drug (i.e. <em>medication vs placebo</em>) is different depending upon whether you are a <em>control</em> or a <em>patient</em>. For instance, if the drug is very targeted then there may only be a difference between the medication and a placebo if you are patient, but not if you are a control. In this example, the effect of <em>drug</em> depends upon <em>diagnosis</em>. When <em>diagnosis = control</em> there is no effect, but when <em>diagnosis = patient</em> there is an effect. This form of dependence between the levels of multiple factors is known as an <em>interaction</em>.</p>
 <div class="tip admonition">
 <p class="admonition-title">Interaction Definition</p>
-<p>Within the context of an ANOVA, the omnibus <em>interaction</em> effect of two categorical predictor is defined as the degree to which the effect of one factor (i.e. the difference between its levels) changes depending upon the levels of another factor. When there are two factors involved this is known as a 2-way interaction. This can also be thought of as the degree to which the additivity assumption does not hold, based on comparing the estimated means to the sample means.</p>
+<p>Within the context of an ANOVA, the <em>interaction</em> between two categorical predictor is defined as the degree to which the effect of one factor changes depending upon the levels of another factor. This can also be thought of as the degree to which the additivity assumption does <em>not</em> hold, capturing the difference between the estimated means from an additive model and the true sample means.</p>
 </div>
 <section id="conceptual-understanding-of-an-interaction">
 <h2>Conceptual Understanding of an Interaction<a class="headerlink" href="#conceptual-understanding-of-an-interaction" title="Link to this heading">#</a></h2>
-<p>An interaction can most easily be understood conceptually as a <em>difference</em> of a <em>difference</em>. Thinking back to our basic <span class="math notranslate nohighlight">\(2 \times 2\)</span> arrangement, we have the following means table</p>
+<p>An interaction can most easily be understood as a <em>difference</em> of <em>differences</em>. Thinking back to our basic <span class="math notranslate nohighlight">\(2 \times 2\)</span> arrangement, we have the following means table</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
@@ -429,7 +429,7 @@
 </tbody>
 </table>
 </div>
-<p>Remember that the additive model assumes a <em>constant difference</em> between the columns and the rows, such that the level of the second factor does not change the effect of the first factor. In terms of the cell means, this leads to</p>
+<p>Remembering that the additive model assumes a <em>constant difference</em> between the columns and the rows, this leads to</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{alignat*}{1}
@@ -437,12 +437,12 @@
     \text{Factor B} &amp;: \mu_{11} - \mu_{12} = \mu_{21} - \mu_{22} \quad\text{(column effects are the same)} \\
 \end{alignat*}
 \end{split}\]</div>
-<p>So how would we test whether this is true? Let us rewrite the additive assumption about Factor A a different way</p>
+<p>If there is an <em>interaction</em>, then the equalities above will not hold. So how would we test this? Let us rewrite the additive assumption about Factor A a different way</p>
 <div class="math notranslate nohighlight">
 \[
 \left(\mu_{11} - \mu_{21}\right) - \left(\mu_{12} - \mu_{22}\right) = 0.
 \]</div>
-<p>So we can see that the additive assumption says that this <em>difference</em> of <em>differences</em> is 0. So, in cases where additivity does not hold, we would expect this value to be <em>non-zero</em>. Thus, in order to test an interaction, we calculate</p>
+<p>So we can see that the additive assumption says that this <em>difference</em> of <em>differences</em> is 0. So, in cases where additivity does not hold, we would expect this value to be <em>non-zero</em>. Thus, in order to test an interaction, we calculate<a class="footnote-reference brackets" href="#multiplication-foot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{alignat*}{1}
@@ -474,7 +474,7 @@
 <a class="reference internal image-reference" href="_images/7bc089982151a2a66b3ded29d048e92e2b4e108a7740d699aaff92f4959be4c4.png"><img alt="_images/7bc089982151a2a66b3ded29d048e92e2b4e108a7740d699aaff92f4959be4c4.png" src="_images/7bc089982151a2a66b3ded29d048e92e2b4e108a7740d699aaff92f4959be4c4.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>In the final plot, we see a <em>crossover interaction</em>, so-called because the lines create an x-shape. This form of interaction can be more unusal as it implies a complete reversal of the effect of one factor at different levels of another. In our clinical trial example, this could imply that the patients <em>improve</em> when taking the drug, whereas the controls get <em>worse</em>. This is not implausible. Perhaps without any clinical benefit, the side-effects of the drug are more pronounced in the control group. Of note is that we are better powered to detect cross-over interactions compared to non-crossover. This is because the <em>difference</em> of <em>differences</em> is always larger for a crossover than a non-crossover interaction<a class="footnote-reference brackets" href="#crosspower-foot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+<p>In the final plot, we see a <em>crossover interaction</em>, so-called because the lines create an x-shape. This form of interaction can be more unusal as it implies a complete reversal of the effect of one factor at different levels of another. In our clinical trial example, this could imply that the patients <em>improve</em> when taking the drug, whereas the controls get <em>worse</em>. This is not implausible. Perhaps without any clinical benefit, the side-effects of the drug are more pronounced in the control group. Of note is that we are better powered to detect cross-over interactions compared to non-crossover. This is because the <em>difference</em> of <em>differences</em> is always larger for a crossover than a non-crossover interaction<a class="footnote-reference brackets" href="#crosspower-foot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
 <a class="reference internal image-reference" href="_images/a83918bd6ce9b661fff0a08aa54a4b2413bab3ee4b9ddd4336b1c980b971460d.png"><img alt="_images/a83918bd6ce9b661fff0a08aa54a4b2413bab3ee4b9ddd4336b1c980b971460d.png" src="_images/a83918bd6ce9b661fff0a08aa54a4b2413bab3ee4b9ddd4336b1c980b971460d.png" style="width: 420px; height: 420px;" /></a>
@@ -508,7 +508,7 @@ y_{i} = \beta_{0} + \beta_{1}x_{i1} + (\underbrace{\beta_{2} + \beta_{3}x_{i1}}_
 \[
 y_{i} = \beta_{0} + \underbrace{\beta_{1}x_{i1} + \beta_{2}x_{i2}}_{\text{additive model}} + \underbrace{\beta_{3}x_{i1}x_{i2}}_{\text{interaction}} + \epsilon_{i}.
 \]</div>
-<p>So what is an interaction? In modelling terms, it is the effect associated with the <em>multiplication</em> of predictor variables<a class="footnote-reference brackets" href="#interact-foot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. Hence, an interaction effect is often termed a <em>multiplicative</em> effect, rather than an <em>additive</em> effect, and is often written as “A <span class="math notranslate nohighlight">\(\times\)</span> B”. We will make the intuition behind this a little clearer below. First, let us look at the full factorial ANOVA model and how it can be expressed using dummy variables.</p>
+<p>So what is an interaction? In modelling terms, it is the effect associated with the <em>multiplication</em> of predictor variables. Hence, an interaction effect is often termed a <em>multiplicative</em> effect, rather than an <em>additive</em> effect, and is often written as “A <span class="math notranslate nohighlight">\(\times\)</span> B”. We will make the intuition behind this a little clearer below. First, let us look at the full factorial ANOVA model and how it can be expressed using dummy variables.</p>
 </section>
 </section>
 <section id="the-full-factorial-anova">
@@ -967,9 +967,9 @@ origin.margin     25.77045   17.75833  21.76439
 </section>
 <section id="type-ii-effects">
 <h3>Type II Effects<a class="headerlink" href="#type-ii-effects" title="Link to this heading">#</a></h3>
-<p>Given everything we have said above, in the presence of an interaction simply averaging the cells and comparing the marginal means is a meaningless endeavour, correct? And yet, this is <em>precisely</em> what the main effects tests produced in statistical software such as SAS and SPSS computes. These are known as Type III effects, as illustrated in the ANOVA table from SPSS below.</p>
+<p>Given everything we have said above, in the presence of an interaction simply averaging the cells and comparing the marginal means is a meaningless endeavour, correct? And yet, this is <em>precisely</em> what the main effects tests produced in statistical software such as SAS and SPSS computes. These are known as Type III effects, as clearly labelled in the ANOVA table from SPSS below.</p>
 <figure class="align-default">
-<a class="reference internal image-reference" href="_images/spss-anova.png"><img alt="_images/spss-anova.png" src="_images/spss-anova.png" style="width: 657.9px; height: 241.20000000000002px;" /></a>
+<a class="reference internal image-reference" href="_images/spss-anova.png"><img alt="_images/spss-anova.png" src="_images/spss-anova.png" style="width: 584.8000000000001px; height: 214.4px;" /></a>
 </figure>
 <div class="warning admonition">
 <p class="admonition-title">The Curse of Type III Effects</p>
@@ -1018,29 +1018,47 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 <p>So we have</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">origin</span></code> = assuming that <code class="docutils literal notranslate"><span class="pre">origin:vs</span></code> is 0, what is the main effect of <code class="docutils literal notranslate"><span class="pre">origin</span></code>?</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">vs</span></code> = assuming that <code class="docutils literal notranslate"><span class="pre">origin:vs</span></code> is 0, what is the main effect of <code class="docutils literal notranslate"><span class="pre">vs</span></code>?</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">origin:vs</span></code> = in the full factorical model, what is the interaction between <code class="docutils literal notranslate"><span class="pre">origin</span></code> and <code class="docutils literal notranslate"><span class="pre">vs</span></code>?</p></li>
-</ul>
-<p>To use this table, we therefore have to make a decision, depending upon the status of the <code class="docutils literal notranslate"><span class="pre">origin:vs</span></code> effect. If this is <em>significant</em>, or if its magnitude is <em>large</em> by whatever criteria you are using, we interpret the <code class="docutils literal notranslate"><span class="pre">origin:vs</span></code> effect <em>only</em> and ignore the main effects. However, if the <code class="docutils literal notranslate"><span class="pre">origin:vs</span></code> effect is <em>non-significant</em> or <em>small</em>, we interpret the main effects only, recognising that these are computed from an additive model where the interaction effect is assumed to be 0.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Omnibus Effect</p></th>
+<th class="head"><p>Type II Interpretation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">origin</span></code></p></td>
+<td><p>Main effect of <code class="docutils literal notranslate"><span class="pre">origin</span></code>, assuming that <code class="docutils literal notranslate"><span class="pre">origin:vs</span></code> is 0</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">vs</span></code></p></td>
+<td><p>Main effect of <code class="docutils literal notranslate"><span class="pre">vs</span></code>, assuming that <code class="docutils literal notranslate"><span class="pre">origin:vs</span></code> is 0</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">origin:vs</span></code></p></td>
+<td><p>Interaction effect of <code class="docutils literal notranslate"><span class="pre">origin:vs</span></code>, under the full factorial model</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>To use this ANOVA table, we therefore have to make a decision depending upon the status of the <code class="docutils literal notranslate"><span class="pre">origin:vs</span></code> effect. If this is <em>significant</em> (or <em>large</em>), we interpret the <code class="docutils literal notranslate"><span class="pre">origin:vs</span></code> effect <em>only</em> and ignore the main effects. However, if the <code class="docutils literal notranslate"><span class="pre">origin:vs</span></code> effect is <em>non-significant</em> (or <em>small</em>), we interpret the main effects only, recognising that these are computed from an additive model where the interaction effect is assumed to be 0.</p>
 <aside class="topic">
 <p class="topic-title">What do you now know?</p>
-<p>In this section, we have explored … . After reading this section, you should have a good sense of:</p>
+<p>In this section, we have explored the full factorial model that includes interaction terms between each factor. After reading this section, you should have a good sense of:</p>
 <ul class="simple">
-<li><p>…</p></li>
-<li><p>…</p></li>
+<li><p>What an interaction is, both in terms of a <em>difference</em> or <em>differences</em> between the cell means, as well as how this is identified visually from interaction plots.</p></li>
+<li><p>Why an interaction is termed a <em>multiplicative</em> effect and how this translates into dummy variables.</p></li>
+<li><p>How an interaction is specified in <code class="docutils literal notranslate"><span class="pre">R</span></code> using either the <code class="docutils literal notranslate"><span class="pre">:</span></code> or <code class="docutils literal notranslate"><span class="pre">*</span></code> syntax.</p></li>
+<li><p>How the omnibus interaction test is equivalent to model comparisons.</p></li>
+<li><p>Why interpreting main effects in the presence of a significant interaction is usually nonsensical.</p></li>
+<li><p>Why Type II effects are therefore preferred over Type III, despite Type III being the default in other software.</p></li>
 </ul>
 </aside>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="crosspower-foot" role="note">
+<aside class="footnote brackets" id="multiplication-foot" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
-<p>This is simply because one of the mean differences is negative and one is postitive. If we subtract a positive and negative number, the signs cancel and the effects <em>sum</em>. So, a perfect crossover would be something like <span class="math notranslate nohighlight">\((10 - 5) - (5 - 10) = 5 - (-5) = 5 + 5 = 10\)</span>. A non-crossover would then be something like <span class="math notranslate nohighlight">\((10 - 5) - (6 - 5) = 5 - 1 = 4\)</span>. So the effect is much smaller.</p>
+<p>We will see why this is labelled as one factor <em>multiplied</em> by the other shortly.</p>
 </aside>
-<aside class="footnote brackets" id="interact-foot" role="note">
+<aside class="footnote brackets" id="crosspower-foot" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
-<p>This does imply that interactions can occur between <em>any</em> variables, and indeed they can. We can have continuous <span class="math notranslate nohighlight">\(\times\)</span> continuous, categorical <span class="math notranslate nohighlight">\(\times\)</span> continuous, and categroical <span class="math notranslate nohighlight">\(\times\)</span> categorical interactions.</p>
+<p>This is simply because one of the mean differences is negative and one is postitive. If we subtract a positive and negative number, the signs cancel and the effects <em>sum</em>. So, a perfect crossover would be something like <span class="math notranslate nohighlight">\((10 - 5) - (5 - 10) = 5 - (-5) = 5 + 5 = 10\)</span>. A non-crossover would then be something like <span class="math notranslate nohighlight">\((10 - 5) - (6 - 5) = 5 - 1 = 4\)</span>. So the effect is much smaller.</p>
 </aside>
 <aside class="footnote brackets" id="fsqrt-foot" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
@@ -1052,7 +1070,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </aside>
 <aside class="footnote brackets" id="margin-foot" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">5</a><span class="fn-bracket">]</span></span>
-<p>Using the same numbers as the other footnote as an example, we would have <span class="math notranslate nohighlight">\((10 + 5)/2 = 7.5\)</span> and <span class="math notranslate nohighlight">\((5 + 10)/2 = 7.5\)</span>. So, although the individual simple effects are different (<span class="math notranslate nohighlight">\(10 - 5 = 5\)</span> and <span class="math notranslate nohighlight">\(5 - 10 = -5\)</span>), the marginal means are identical.</p>
+<p>Using the same numbers as the other footnote, we would have <span class="math notranslate nohighlight">\((10 + 5)/2 = 7.5\)</span> and <span class="math notranslate nohighlight">\((5 + 10)/2 = 7.5\)</span>. So, although the individual simple effects are different (<span class="math notranslate nohighlight">\(10 - 5 = 5\)</span> and <span class="math notranslate nohighlight">\(5 - 10 = -5\)</span>), the marginal means are identical.</p>
 </aside>
 </aside>
 </section>
