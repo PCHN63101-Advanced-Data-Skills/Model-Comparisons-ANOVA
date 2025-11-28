@@ -404,10 +404,10 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anova-tables-in-r">ANOVA Tables in <code class="docutils literal notranslate"><span class="pre">R</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-anova-function">The <code class="docutils literal notranslate"><span class="pre">anova()</span></code> Function</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> Function</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#effect-sizes-and-confidence-intervals">Effect Sizes and Confidence Intervals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#effect-sizes-and-confidence-intervals-maybe-for-the-workshop">Effect Sizes and Confidence Intervals (MAYBE FOR THE WORKSHOP!?)</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test-maybe-for-the-workshop">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test (MAYBE FOR THE WORKSHOP?)</a></li>
 </ul>
             </nav>
         </div>
@@ -775,8 +775,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 <p>Here, there is no difference between <code class="docutils literal notranslate"><span class="pre">anova()</span></code> and <code class="docutils literal notranslate"><span class="pre">Anova()</span></code>. However, this will not always be true and so we would always recommend defaulting to <code class="docutils literal notranslate"><span class="pre">Anova()</span></code>. Notice that this table says <code class="docutils literal notranslate"><span class="pre">Type</span> <span class="pre">II</span> <span class="pre">tests</span></code> at the top. This is related to how the <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function deals with unablanced data, which <code class="docutils literal notranslate"><span class="pre">anova()</span></code> does not do. This is a complicated topic we will leave for another day. For the moment, just try and remember that whatever form of ANOVA table we produce, this is the result of comparing multiple models, with the <span class="math notranslate nohighlight">\(F\)</span>-statistic reflecting the degree of model improvement relative to the error.</p>
 </section>
-<section id="effect-sizes-and-confidence-intervals">
-<h3>Effect Sizes and Confidence Intervals<a class="headerlink" href="#effect-sizes-and-confidence-intervals" title="Link to this heading">#</a></h3>
+<section id="effect-sizes-and-confidence-intervals-maybe-for-the-workshop">
+<h3>Effect Sizes and Confidence Intervals (MAYBE FOR THE WORKSHOP!?)<a class="headerlink" href="#effect-sizes-and-confidence-intervals-maybe-for-the-workshop" title="Link to this heading">#</a></h3>
 <p>As we can see above, the standard inferential results for the omnibus tests are based on <span class="math notranslate nohighlight">\(p\)</span>-values and NHST. If we would prefer effect sizes and confidence intervals, we can generate these using the <code class="docutils literal notranslate"><span class="pre">effectsize</span></code> package. In the example below, we generate Cohen’s <span class="math notranslate nohighlight">\(f\)</span>. In general, effect sizes on omnibus tests are quite messy and difficult to interpret and are often not recommended. Still, if we want omnibus tests but do not want NHST, we have few options. This could be cause to just abandon omnibus tests entirely and jump straight to comparisons between means. There is an argument for this (as we will see more in the materials next week), but if we want a traditional ANOVA with traditional omnibus tests and no <span class="math notranslate nohighlight">\(p\)</span>-values, this is our only option.</p>
 <p>Although there are several different ANOVA effect sizes, Cohen’s <span class="math notranslate nohighlight">\(f^2\)</span> is particularly useful in the context of model comparisons. …</p>
 <div class="math notranslate nohighlight">
@@ -788,8 +788,6 @@ f^2 = \frac{R^{2}_{\text{full}} - R^{2}_{\text{null}}}{1 - R^{2}_{\text{full}}}
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">effectsize</span><span class="p">)</span>
 <span class="n">aov.table</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Anova</span><span class="p">(</span><span class="n">full.mod</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="nf">cohens_f</span><span class="p">(</span><span class="n">aov.table</span><span class="p">))</span>
-
-<span class="nf">sqrt</span><span class="p">((</span><span class="nf">summary</span><span class="p">(</span><span class="n">full.mod</span><span class="p">)</span><span class="o">$</span><span class="n">r.squared</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="n">null.mod</span><span class="p">)</span><span class="o">$</span><span class="n">r.squared</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="m">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="n">full.mod</span><span class="p">)</span><span class="o">$</span><span class="n">r.squared</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -807,12 +805,29 @@ origin    |      0.73 | [0.35, Inf]
 <span class=" -Color -Color-Cyan">- One-sided CIs: upper bound fixed at [Inf].</span>
 </pre></div>
 </div>
-<div class="output text_html">0.733453704897696</div></div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">R2.full</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="n">full.mod</span><span class="p">)</span><span class="o">$</span><span class="n">r.squared</span>
+<span class="n">R2.null</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="n">null.mod</span><span class="p">)</span><span class="o">$</span><span class="n">r.squared</span>
+<span class="n">Cohens.f2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="n">R2.full</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">R2.null</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="m">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">R2.full</span><span class="p">)</span>
+<span class="n">Cohens.f</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="n">Cohens.f2</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">Cohens.f</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 0.7334537
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 </section>
-<section id="the-regression-anova-f-test">
-<h2>The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test<a class="headerlink" href="#the-regression-anova-f-test" title="Link to this heading">#</a></h2>
+<section id="the-regression-anova-f-test-maybe-for-the-workshop">
+<h2>The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test (MAYBE FOR THE WORKSHOP?)<a class="headerlink" href="#the-regression-anova-f-test-maybe-for-the-workshop" title="Link to this heading">#</a></h2>
 <p>As a final point, it is interesting to note that we did not actually need to do any of the calculations above, because the results were provided all along at the bottom of the summary table for the full model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -962,10 +977,10 @@ F-statistic:   7.8 on 2 and 29 DF,  p-value: 0.001947
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anova-tables-in-r">ANOVA Tables in <code class="docutils literal notranslate"><span class="pre">R</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-anova-function">The <code class="docutils literal notranslate"><span class="pre">anova()</span></code> Function</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">The <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> Function</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#effect-sizes-and-confidence-intervals">Effect Sizes and Confidence Intervals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#effect-sizes-and-confidence-intervals-maybe-for-the-workshop">Effect Sizes and Confidence Intervals (MAYBE FOR THE WORKSHOP!?)</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test-maybe-for-the-workshop">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test (MAYBE FOR THE WORKSHOP?)</a></li>
 </ul>
   </nav></div>
 
