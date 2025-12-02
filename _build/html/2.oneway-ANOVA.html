@@ -389,7 +389,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-dummy-variable-regression-to-the-anova-model">Connecting Dummy Variable Regression to the ANOVA Model</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-parameterisation-and-constraints">Model Parameterisation and Constraints</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-parametrisation-and-constraints">Model Parametrisation and Constraints</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dummy-variable-anova-model">The Dummy Variable ANOVA Model</a></li>
 </ul>
 </li>
@@ -512,7 +512,7 @@ y_{ij} = \mu + \alpha_{j} + \epsilon_{ij},
 y_{ij} = \mu_{j} + \epsilon_{ij}.
 \]</div>
 <p>The second form is actually more intuitive and makes it much more explicit that the ANOVA is using <em>means</em> as its predicted values.</p>
-<p>However, there are more subtle benefits to a model that uses <em>deviations</em> from the grand mean to parameterise the model. To begin with, there is a clearer link here with regression models that constain an intercept (constant) and a slope. This will make mapping the ANOVA on to a regression model simpler. In addition, when we come to add <em>more predictors</em> to the ANOVA, each one can be conceptualised as a separate deviation from the grand mean. So, a model with an additional factor can be written as</p>
+<p>However, there are more subtle benefits to a model that uses <em>deviations</em> from the grand mean to parameterise the model. To begin with, there is a clearer link here with regression models that constrain an intercept (constant) and a slope. This will make mapping the ANOVA on to a regression model simpler. In addition, when we come to add <em>more predictors</em> to the ANOVA, each one can be conceptualised as a separate deviation from the grand mean. So, a model with an additional factor can be written as</p>
 <div class="math notranslate nohighlight">
 \[
 y_{ijk} = \mu + \alpha_{j} + \beta_{k} + \epsilon_{ijk}
@@ -591,17 +591,17 @@ y_{ijk} = \mu_{jk} + \epsilon_{ijk},
 \end{cases}
 \end{alignat*}.
 \end{split}\]</div>
-<p>It is hopefully now clear that <span class="math notranslate nohighlight">\(\mu\)</span> is constant across all observations, <span class="math notranslate nohighlight">\(\alpha_{j}\)</span> is unique to each group and <span class="math notranslate nohighlight">\(\epsilon_{ij}\)</span> is unique to each observation. In other words, <span class="math notranslate nohighlight">\(\mu\)</span> captures a univeral truth of the outcome variable, <span class="math notranslate nohighlight">\(\alpha_{j}\)</span> captures how this truth changes across the different groups and <span class="math notranslate nohighlight">\(\epsilon_{ij}\)</span> captures the random abberations from this truth that are unique to each measurement.</p>
+<p>It is hopefully now clear that <span class="math notranslate nohighlight">\(\mu\)</span> is constant across all observations, <span class="math notranslate nohighlight">\(\alpha_{j}\)</span> is unique to each group and <span class="math notranslate nohighlight">\(\epsilon_{ij}\)</span> is unique to each observation. In other words, <span class="math notranslate nohighlight">\(\mu\)</span> captures a universal truth of the outcome variable, <span class="math notranslate nohighlight">\(\alpha_{j}\)</span> captures how this truth changes across the different groups and <span class="math notranslate nohighlight">\(\epsilon_{ij}\)</span> captures the random aberrations from this truth that are unique to each measurement.</p>
 </section>
 </section>
 <section id="connecting-dummy-variable-regression-to-the-anova-model">
 <h2>Connecting Dummy Variable Regression to the ANOVA Model<a class="headerlink" href="#connecting-dummy-variable-regression-to-the-anova-model" title="Link to this heading">#</a></h2>
-<p>We have now seen in more detail the theory behind the ANOVA model. However, we have yet to explicitly connect this with the dummy variable regression model we saw in the previous part of this lesson. To do so, notice that there is nothing in the definition above that states how many values <span class="math notranslate nohighlight">\(j\)</span> should take. This is important because both the one-sample and two-sample <span class="math notranslate nohighlight">\(t\)</span>-tests are <em>sepecial cases</em> of the one-way ANOVA model. In the <em>one-sample</em> case, we set <span class="math notranslate nohighlight">\(j = 1\)</span> and we have</p>
+<p>We have now seen in more detail the theory behind the ANOVA model. However, we have yet to explicitly connect this with the dummy variable regression model we saw in the previous part of this lesson. To do so, notice that there is nothing in the definition above that states how many values <span class="math notranslate nohighlight">\(j\)</span> should take. This is important because both the one-sample and two-sample <span class="math notranslate nohighlight">\(t\)</span>-tests are <em>special cases</em> of the one-way ANOVA model. In the <em>one-sample</em> case, we set <span class="math notranslate nohighlight">\(j = 1\)</span> and we have</p>
 <div class="math notranslate nohighlight">
 \[
 y_{i} = \mu + \epsilon_{i},
 \]</div>
-<p>which is about as simply as any linear model can get<a class="footnote-reference brackets" href="#j-foot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. In the <em>two-sample</em> case, we set <span class="math notranslate nohighlight">\(j = 1,2\)</span> and we have</p>
+<p>which is about as simple as any linear model can get<a class="footnote-reference brackets" href="#j-foot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. In the <em>two-sample</em> case, we set <span class="math notranslate nohighlight">\(j = 1,2\)</span> and we have</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
@@ -621,15 +621,15 @@ y_{ij} = \mu + \alpha_{j} + \epsilon_{ij}
 y_{i} = \beta_{0} + \beta_{1}x_{i} + \epsilon_{i}.
 \]</div>
 <p>You may <em>almost</em> be able to see it, as these two models are very close to each other, save for the use of <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\alpha\)</span> instead of <span class="math notranslate nohighlight">\(\beta\)</span>, and the inclusion of <span class="math notranslate nohighlight">\(x\)</span> in the regression model. So, we just need to do a little bit more work before these specifications become <em>identical</em>.</p>
-<section id="model-parameterisation-and-constraints">
-<h3>Model Parameterisation and Constraints<a class="headerlink" href="#model-parameterisation-and-constraints" title="Link to this heading">#</a></h3>
-<p>One of the problems with ANOVA models is that there are many different ways of writing them, using different numbers of parameters. These different options are known as model <em>parameterisations</em>. We have already seen two examples, where we have chosen to write the model as <span class="math notranslate nohighlight">\(E(y_{ij}) = \mu + \alpha_{j}\)</span> instead of <span class="math notranslate nohighlight">\(E(y_{ij}) = \mu_{j}\)</span>. Remember, the most important element of an ANOVA model is that the model predictions are always the <em>group means</em>. These are the least-squares estimates as well as the maximum likelihood estimates. So, no matter how we want to write the model, the best estimates will always be the sample means.</p>
+<section id="model-parametrisation-and-constraints">
+<h3>Model Parametrisation and Constraints<a class="headerlink" href="#model-parametrisation-and-constraints" title="Link to this heading">#</a></h3>
+<p>One of the problems with ANOVA models is that there are many different ways of writing them, using different numbers of parameters. These different options are known as model <em>parametrisations</em>. We have already seen two examples, where we have chosen to write the model as <span class="math notranslate nohighlight">\(E(y_{ij}) = \mu + \alpha_{j}\)</span> instead of <span class="math notranslate nohighlight">\(E(y_{ij}) = \mu_{j}\)</span>. Remember, the most important element of an ANOVA model is that the model predictions are always the <em>group means</em>. These are the least-squares estimates as well as the maximum likelihood estimates. So, no matter how we want to write the model, the best estimates will always be the sample means.</p>
 <p>With this in mind, consider possible solutions for <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\alpha_{j}\)</span> when we have</p>
 <div class="math notranslate nohighlight">
 \[
 E(y_{ij}) = \mu + \alpha_{j} = \mu_{j}.
 \]</div>
-<p>In effect, we want two numbers that add up to <span class="math notranslate nohighlight">\(\mu_{j}\)</span>, the sample mean. The problem is that there are literally an <em>infinite</em> number of possible choices here. For instance, if <span class="math notranslate nohighlight">\(\mu_{1} = 6\)</span>, we could choose <span class="math notranslate nohighlight">\(\mu = 5\)</span> and <span class="math notranslate nohighlight">\(\alpha_{1} = 1\)</span>, or <span class="math notranslate nohighlight">\(\mu = 200\)</span> and <span class="math notranslate nohighlight">\(\alpha_{1} = -194\)</span>, or <span class="math notranslate nohighlight">\(\mu = -3,467\)</span> and <span class="math notranslate nohighlight">\(\alpha_{1} = 3,473\)</span> and so on. This is know as the model being <em>overparameterised</em> or <em>unidentifiable</em>. If we try to use this model in a computer, the computer will not be able to find a unique single set of parameters because the options are, quite literally, <em>limitless</em>. This is not just a problem in a computer. If you tried to find the parameter values that maximise the likelihood, you would find yourself dealing with an infinite number of possibilities.</p>
+<p>In effect, we want two numbers that add up to <span class="math notranslate nohighlight">\(\mu_{j}\)</span>, the sample mean. The problem is that there are literally an <em>infinite</em> number of possible choices here. For instance, if <span class="math notranslate nohighlight">\(\mu_{1} = 6\)</span>, we could choose <span class="math notranslate nohighlight">\(\mu = 5\)</span> and <span class="math notranslate nohighlight">\(\alpha_{1} = 1\)</span>, or <span class="math notranslate nohighlight">\(\mu = 200\)</span> and <span class="math notranslate nohighlight">\(\alpha_{1} = -194\)</span>, or <span class="math notranslate nohighlight">\(\mu = -3,467\)</span> and <span class="math notranslate nohighlight">\(\alpha_{1} = 3,473\)</span> and so on. This is know as the model being <em>overparametrised</em> or <em>unidentifiable</em>. If we try to use this model in a computer, the computer will not be able to find a unique single set of parameters because the options are, quite literally, <em>limitless</em>. This is not just a problem in a computer. If you tried to find the parameter values that maximise the likelihood, you would find yourself dealing with an infinite number of possibilities.</p>
 <p>To stop this from happening and to force the model to choose one possibility out of the infinity of options, we have to impose a <em>constraint</em>. Think of this as adding some <em>rule</em> to finding parameters that allows the computer (or person) to settle on one possible solution. Although these constraints could be <em>anything</em>, we typically choose between constraints that lead to useful values of the parameters. Whilst <span class="math notranslate nohighlight">\(\mu = -3,467\)</span> and <span class="math notranslate nohighlight">\(\alpha_{1} = 3,473\)</span> would work (because the predicted value is still <span class="math notranslate nohighlight">\(\mu_{1}\)</span>), neither of these values are particularly useful or meaningful. However, if we impose the constraint that <span class="math notranslate nohighlight">\(\sum{\alpha_{j}} = 0\)</span>, then the <em>only</em> choice is that <span class="math notranslate nohighlight">\(\mu\)</span> is the grand mean and the <span class="math notranslate nohighlight">\(\alpha_{j}\)</span> are deflections from the grand mean. These are much more useful parameters because they actually tell us something about the data that we are interested in.</p>
 <p>Imposing <span class="math notranslate nohighlight">\(\sum{\alpha_{j}} = 0\)</span> is one constraint we can use, but there are many others. In fact, the use of dummy variables is a different form of constraint. Instead of imposing <span class="math notranslate nohighlight">\(\sum{\alpha_{j}} = 0\)</span>, the dummy variables actually impose that one of the factor effects is equal to 0. For instance, if we have <span class="math notranslate nohighlight">\(j = 1,2\)</span> and set <span class="math notranslate nohighlight">\(\alpha_{1} = 0\)</span>, then we have</p>
 <div class="math notranslate nohighlight">
@@ -643,7 +643,7 @@ E(y_{ij}) = \mu + \alpha_{j} = \mu_{j}.
 </section>
 <section id="the-dummy-variable-anova-model">
 <h3>The Dummy Variable ANOVA Model<a class="headerlink" href="#the-dummy-variable-anova-model" title="Link to this heading">#</a></h3>
-<p>As a final step, we will just make the link between the constrainted one-way ANOVA and a dummy variable regression model absolutely explicit, so there can be no doubts that these are <em>exactly the same model</em>.</p>
+<p>As a final step, we will just make the link between the constrained one-way ANOVA and a dummy variable regression model absolutely explicit, so there can be no doubts that these are <em>exactly the same model</em>.</p>
 <p>As we saw in the previous part of the lesson, the dummy variable representation of the two-sample <span class="math notranslate nohighlight">\(t\)</span>-test creates <em>two</em> equations for the <em>two</em> different categories</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -753,7 +753,7 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 Europe
 </div>
 </div>
 </div>
-<p>Before modelling anything, let us now see how <code class="docutils literal notranslate"><span class="pre">R</span></code> has coded these catgories in terms of dummy variables</p>
+<p>Before modelling anything, let us now see how <code class="docutils literal notranslate"><span class="pre">R</span></code> has coded these categories in terms of dummy variables</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">contrasts</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="p">))</span>
@@ -769,7 +769,7 @@ USA        0   1
 </div>
 </div>
 </div>
-<p>So, now we have <em>two</em> dummy variables. The first (lablled <code class="docutils literal notranslate"><span class="pre">Japan</span></code>) is a 1 for all the Japanese cars and a 0 for everything else, whereas the second (labelled <code class="docutils literal notranslate"><span class="pre">USA</span></code>) is a 1 for all the USA cars and a 0 for everything else. Although we will not be using manually-defined dummy variables, it can be helpful to create these so you have the clearest sense of what is being put into the model. The code below shows the creation of these two dummy variables. Adding these to the model will results in an <em>identical</em> fit to the model we will use use a little further below<a class="footnote-reference brackets" href="#tryit-foot" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.</p>
+<p>So, now we have <em>two</em> dummy variables. The first (labelled <code class="docutils literal notranslate"><span class="pre">Japan</span></code>) is a 1 for all the Japanese cars and a 0 for everything else, whereas the second (labelled <code class="docutils literal notranslate"><span class="pre">USA</span></code>) is a 1 for all the USA cars and a 0 for everything else. Although we will not be using manually-defined dummy variables, it can be helpful to create these so you have the clearest sense of what is being put into the model. The code below shows the creation of these two dummy variables. Adding these to the model will results in an <em>identical</em> fit to the model we will use use a little further below<a class="footnote-reference brackets" href="#tryit-foot" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w">         </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="p">)</span>
@@ -825,7 +825,7 @@ USA        0   1
 \[
 y_{ij} = \mu + \alpha_{j} + \epsilon_{ij},
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(j = (1,2,3)\)</span> and the constraint has been imposed that <span class="math notranslate nohighlight">\(\alpha_{3} = 0\)</span>. Let us double-check our understanding by fitting this model and examing the output</p>
+<p>where <span class="math notranslate nohighlight">\(j = (1,2,3)\)</span> and the constraint has been imposed that <span class="math notranslate nohighlight">\(\alpha_{3} = 0\)</span>. Let us double-check our understanding by fitting this model and examining the output</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">origin.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
@@ -891,7 +891,7 @@ originUSA   -5.668681 -5.668681
 <li><p>The conceptualisation of an ANOVA as a basic linear model that uses <em>group means</em> as the predicted values.</p></li>
 <li><p>The idea that these group means can be represented as a combination of the <em>grand mean</em> and a separate <em>effect</em> for each level of the categorical predictor.</p></li>
 <li><p>The concept that this model can be represented by a multiple regression that contains <span class="math notranslate nohighlight">\(k-1\)</span> dummy variables, where <span class="math notranslate nohighlight">\(k = 1\)</span> and <span class="math notranslate nohighlight">\(k = 2\)</span> are special cases that are equivalent to a <em>one-sample</em> and <em>two-sample</em> <span class="math notranslate nohighlight">\(t\)</span>-tests.</p></li>
-<li><p>The concept that the multiple regression model is equiavlent to the One-way ANOVA model, with the additional constraint that one of the factor effects is 0.</p></li>
+<li><p>The concept that the multiple regression model is equivalent to the One-way ANOVA model, with the additional constraint that one of the factor effects is 0.</p></li>
 <li><p>The concept that a constraint of some sort is always needed in an ANOVA model due to the infinite number of solutions available.</p></li>
 <li><p>The idea that the interpretation of the multiple regression parameters is a simple extension of the single dummy variable example, where the intercept represents the mean of a single group (the <em>reference group</em>) and the remaining slopes represent <em>mean differences</em> with that reference group.</p></li>
 </ul>
@@ -984,7 +984,7 @@ originUSA   -5.668681 -5.668681
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-dummy-variable-regression-to-the-anova-model">Connecting Dummy Variable Regression to the ANOVA Model</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-parameterisation-and-constraints">Model Parameterisation and Constraints</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-parametrisation-and-constraints">Model Parametrisation and Constraints</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dummy-variable-anova-model">The Dummy Variable ANOVA Model</a></li>
 </ul>
 </li>
