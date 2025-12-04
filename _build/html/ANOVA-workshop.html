@@ -370,9 +370,13 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-general-modelling-procedure">The General Modelling Procedure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-assumptions-with-dummy-variables">Model Assumptions with Dummy Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-a-t-test">Assumptions in a <span class="math notranslate nohighlight">\(t\)</span>-test</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-an-anova">Assumptions in an ANOVA</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-anova-models">Assumptions in ANOVA Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumption-violations-in-anova-models">Assumption Violations in ANOVA Models</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-gls-for-violations-of-homogeneity-of-variance">Using <code class="docutils literal notranslate"><span class="pre">gls()</span></code> for Violations of Homogeneity of Variance</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#one-way-example">One-way Example</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#higher-order-example">Higher-order Example</a></li>
@@ -380,12 +384,7 @@
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-with-2-levels">2-way ANOVA with &gt; 2 Levels</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-model-matrix">The Model Matrix</a></li>
-</ul>
-</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-and-beyond">3-way ANOVA and Beyond</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-higher-order-anova-models">Assumptions in Higher-order ANOVA Models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-model-comparison-methods">Other Model Comparison Methods</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-2"><span class="math notranslate nohighlight">\(R^{2}\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aic-and-bic">AIC and BIC</a></li>
@@ -404,101 +403,37 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="pchn63101-anova-workshop">
 <h1>PCHN63101: ANOVA Workshop<a class="headerlink" href="#pchn63101-anova-workshop" title="Link to this heading">#</a></h1>
-<section id="the-general-modelling-procedure">
-<h2>The General Modelling Procedure<a class="headerlink" href="#the-general-modelling-procedure" title="Link to this heading">#</a></h2>
-<p>At this point, we have examined a lot of theory and output releated to ANOVA models. This can make these models look very complicated, whereas the actual procedure inside <code class="docutils literal notranslate"><span class="pre">R</span></code> is actually very simple. As shown below, we generally just follow 4 steps:</p>
-<ol class="arabic simple">
-<li><p>Convert categorical variables from strings into factors.</p></li>
-<li><p>Fit and summarise the model using <code class="docutils literal notranslate"><span class="pre">lm()</span></code>.</p></li>
-<li><p>Generate omnibus tests using the <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">car</span></code> package.</p></li>
-<li><p>Plot the fitted values using the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package.</p></li>
-</ol>
-<p>We will see an additional step in terms of follow-up tests in the lesson next week. That aside, these same 4 steps can be followed for <em>every linear model you ever use</em>. The only differences are that steps 1 and 3 are not needed when there are no categorical predictors in the model. Obviously, you also need to check assumptions, consider transformations and do all the other things we discussed last week. In addition, we have options at different stages in terms of the exact output we need. However, the core of the modelling procedure exists within these steps.</p>
-<p>To see this in action, consider the following summary of the complete <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> analysis</p>
+<section id="model-assumptions-with-dummy-variables">
+<h2>Model Assumptions with Dummy Variables<a class="headerlink" href="#model-assumptions-with-dummy-variables" title="Link to this heading">#</a></h2>
+<p>As a final topic in this part of the lesson, we can illustrate how all the model assumptions we discussed last week carry-over when using dummy variables. After all, this is still a regression model with all the same assumptions still present. Indeed, this is useful because it will also show how the <span class="math notranslate nohighlight">\(t\)</span>-test assumptions naturally form as special cases of the regression assumptions.</p>
+<section id="assumptions-in-a-t-test">
+<h3>Assumptions in a <span class="math notranslate nohighlight">\(t\)</span>-test<a class="headerlink" href="#assumptions-in-a-t-test" title="Link to this heading">#</a></h3>
+<p>To begin with, we can generate all the plots we discussed last week.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">emmeans</span><span class="p">)</span>
-
-<span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
-<span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span>
-<span class="w">                   </span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span>
-<span class="w">                   </span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;Japan&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span>
-<span class="w">                   </span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;USA&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">,</span><span class="s">&#39;Europe&#39;</span><span class="p">)</span>
-
-<span class="c1"># Step 1 - convert categorical predictors</span>
-<span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.factor</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">origin</span><span class="p">)</span>
-
-<span class="c1"># Step 2 - fit the model</span>
-<span class="n">origin.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="nf">summary</span><span class="p">(</span><span class="n">origin.mod</span><span class="p">))</span>
-
-<span class="c1"># Step 3 - generate the ANOVA table</span>
-<span class="n">anova.tbl</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Anova</span><span class="p">(</span><span class="n">origin.mod</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">anova.tbl</span><span class="p">)</span>
-
-<span class="c1"># Step 4 - generate follow-up tests</span>
-<span class="n">follow.up</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">emmeans</span><span class="p">(</span><span class="n">origin.mod</span><span class="p">,</span><span class="w"> </span><span class="n">specs</span><span class="o">=</span><span class="n">pairwise</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">adjust</span><span class="o">=</span><span class="s">&#39;holm&#39;</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">follow.up</span><span class="o">$</span><span class="n">contrasts</span><span class="p">)</span>
-
-<span class="c1"># Step 5 - extract and plot effects</span>
-<span class="n">effs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">allEffects</span><span class="p">(</span><span class="n">origin.mod</span><span class="p">)</span>
-<span class="nf">plot</span><span class="p">(</span><span class="n">effs</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">))</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">dummy.mod</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: carData
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="nb">eval</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">envir</span><span class="p">,</span> <span class="n">enclos</span><span class="p">):</span> <span class="nb">object</span> <span class="s1">&#39;dummy.mod&#39;</span> <span class="ow">not</span> <span class="n">found</span>
+<span class="ne">Traceback</span>:
+
+<span class="mi">1</span><span class="o">.</span> <span class="n">plot</span><span class="p">(</span><span class="n">dummy</span><span class="o">.</span><span class="n">mod</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>lattice theme set by effectsTheme()
-See ?effectsTheme for details.
-
-Welcome to emmeans.
-Caution: You lose important information if you filter this package&#39;s results.
-See &#39;? untidy&#39;
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
-lm(formula = mpg ~ origin, data = mtcars)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--6.8071 -4.1718 -0.7885  3.3444 10.5929 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   21.807      1.343  16.239 4.26e-16 ***
-originJapan    3.753      2.618   1.434  0.16238    
-originUSA     -5.669      1.935  -2.929  0.00656 ** 
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-Residual standard error: 5.025 on 29 degrees of freedom
-Multiple R-squared:  0.3498,	Adjusted R-squared:  0.3049 
-F-statistic:   7.8 on 2 and 29 DF,  p-value: 0.001947
-
-Anova Table (Type II tests)
-
-Response: mpg
-          Sum Sq Df F value   Pr(&gt;F)   
-origin    393.88  2  7.8003 0.001947 **
-Residuals 732.17 29                    
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
- contrast       estimate   SE df t.ratio p.value
- Europe - Japan    -3.75 2.62 29  -1.434  0.1624
- Europe - USA       5.67 1.94 29   2.929  0.0131
- Japan - USA        9.42 2.64 29   3.563  0.0039
-
-P value adjustment: holm method for 3 tests 
-</pre></div>
-</div>
-<a class="reference internal image-reference" href="_images/5364699f54430767e1af94a1c04a307a4949867ea873b08bf6ee48922ed084ad.png"><img alt="_images/5364699f54430767e1af94a1c04a307a4949867ea873b08bf6ee48922ed084ad.png" src="_images/5364699f54430767e1af94a1c04a307a4949867ea873b08bf6ee48922ed084ad.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>This leads to a reasonable amount of output, but which contains everything we need to reach conclusions. Indeed, the summarising of the results of <code class="docutils literal notranslate"><span class="pre">lm()</span></code> is not strictly necessary. However, it is good practice to always look at this to make sure the model is correct, otherwise we can miss important misspecifications that will cause issues later on. It is also notable that the actual reference level of the dummy variables does not matter here, nor does even understanding the coding used for the dummy variables. These are <em>implementation details</em> that matter for understanding the theory, but should not influence the final results.</p>
+<p>To begin with, the <em>Residuals vs Fitted</em> plot is less relevant with a simply dummy variable model because the assumption of linearity is always met. All we are doing is drawing a line between the means of the two categories. The values in-between are not meaningful in the sense that a dummy value of 0.5 is not somehow half-way between the two groups. Because of this, there no sense in which having a curved line between the categories would make much sense.</p>
+<p>Moving on to the <em>Q-Q Residuals</em> plot, this one <em>is</em> relevant for our simple <span class="math notranslate nohighlight">\(t\)</span>-test model. Remember, the normality assumption can also be thought of as the normality of the outcome variable <em>conditional</em> on the values of the predictor. When we have a dummy variable, the predictor only has <em>two</em> values, meaning that the assumption is that the data is normally distributed for each value of the dummy variable. In other words, normality is assumed <em>within each category</em>. This is a natural simplification of what we have seen before, as illustrated in the 3D scatterplot below.</p>
+<p>This is therefore one of the rarer cases where we could easily split the raw data into the two groups and then assess normality within each group. However, this is unnecessary when we can just stick to looking at the standardised residuals as usual. As shown in the QQ-plot, no severe deviations from normality are evident here, though there is evidence of a slightly heavier upper-tail.</p>
+<p>In terms of the <em>Scale-Location</em> plot, this is also of importance because the traditional <span class="math notranslate nohighlight">\(t\)</span>-test assumes homogeneity of variance. In other words, that the variance of the population distribution that each group is sampled from is identical. This can be assessed in the same fashion as any other regression model, where we look for an equal scattering of points around the horizontal line. In this instance, there appears to be larger variance (a more dispersed scattering of points) in the <code class="docutils literal notranslate"><span class="pre">Other</span></code> category compared to the <code class="docutils literal notranslate"><span class="pre">USA</span></code> category. We will see how to deal with this during this week’s workshop.</p>
+<p>Finally, for the <em>Residuals vs Leverage</em> plot, our main concern is <em>outliers</em>. Notice that all data points within the same category have the same amount of leverage. As such, there is little sense in trying to interpret leverage in these types of model. If a single category has high leverage, all that means is that the group average is quite different from the other categories. Given that this is what we are interested in, it does not really matter, especially as this will not just be a single datapoint influencing the fit but a whole <em>group</em> of datapoints. Outliers, however, will matter because they will potentially bias the group means. Looking along the vertical axis, however, we can see no points that are particularly extreme, if we use a cut-off of <span class="math notranslate nohighlight">\(|t_{i}| &gt; 3\)</span>.</p>
+</section>
+<section id="assumptions-in-an-anova">
+<h3>Assumptions in an ANOVA<a class="headerlink" href="#assumptions-in-an-anova" title="Link to this heading">#</a></h3>
+</section>
 </section>
 <section id="the-regression-anova-f-test">
 <h2>The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test<a class="headerlink" href="#the-regression-anova-f-test" title="Link to this heading">#</a></h2>
@@ -536,8 +471,8 @@ F-statistic:   7.8 on 2 and 29 DF,  p-value: 0.001947
 <p><code class="docutils literal notranslate"><span class="pre">F-statistic:</span>&#160;&#160; <span class="pre">7.8</span> <span class="pre">on</span> <span class="pre">2</span> <span class="pre">and</span> <span class="pre">29</span> <span class="pre">DF,</span>&#160; <span class="pre">p-value:</span> <span class="pre">0.001947</span></code></p>
 <p>which is exactly the results from the ANOVA table. In general, it is customary to always provide an omnibus test of the <em>whole</em> regression model, by comparing the full model to a model containing only an intercept. Because this model only contains a single predictor, this is then equivalent to the one-way ANOVA. In general, if there are multiple predictor variables, this will not be the same. However, the omnibus regression test is useful as a single way of asking the question “is our model actually doing anything?” or “is our model any better than just fitting an intercept?”</p>
 </section>
-<section id="assumptions-in-anova-models">
-<h2>Assumptions in ANOVA Models<a class="headerlink" href="#assumptions-in-anova-models" title="Link to this heading">#</a></h2>
+<section id="assumption-violations-in-anova-models">
+<h2>Assumption Violations in ANOVA Models<a class="headerlink" href="#assumption-violations-in-anova-models" title="Link to this heading">#</a></h2>
 <section id="using-gls-for-violations-of-homogeneity-of-variance">
 <h3>Using <code class="docutils literal notranslate"><span class="pre">gls()</span></code> for Violations of Homogeneity of Variance<a class="headerlink" href="#using-gls-for-violations-of-homogeneity-of-variance" title="Link to this heading">#</a></h3>
 <section id="one-way-example">
@@ -641,18 +576,8 @@ Conf-level adjustment: bonferroni method for 3 estimates
 </section>
 </section>
 </section>
-<section id="way-anova-with-2-levels">
-<h2>2-way ANOVA with &gt; 2 Levels<a class="headerlink" href="#way-anova-with-2-levels" title="Link to this heading">#</a></h2>
-<section id="the-model-matrix">
-<h3>The Model Matrix<a class="headerlink" href="#the-model-matrix" title="Link to this heading">#</a></h3>
-<p>… You don’t need to worry about exactly what a matrix is, nor how this is used. The main idea is just to see how <code class="docutils literal notranslate"><span class="pre">R</span></code> has constructed all the dummy variables in full.</p>
-</section>
-</section>
 <section id="way-anova-and-beyond">
 <h2>3-way ANOVA and Beyond<a class="headerlink" href="#way-anova-and-beyond" title="Link to this heading">#</a></h2>
-</section>
-<section id="assumptions-in-higher-order-anova-models">
-<h2>Assumptions in Higher-order ANOVA Models<a class="headerlink" href="#assumptions-in-higher-order-anova-models" title="Link to this heading">#</a></h2>
 </section>
 <section id="other-model-comparison-methods">
 <h2>Other Model Comparison Methods<a class="headerlink" href="#other-model-comparison-methods" title="Link to this heading">#</a></h2>
@@ -712,9 +637,13 @@ Conf-level adjustment: bonferroni method for 3 estimates
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-general-modelling-procedure">The General Modelling Procedure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-assumptions-with-dummy-variables">Model Assumptions with Dummy Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-a-t-test">Assumptions in a <span class="math notranslate nohighlight">\(t\)</span>-test</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-an-anova">Assumptions in an ANOVA</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-anova-models">Assumptions in ANOVA Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumption-violations-in-anova-models">Assumption Violations in ANOVA Models</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-gls-for-violations-of-homogeneity-of-variance">Using <code class="docutils literal notranslate"><span class="pre">gls()</span></code> for Violations of Homogeneity of Variance</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#one-way-example">One-way Example</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#higher-order-example">Higher-order Example</a></li>
@@ -722,12 +651,7 @@ Conf-level adjustment: bonferroni method for 3 estimates
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-with-2-levels">2-way ANOVA with &gt; 2 Levels</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-model-matrix">The Model Matrix</a></li>
-</ul>
-</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-and-beyond">3-way ANOVA and Beyond</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-higher-order-anova-models">Assumptions in Higher-order ANOVA Models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-model-comparison-methods">Other Model Comparison Methods</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-2"><span class="math notranslate nohighlight">\(R^{2}\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aic-and-bic">AIC and BIC</a></li>
