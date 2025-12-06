@@ -371,8 +371,15 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-assumptions-with-dummy-variables">Model Assumptions with Dummy Variables</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-a-t-test">Assumptions in a <span class="math notranslate nohighlight">\(t\)</span>-test</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-an-anova">Assumptions in an ANOVA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-a-t-test">Assumptions in a <span class="math notranslate nohighlight">\(t\)</span>-test</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-fitted">Residuals vs Fitted</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#q-q-residuals">Q-Q Residuals</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-location">Scale-Location</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage">Residuals vs Leverage</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assumption-violations-in-the-t-test">Assumption Violations in the <span class="math notranslate nohighlight">\(t\)</span>-test</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-and-violations-in-an-anova">Assumptions and Violations in an ANOVA</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test</a></li>
@@ -405,34 +412,109 @@
 <h1>PCHN63101: ANOVA Workshop<a class="headerlink" href="#pchn63101-anova-workshop" title="Link to this heading">#</a></h1>
 <section id="model-assumptions-with-dummy-variables">
 <h2>Model Assumptions with Dummy Variables<a class="headerlink" href="#model-assumptions-with-dummy-variables" title="Link to this heading">#</a></h2>
-<p>As a final topic in this part of the lesson, we can illustrate how all the model assumptions we discussed last week carry-over when using dummy variables. After all, this is still a regression model with all the same assumptions still present. Indeed, this is useful because it will also show how the <span class="math notranslate nohighlight">\(t\)</span>-test assumptions naturally form as special cases of the regression assumptions.</p>
+<p>Last week, we spent a lot of time discussing model assumptions and ways to address violations of assumptions. Although this was framed within multiple regression, we know that our aim here is to provide a <em>generic framework</em> for different types of analyses. In the accompanying lesson, we discovered that a <span class="math notranslate nohighlight">\(t\)</span>-test and ANOVA are effectively multiple regression in disguise. Part of the utility of this is that if these methods are just multiple regression, we can treat them in exactly the same way as any othe regression model. This is particularly useful when it comes to the assumptions because these are <em>exactly the same</em>. This means we can use the same diagnostic plots with the same interpretation <em>and</em> can use the same methods of adjusting violations of assumptions.</p>
 <section id="assumptions-in-a-t-test">
 <h3>Assumptions in a <span class="math notranslate nohighlight">\(t\)</span>-test<a class="headerlink" href="#assumptions-in-a-t-test" title="Link to this heading">#</a></h3>
-<p>To begin with, we can generate all the plots we discussed last week.</p>
+<p>To simplest way to illustrate this connection is to use a basic <span class="math notranslate nohighlight">\(t\)</span>-test model. We will have a look at an ANOVA a little further below. To start with, we will use the <code class="docutils literal notranslate"><span class="pre">vs</span></code> variable from <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> as a factor with two levels. In the code below, we can how to use the <code class="docutils literal notranslate"><span class="pre">factor()</span></code> function to turn the original <code class="docutils literal notranslate"><span class="pre">vs</span></code> variable into a factor with labels for each level.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">))</span>
-<span class="nf">plot</span><span class="p">(</span><span class="n">dummy.mod</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">mtcars</span><span class="o">$</span><span class="n">vs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="n">mtcars</span><span class="o">$</span><span class="n">vs</span><span class="p">,</span><span class="w"> </span><span class="n">levels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">labels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;V-shaped&#39;</span><span class="p">,</span><span class="s">&#39;Straight&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now fit the model and view the summary</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">vs.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">vs</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">vs.mod</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="nb">eval</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">envir</span><span class="p">,</span> <span class="n">enclos</span><span class="p">):</span> <span class="nb">object</span> <span class="s1">&#39;dummy.mod&#39;</span> <span class="ow">not</span> <span class="n">found</span>
-<span class="ne">Traceback</span>:
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = mpg ~ vs, data = mtcars)
 
-<span class="mi">1</span><span class="o">.</span> <span class="n">plot</span><span class="p">(</span><span class="n">dummy</span><span class="o">.</span><span class="n">mod</span><span class="p">)</span>
+Residuals:
+   Min     1Q Median     3Q    Max 
+-6.757 -3.082 -1.267  2.828  9.383 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   16.617      1.080  15.390 8.85e-16 ***
+vsStraight     7.940      1.632   4.864 3.42e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 4.581 on 30 degrees of freedom
+Multiple R-squared:  0.4409,	Adjusted R-squared:  0.4223 
+F-statistic: 23.66 on 1 and 30 DF,  p-value: 3.416e-05
 </pre></div>
 </div>
 </div>
 </div>
-<p>To begin with, the <em>Residuals vs Fitted</em> plot is less relevant with a simply dummy variable model because the assumption of linearity is always met. All we are doing is drawing a line between the means of the two categories. The values in-between are not meaningful in the sense that a dummy value of 0.5 is not somehow half-way between the two groups. Because of this, there no sense in which having a curved line between the categories would make much sense.</p>
-<p>Moving on to the <em>Q-Q Residuals</em> plot, this one <em>is</em> relevant for our simple <span class="math notranslate nohighlight">\(t\)</span>-test model. Remember, the normality assumption can also be thought of as the normality of the outcome variable <em>conditional</em> on the values of the predictor. When we have a dummy variable, the predictor only has <em>two</em> values, meaning that the assumption is that the data is normally distributed for each value of the dummy variable. In other words, normality is assumed <em>within each category</em>. This is a natural simplification of what we have seen before, as illustrated in the 3D scatterplot below.</p>
-<p>This is therefore one of the rarer cases where we could easily split the raw data into the two groups and then assess normality within each group. However, this is unnecessary when we can just stick to looking at the standardised residuals as usual. As shown in the QQ-plot, no severe deviations from normality are evident here, though there is evidence of a slightly heavier upper-tail.</p>
+<p>So we can see that there is a significant effect of engine shape (<span class="math notranslate nohighlight">\(t_{30} = 4.86, p &lt; 0.001\)</span>), which matches what we would get from a basic <span class="math notranslate nohighlight">\(t\)</span>-test</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">t.test</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">vs</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">,</span><span class="w"> </span><span class="n">var.equal</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	Two Sample t-test
+
+data:  mpg by vs
+t = -4.8644, df = 30, p-value = 3.416e-05
+alternative hypothesis: true difference in means between group V-shaped and group Straight is not equal to 0
+95 percent confidence interval:
+ -11.274221  -4.606732
+sample estimates:
+mean in group V-shaped mean in group Straight 
+              16.61667               24.55714 
+</pre></div>
+</div>
+</div>
+</div>
+<p>However, part of the utility of the approach using <code class="docutils literal notranslate"><span class="pre">lm()</span></code> is that we can now assess all the assumptions of the <span class="math notranslate nohighlight">\(t\)</span>-test using our familiar diagnostic plots</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">))</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">vs.mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/2f58ff5f649d99ee8a0f030c0f34c83188c5e71560b761a3766fc0955aa2ded1.png"><img alt="_images/2f58ff5f649d99ee8a0f030c0f34c83188c5e71560b761a3766fc0955aa2ded1.png" src="_images/2f58ff5f649d99ee8a0f030c0f34c83188c5e71560b761a3766fc0955aa2ded1.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<div class="alert alert-block alert-info"> 
+<b>ACTIVITY ...</b> Before reading on, refer back to the interpretation of these plots from last week. Think about what they mean in the context of a $t$-test model and whether you think they are all still relevant?
+</div><p>In terms of interpreting these, we have the following guidance:</p>
+<section id="residuals-vs-fitted">
+<h4>Residuals vs Fitted<a class="headerlink" href="#residuals-vs-fitted" title="Link to this heading">#</a></h4>
+<p>The <em>Residuals vs Fitted</em> plot is less relevant with dummy variable models because the assumption of linearity is always met. All we are doing is drawing a line between the means of the two categories. The values in-between are not meaningful in the sense that a dummy value of 0.5 is not somehow half-way between the two groups. Because of this, there no sense in which having a curved line between the categories would make much sense. Indeed, this could not actually be fitted because a polynomial requires fewer unique points than degrees. If we had 3 categories, we could fit a <em>quadratic</em> curve through them, but this would require us to order the categories in some fashion, which is rarely meaningful.</p>
+</section>
+<section id="q-q-residuals">
+<h4>Q-Q Residuals<a class="headerlink" href="#q-q-residuals" title="Link to this heading">#</a></h4>
+<p>Moving on to the <em>Q-Q Residuals</em> plot, this one <em>is</em> relevant for our simple <span class="math notranslate nohighlight">\(t\)</span>-test model. Remember, the normality assumption can also be thought of as the normality of the outcome variable <em>conditional</em> on the values of the predictor. When we have a dummy variable, the predictor only has <em>two</em> values, meaning that the assumption is that the data is normally distributed for each value of the dummy variable. In other words, normality is assumed <em>within each group</em>. In context, this means that the <code class="docutils literal notranslate"><span class="pre">Straight</span></code> engine group is normally distributed and the <code class="docutils literal notranslate"><span class="pre">V-shaped</span></code> engine group is normally distributed. This is a natural simplification of what we have seen before and means that this is one of the rarer cases where we could actually split the raw data into the two groups and then assess normality using the <em>outcome variable</em>. However, this is unnecessary when we can just stick to looking at the standardised residuals as usual.</p>
+<div class="alert alert-block alert-info"> 
+<b>ACTIVITY ...</b> Imagine you are working with a researcher who has not had the benefit of a very thorough statistical education. They decide to assess the normality assumption by producing a single histogram of the whole outcome variable. Why is this wrong and how would you try and explain this to them? 
+</div></section>
+<section id="scale-location">
+<h4>Scale-Location<a class="headerlink" href="#scale-location" title="Link to this heading">#</a></h4>
 <p>In terms of the <em>Scale-Location</em> plot, this is also of importance because the traditional <span class="math notranslate nohighlight">\(t\)</span>-test assumes homogeneity of variance. In other words, that the variance of the population distribution that each group is sampled from is identical. This can be assessed in the same fashion as any other regression model, where we look for an equal scattering of points around the horizontal line. In this instance, there appears to be larger variance (a more dispersed scattering of points) in the <code class="docutils literal notranslate"><span class="pre">Other</span></code> category compared to the <code class="docutils literal notranslate"><span class="pre">USA</span></code> category. We will see how to deal with this during this week’s workshop.</p>
+</section>
+<section id="residuals-vs-leverage">
+<h4>Residuals vs Leverage<a class="headerlink" href="#residuals-vs-leverage" title="Link to this heading">#</a></h4>
 <p>Finally, for the <em>Residuals vs Leverage</em> plot, our main concern is <em>outliers</em>. Notice that all data points within the same category have the same amount of leverage. As such, there is little sense in trying to interpret leverage in these types of model. If a single category has high leverage, all that means is that the group average is quite different from the other categories. Given that this is what we are interested in, it does not really matter, especially as this will not just be a single datapoint influencing the fit but a whole <em>group</em> of datapoints. Outliers, however, will matter because they will potentially bias the group means. Looking along the vertical axis, however, we can see no points that are particularly extreme, if we use a cut-off of <span class="math notranslate nohighlight">\(|t_{i}| &gt; 3\)</span>.</p>
 </section>
-<section id="assumptions-in-an-anova">
-<h3>Assumptions in an ANOVA<a class="headerlink" href="#assumptions-in-an-anova" title="Link to this heading">#</a></h3>
+</section>
+<section id="assumption-violations-in-the-t-test">
+<h3>Assumption Violations in the <span class="math notranslate nohighlight">\(t\)</span>-test<a class="headerlink" href="#assumption-violations-in-the-t-test" title="Link to this heading">#</a></h3>
+</section>
+<section id="assumptions-and-violations-in-an-anova">
+<h3>Assumptions and Violations in an ANOVA<a class="headerlink" href="#assumptions-and-violations-in-an-anova" title="Link to this heading">#</a></h3>
 </section>
 </section>
 <section id="the-regression-anova-f-test">
@@ -638,8 +720,15 @@ Conf-level adjustment: bonferroni method for 3 estimates
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-assumptions-with-dummy-variables">Model Assumptions with Dummy Variables</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-a-t-test">Assumptions in a <span class="math notranslate nohighlight">\(t\)</span>-test</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-an-anova">Assumptions in an ANOVA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-a-t-test">Assumptions in a <span class="math notranslate nohighlight">\(t\)</span>-test</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-fitted">Residuals vs Fitted</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#q-q-residuals">Q-Q Residuals</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#scale-location">Scale-Location</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals-vs-leverage">Residuals vs Leverage</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assumption-violations-in-the-t-test">Assumption Violations in the <span class="math notranslate nohighlight">\(t\)</span>-test</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-and-violations-in-an-anova">Assumptions and Violations in an ANOVA</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test</a></li>
