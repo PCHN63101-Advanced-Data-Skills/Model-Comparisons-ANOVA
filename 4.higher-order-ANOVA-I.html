@@ -878,9 +878,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: carData
-</pre></div>
-</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Anova Table (Type II tests)
 
 Response: mpg
@@ -896,27 +893,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 <p>Compare the <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> output with the outputs from the model comparisons to reassure yourself that these are <em>identical</em>.</p>
 <p>Based on this result, there are significant differences in <code class="docutils literal notranslate"><span class="pre">mpg</span></code> between the levels of both <code class="docutils literal notranslate"><span class="pre">origin</span></code> and <code class="docutils literal notranslate"><span class="pre">vs</span></code>, assuming the two factors have independent influences on <code class="docutils literal notranslate"><span class="pre">mpg</span></code>. In context, this is assuming that there is nothing about where the car is manufactured that influences the shape of the engine, nor anything about the shape of the engine that influences where it was manufactured. Based on this, we would conclude that <em>both</em> the engine shape and the country of origin independently influence MPG.</p>
-<p>We can also generate Cohen’s <span class="math notranslate nohighlight">\(f\)</span> here as well, as shown below. Here we can see that <code class="docutils literal notranslate"><span class="pre">vs</span></code> is a larger effect than <code class="docutils literal notranslate"><span class="pre">origin</span></code>, but both are above Cohen’s recommendation of <span class="math notranslate nohighlight">\(f = 0.4\)</span> for a <em>large</em> effect. That being said, the uncertainty for <code class="docutils literal notranslate"><span class="pre">origin</span></code> is much higher, as the lower-bound of the CI is between <em>small</em> and <em>medium</em> (though closer to the <em>medium</em> boundary of <span class="math notranslate nohighlight">\(f = 0.25\)</span>). So <code class="docutils literal notranslate"><span class="pre">vs</span></code> would seem the stronger result, though both remain notable.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">effectsize</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="nf">cohens_f</span><span class="p">(</span><span class="nf">Anova</span><span class="p">(</span><span class="n">add.mod</span><span class="p">)))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Blue"># Effect Size for ANOVA (Type II)</span>
-
-Parameter | Cohen&#39;s f (partial) |      95% CI
----------------------------------------------
-origin    |                0.52 | [0.19, Inf]
-vs        |                0.76 | [0.41, Inf]
-
-<span class=" -Color -Color-Cyan">- One-sided CIs: upper bound fixed at [Inf].</span>
-</pre></div>
-</div>
-</div>
-</div>
 <aside class="topic">
 <p class="topic-title">What do you now know?</p>
 <p>In this section, we have explored higher-order ANOVA models in terms of a simple additive model. After reading this section, you should have a good sense of:</p>
