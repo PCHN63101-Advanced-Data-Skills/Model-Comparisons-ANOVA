@@ -7482,7 +7482,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="PCHN63101:-ANOVA-Workshop">PCHN63101: ANOVA Workshop<a class="anchor-link" href="#PCHN63101:-ANOVA-Workshop">¶</a></h1>
+<h1 id="PCHN63101:-ANOVA-Workshop">PCHN63101: ANOVA Workshop<a class="anchor-link" href="#PCHN63101:-ANOVA-Workshop">¶</a></h1><p>In the accompanying lesson to this workshop we explored the topic of categorical predictor variables in regression models, exploring how the $t$-test and ANOVA are simply special cases of linear regression containing dummy variables. In this workshop, we will take this perspective further by showing how all the usual linear regression assumptions still remain and how we can use the same diagnostic plots and alternative approaches when using $t$-test or ANOVA models. We will also see how the information from the lesson can be easily generalised to form 3-way (and higher) ANOVA models. Finally, we will examine alternative methods of model comparison that do <em>not</em> rely on $F$-statistics and $p$-values, allowing the concept of an ANOVA as a model comparison procedure to be updated using modern statistical methods.</p>
 </div>
 </div>
 </div>
@@ -8819,13 +8819,13 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-r"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">'performance'</span><span class="p">)</span>
 
 <span class="n">mod.null</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">cholesterol</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="p">(</span><span class="n">gender</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">risk</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">drug</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">heartattack</span><span class="p">)</span>
-<span class="n">mod.full</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">cholesterol</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="p">(</span><span class="n">gender</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">risk</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">drug</span><span class="p">)</span><span class="o">^</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">heartattack</span><span class="p">)</span><span class="w"> </span><span class="c1"># equivalent to gender*risk*drug</span>
+<span class="n">mod.full</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">cholesterol</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="p">(</span><span class="n">gender</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">risk</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">drug</span><span class="p">)</span><span class="o">^</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">heartattack</span><span class="p">)</span><span class="w"> </span><span class="c1"># gender*risk*drug</span>
 
 <span class="nf">print</span><span class="p">(</span><span class="nf">compare_performance</span><span class="p">(</span><span class="n">mod.null</span><span class="p">,</span><span class="w"> </span><span class="n">mod.full</span><span class="p">,</span><span class="w"> </span><span class="n">metrics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">'R2'</span><span class="p">,</span><span class="s">'R2_adj'</span><span class="p">,</span><span class="s">'AIC'</span><span class="p">,</span><span class="s">'BIC'</span><span class="p">)))</span>
 </pre></div>
@@ -8939,41 +8939,6 @@ mod.full |    lm |  39.2 (0.997) |  68.8 (0.975) | 0.710 |     0.656
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=ffe3932b">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [25]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-r"><pre><span></span><span class="n">mod.null</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gls</span><span class="p">(</span><span class="n">cholesterol</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="p">(</span><span class="n">gender</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">risk</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">drug</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">heartattack</span><span class="p">,</span><span class="w"> </span><span class="n">weights</span><span class="o">=</span><span class="nf">varIdent</span><span class="p">(</span><span class="n">form</span><span class="o">=~</span><span class="m">1</span><span class="o">|</span><span class="n">gender</span><span class="o">*</span><span class="n">risk</span><span class="o">*</span><span class="n">drug</span><span class="p">))</span><span class="w"> </span>
-<span class="n">mod.full</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gls</span><span class="p">(</span><span class="n">cholesterol</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="p">(</span><span class="n">gender</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">risk</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">drug</span><span class="p">)</span><span class="o">^</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">heartattack</span><span class="p">,</span><span class="w"> </span><span class="n">weights</span><span class="o">=</span><span class="nf">varIdent</span><span class="p">(</span><span class="n">form</span><span class="o">=~</span><span class="m">1</span><span class="o">|</span><span class="n">gender</span><span class="o">*</span><span class="n">risk</span><span class="o">*</span><span class="n">drug</span><span class="p">))</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="nf">compare_performance</span><span class="p">(</span><span class="n">mod.null</span><span class="p">,</span><span class="w"> </span><span class="n">mod.full</span><span class="p">,</span><span class="w"> </span><span class="n">metrics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">'R2'</span><span class="p">,</span><span class="s">'R2_adj'</span><span class="p">,</span><span class="s">'AIC'</span><span class="p">,</span><span class="s">'BIC'</span><span class="p">)))</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre><span class="ansi-blue-fg"># Comparison of Model Performance Indices</span>
-
-Name     | Model | AIC (weights) | BIC (weights) |    R2
---------------------------------------------------------
-mod.null |   gls |  67.1 (0.007) | 117.1 (0.063) | 0.577
-mod.full |   gls |  57.1 (0.993) | 111.8 (0.937) | 0.710
-</pre>
-</div>
-</div>
-</div>
-</div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c2c12294">
 <div class="jp-Cell-inputWrapper" tabindex="0">
@@ -8983,6 +8948,32 @@ mod.full |   gls |  57.1 (0.993) | 111.8 (0.937) | 0.710
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <div class="alert alert-block alert-info">
 <b>ACTIVITY ...</b> Can you create these model comparison metrics for the <code>gls()</code> 3-way model? <b>NOTE</b> For similar reasons to degrees of freedom, both <code>'R2'</code> and <code>'R2_adj'</code> are ill-defined for GLS models. Just try and interpret using AIC and BIC instead.
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=16f417c7">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="alert alert-block alert-warning">
+<b>TEST QUESTIONS</b>
+<p>Use the questions below to check your understanding of all the materials from this week.</p>
+<ol>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ol>
 </div>
 </div>
 </div>
