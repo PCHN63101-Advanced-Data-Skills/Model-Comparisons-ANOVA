@@ -382,13 +382,18 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-and-violations-in-an-anova">Assumptions and Violations in an ANOVA</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-and-beyond">3-way ANOVA and Beyond</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-and-beyond">3-way ANOVA and Beyond</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3-way-dataset">Example 3-way Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-model">3-way ANOVA Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-a-3-way-anova">Plotting a 3-way ANOVA</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-model-comparison-methods">Other Model Comparison Methods</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-2"><span class="math notranslate nohighlight">\(R^{2}\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aic-and-bic">AIC and BIC</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test</a></li>
 </ul>
             </nav>
         </div>
@@ -501,7 +506,7 @@ mean in group V-shaped mean in group Straight
 </div></section>
 <section id="residuals-vs-leverage">
 <h4>Residuals vs Leverage<a class="headerlink" href="#residuals-vs-leverage" title="Link to this heading">#</a></h4>
-<p>Finally, for the <em>Residuals vs Leverage</em> plot, our main concern is <em>outliers</em>. Notice that all data points within the same category have the same amount of leverage. As such, there is little sense in trying to interpret leverage in these types of model. If a single category has high leverage, all that means is that the group average is quite different from the other categories. Given that this is what we are interested in, it does not really matter, especially as this will not just be a single datapoint influencing the fit but a whole <em>group</em> of datapoints. Outliers, however, will matter because they will potentially bias the group means.</p>
+<p>Finally, for the <em>Residuals vs Leverage</em> plot, our main concern is <em>outliers</em>. Notice that all data points within the same category have the same amount of leverage. As such, there is little sense in trying to interpret leverage in these types of model. If a single category has high leverage, all that means is that a smaller group has an average that is quite different from the other categories. Outliers, however, will matter because they will potentially bias the group means.</p>
 </section>
 </section>
 <section id="assumption-violations-in-the-t-test">
@@ -548,7 +553,7 @@ Degrees of freedom: 32 total; 30 residual
 </div>
 </div>
 </div>
-<p>In this example, we have used the <code class="docutils literal notranslate"><span class="pre">varIdent()</span></code> variance function, which tells GLS to fit a constant variance that depends upon the <code class="docutils literal notranslate"><span class="pre">form=</span></code> argument. Here, we specify <code class="docutils literal notranslate"><span class="pre">~</span> <span class="pre">1|vs</span></code>, which means a constant variance for each level of <code class="docutils literal notranslate"><span class="pre">vs</span></code>. This means we get a different variance estimated for <code class="docutils literal notranslate"><span class="pre">V-shaped</span></code> and a different variance for <code class="docutils literal notranslate"><span class="pre">Straight</span></code>.</p>
+<p>In this example, we have used the <code class="docutils literal notranslate"><span class="pre">varIdent()</span></code> variance function, which tells GLS to fit a constant variance that depends upon the <code class="docutils literal notranslate"><span class="pre">form</span></code> argument. Here, we specify <code class="docutils literal notranslate"><span class="pre">~</span> <span class="pre">1|vs</span></code>, which means a constant variance for each level of <code class="docutils literal notranslate"><span class="pre">vs</span></code>. This means we get a different variance estimated for <code class="docutils literal notranslate"><span class="pre">V-shaped</span></code> and a different variance for <code class="docutils literal notranslate"><span class="pre">Straight</span></code>.</p>
 <p>In this instance, it has not made much difference to the results. However, it is interesting to compare it to the results of <code class="docutils literal notranslate"><span class="pre">t.test()</span></code> which has a <code class="docutils literal notranslate"><span class="pre">var.equal=</span></code> option. When set to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>, this implements a variant of the <span class="math notranslate nohighlight">\(t\)</span>-test known as Welch’s <span class="math notranslate nohighlight">\(t\)</span>-test, which allows for different variances in each group. Note that both these solutions are <em>approximations</em>, as finding null distributions and <span class="math notranslate nohighlight">\(p\)</span>-values from population distributions with different variances is an unsolved issue in statistics known as the Behrens-Fisher problem.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -617,7 +622,7 @@ mean in group V-shaped mean in group Straight
 <p>Then, we can specify the model and examine the assumptions</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">suppressMessages</span><span class="p">(</span><span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">))</span>
 
 <span class="n">twoway.mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w">  </span><span class="o">~</span><span class="w"> </span><span class="n">vs</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="nf">Anova</span><span class="p">(</span><span class="n">twoway.mod</span><span class="p">))</span>
@@ -628,9 +633,6 @@ mean in group V-shaped mean in group Straight
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: carData
-</pre></div>
-</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Anova Table (Type II tests)
 
 Response: mpg
@@ -646,8 +648,10 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 <a class="reference internal image-reference" href="_images/97bc42f6f1de1aafb4cfbbf0c8ec4352626f15418ffe30a8100abe920435a23e.png"><img alt="_images/97bc42f6f1de1aafb4cfbbf0c8ec4352626f15418ffe30a8100abe920435a23e.png" src="_images/97bc42f6f1de1aafb4cfbbf0c8ec4352626f15418ffe30a8100abe920435a23e.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>Based on these plots, normality seems OK and there are no obvious outliers (using <span class="math notranslate nohighlight">\(|t_{i}| &gt; 3\)</span>). However, the variance looks like it differs across the different cells of the design, which we can see as the vertical stacks of points in the plots.</p>
-<p>In order to accmmodate different variances for each factor, we can use the <code class="docutils literal notranslate"><span class="pre">varIdent()</span></code> function, but specify the grouping factor as the <em>interaction</em> between <code class="docutils literal notranslate"><span class="pre">vs</span></code> and <code class="docutils literal notranslate"><span class="pre">origin</span></code>. This will result in a separate variance term for each cell of the design.</p>
+<p>Based on these plots, normality seems OK and there are no obvious outliers (using <span class="math notranslate nohighlight">\(|t_{i}| &gt; 3\)</span>). However, the variance looks like it differs across the different cells of the design.</p>
+<div class="alert alert-block alert-info"> 
+<b>ACTIVITY ...</b> Why is it that the cells of the design are visible as vertical stacks of points in a visualisation such as the Residuals vs Fitted plot? <b>HINT</b>: Think about the <i>x</i>-axis in this plot and what it means for data to share the same value on this axis.  
+</div><p>In order to accmmodate different variances for each factor, we can use the <code class="docutils literal notranslate"><span class="pre">varIdent()</span></code> function, but specify the grouping factor as the <em>interaction</em> between <code class="docutils literal notranslate"><span class="pre">vs</span></code> and <code class="docutils literal notranslate"><span class="pre">origin</span></code>. This will result in a separate variance term for each cell of the design.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">twoway.mod.gls</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gls</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">vs</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">,</span><span class="w"> </span><span class="n">weights</span><span class="o">=</span><span class="nf">varIdent</span><span class="p">(</span><span class="n">form</span><span class="o">=</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="m">1</span><span class="o">|</span><span class="n">vs</span><span class="o">*</span><span class="n">origin</span><span class="p">))</span>
@@ -744,8 +748,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 </div>
-<p>Notice that <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> from <code class="docutils literal notranslate"><span class="pre">car</span></code> provides asymptotic <span class="math notranslate nohighlight">\(\chi^{2}\)</span> tests by default, instead of <span class="math notranslate nohighlight">\(F\)</span>-tests. This is because the notion of degrees of freedom in the GLS model is quite controversial. In simple terms, the degrees of freedom of a GLS model will be different from OLS because of the additional variance parameters. Although you might think we can just include these in the calculation of the degrees of freedom, variance and correlation parameters do not influence the model in the same way. It is no longer “1 parameter = 1 lost degree of freedom”. In fact, the extra complication of adding these makes the degrees of freedom <em>impossible</em> to calculate. This actually suggests that the whole concept of degrees of freedom breaks-down here. The best we can do is calculate <em>effective</em> degrees of freedom. These are, to put it bluntly, a <em>guess</em> used to make inference work, not a defensible and real quantity.</p>
-<p>Based on this, we have two options for inference here. The first is a blind guess for the degrees of freedom. This is what <code class="docutils literal notranslate"><span class="pre">gls()</span></code> does in terms of reporting the <span class="math notranslate nohighlight">\(t\)</span>-statistics and <span class="math notranslate nohighlight">\(p\)</span>-values. The second option is to ignore the whole concept and base inference on test-statistics that do not need the residual degrees of freedom. We know these will not necessarily be accurate in small samples, but <em>asymptotically</em> they will be correct. This is what the <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function will do.</p>
+<p>Notice that <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> from <code class="docutils literal notranslate"><span class="pre">car</span></code> provides asymptotic <span class="math notranslate nohighlight">\(\chi^{2}\)</span> tests by default, instead of <span class="math notranslate nohighlight">\(F\)</span>-tests. This is because the notion of degrees of freedom in the GLS model is quite controversial. In simple terms, the degrees of freedom of a GLS model will be different from OLS because of the additional variance parameters. Although you might think we can just include these in the calculation of the degrees of freedom, variance and correlation parameters do not influence the model in the same way. It is no longer “1 parameter = 1 lost degree of freedom”. In fact, the extra complication of adding these makes the degrees of freedom <em>impossible</em> to calculate. The whole concept of degrees of freedom breaks-down here. For GLS with an <em>estimated</em> covariance structure, degrees of freedom simply do not exist. The best we can do is calculate <em>effective</em> degrees of freedom which are, to put it bluntly, a <em>guess</em> that only exist to make NHST work.</p>
+<p>Based on this, we have two options for inference. The first is a blind guess for the degrees of freedom. This is what <code class="docutils literal notranslate"><span class="pre">gls()</span></code> does in terms of reporting the <span class="math notranslate nohighlight">\(t\)</span>-statistics and <span class="math notranslate nohighlight">\(p\)</span>-values. The second option is to ignore the whole concept and base inference on test-statistics that do not need the residual degrees of freedom. We know these will not necessarily be accurate in small samples, but <em>asymptotically</em> they will be correct. This is what the <code class="docutils literal notranslate"><span class="pre">Anova()</span></code> function will do.</p>
 <p>If we <em>really</em> care about this and <em>really</em> want <span class="math notranslate nohighlight">\(F\)</span>-statistics, we can use the effective degrees of freedom from the <code class="docutils literal notranslate"><span class="pre">gls()</span></code> summary with <code class="docutils literal notranslate"><span class="pre">Anova()</span></code>. We can see at the bottom of the summary table above it says: <code class="docutils literal notranslate"><span class="pre">Degrees</span> <span class="pre">of</span> <span class="pre">freedom:</span> <span class="pre">32</span> <span class="pre">total;</span> <span class="pre">26</span> <span class="pre">residual</span></code>. Remember, this is a wild guess that has not taken the variance parameters into account. Nevertheless, we can plug this into <code class="docutils literal notranslate"><span class="pre">Anova()</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -769,6 +773,174 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 <p>and now we have more traditional ANOVA tests. However, do not discount the fact that these are <em>very approximate</em>. As we can see NHST continues to cause problems as our methods gets more complex and sophisticated.</p>
+<div class="alert alert-block alert-info"> 
+<b>ACTIVITY ...</b> At this point in time, which approach do you feel more comfortable using? The method with approximate degrees of freedom, or the method with asymptotic tests?  
+</div></section>
+</section>
+<section id="way-anova-and-beyond">
+<h2>3-way ANOVA and Beyond<a class="headerlink" href="#way-anova-and-beyond" title="Link to this heading">#</a></h2>
+<p>In terms of factorial ANOVA models, we have mainly focussed on 2-way models. However, we can have as many factors and interactions as we like, so long as each cell contains <em>at least</em> 2 measurements that are different (so that there is some variance left after fitting the cell means). Although the temptation in psychology is often to create very complex factorial experiments, a caution is needed. Firstly, the higher the interaction goes, the more <em>power</em> is needed to detect the effect (in the Neyman-Pearson sense). This means you need more data per-cell, which can make the required sample size wildly impractical. Secondly, understanding and breaking-down the effects (which we will discuss more next week) can become a real interpretational headache. As such, we would caution against anything beyond a 3-way ANOVA.</p>
+<section id="example-3-way-dataset">
+<h3>Example 3-way Dataset<a class="headerlink" href="#example-3-way-dataset" title="Link to this heading">#</a></h3>
+<p>We will move away from the <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> dataset and introduce a useful <code class="docutils literal notranslate"><span class="pre">R</span></code> package that contains many example datasets organised by the type of analysis you can perform. This package is called <code class="docutils literal notranslate"><span class="pre">datarium</span></code>, and is well worth exploring if you want to try more examples of different analyses. In this package is a dataset called <code class="docutils literal notranslate"><span class="pre">'heartattack'</span></code> that contains measures of cholesterol concentration in 72 participants treated with three different drugs. The aim is to examine the potential of a new class of drugs in lowering the cholesterol concentration and consequently reducing heart attack.</p>
+<p>We first load and examine the data below</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">&#39;datarium&#39;</span><span class="p">)</span>
+<span class="nf">data</span><span class="p">(</span><span class="s">&#39;heartattack&#39;</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">head</span><span class="p">(</span><span class="n">heartattack</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span># A data frame: 6 × 5
+  gender risk  drug  cholesterol    id
+* &lt;fct&gt;  &lt;fct&gt; &lt;fct&gt;       &lt;dbl&gt; &lt;int&gt;
+1 male   low   A            5.24     1
+2 male   low   A            5.08     2
+3 male   low   A            4.68     3
+4 male   low   A            5.36     4
+5 male   low   A            4.96     5
+6 male   low   A            4.83     6
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we can see, the data is already organised and ready to go as a 3-way ANOVA model. This is the nice thing about the data from <code class="docutils literal notranslate"><span class="pre">datarium</span></code> (though it does not provide a very realistic picture of real-world data).</p>
+</section>
+<section id="way-anova-model">
+<h3>3-way ANOVA Model<a class="headerlink" href="#way-anova-model" title="Link to this heading">#</a></h3>
+<p>We can fit a 3-way ANOVA model using <code class="docutils literal notranslate"><span class="pre">lm()</span></code>. We have two options here. The first is to specify the full-factorial model manually using</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mod.3way</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">cholesterol</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">gender</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">risk</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">drug</span><span class="w"> </span><span class="o">+</span><span class="w">                   </span><span class="c1"># main effects</span>
+<span class="w">                             </span><span class="n">gender</span><span class="o">:</span><span class="n">risk</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">gender</span><span class="o">:</span><span class="n">drug</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">risk</span><span class="o">:</span><span class="n">drug</span><span class="w"> </span><span class="o">+</span><span class="w">  </span><span class="c1"># 2-way interactions</span>
+<span class="w">                             </span><span class="n">gender</span><span class="o">:</span><span class="n">risk</span><span class="o">:</span><span class="n">drug</span><span class="p">,</span><span class="w">                        </span><span class="c1"># 3-way interaction</span>
+<span class="w">               </span><span class="n">data</span><span class="o">=</span><span class="n">heartattack</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>However, we can see how tedious and error-prone this might be. So it is generally better to let <code class="docutils literal notranslate"><span class="pre">R</span></code> do the work for us and specify the model using</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mod.3way</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">cholesterol</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">gender</span><span class="o">*</span><span class="n">risk</span><span class="o">*</span><span class="n">drug</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">heartattack</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">mod.3way</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = cholesterol ~ gender * risk * drug, data = heartattack)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.69387 -0.20807  0.01759  0.16801  0.58370 
+
+Coefficients:
+                           Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                  6.1256     0.1186  51.644  &lt; 2e-16 ***
+genderfemale                -0.9164     0.1677  -5.463 9.48e-07 ***
+risklow                     -1.1022     0.1677  -6.571 1.34e-08 ***
+drugB                       -0.6868     0.1677  -4.094 0.000129 ***
+drugC                       -0.8625     0.1677  -5.142 3.14e-06 ***
+genderfemale:risklow         0.7912     0.2372   3.335 0.001466 ** 
+genderfemale:drugB           0.8394     0.2372   3.538 0.000785 ***
+genderfemale:drugC           1.0059     0.2372   4.240 7.84e-05 ***
+risklow:drugB                0.4944     0.2372   2.084 0.041436 *  
+risklow:drugC                0.7571     0.2372   3.191 0.002253 ** 
+genderfemale:risklow:drugB  -1.0297     0.3355  -3.069 0.003221 ** 
+genderfemale:risklow:drugC  -1.1895     0.3355  -3.546 0.000766 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.2905 on 60 degrees of freedom
+Multiple R-squared:  0.7096,	Adjusted R-squared:  0.6563 
+F-statistic: 13.33 on 11 and 60 DF,  p-value: 2.214e-12
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we can see, there are a lot of paramters here and we would not even both trying to work out what they all mean (unless you are very bored on a Sunday afternoon). Instead, we can create our omnibus tests, as usual</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">Anova</span><span class="p">(</span><span class="n">mod.3way</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Anova Table (Type II tests)
+
+Response: cholesterol
+                 Sum Sq Df F value    Pr(&gt;F)    
+gender           1.3672  1 16.1957 0.0001625 ***
+risk             7.8251  1 92.6988   8.8e-14 ***
+drug             1.2354  2  7.3177 0.0014328 ** 
+gender:risk      0.0119  1  0.1411 0.7084867    
+gender:drug      0.5636  2  3.3384 0.0422001 *  
+risk:drug        0.1204  2  0.7131 0.4942214    
+gender:risk:drug 1.2504  2  7.4063 0.0013345 ** 
+Residuals        5.0649 60                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+</pre></div>
+</div>
+</div>
+</div>
+<p>So, from this, we can see that the 3-way interaction is significant. In terms of following this up (which we will cover in the asynchoronous materials this week), we would therefore look at the 3-way interaction <em>only</em> and ignore everything else. If the 3-way interaction was <em>not</em> significant, we would interpet the 2-way interactions <em>only</em> and ignore everything else. If all the 2-way interactions were <em>not</em> significant, we would interpret the main effects. This interpretational hierarchy respects something called the <em>principle of marginality</em>, which we will discuss later.</p>
+</section>
+<section id="plotting-a-3-way-anova">
+<h3>Plotting a 3-way ANOVA<a class="headerlink" href="#plotting-a-3-way-anova" title="Link to this heading">#</a></h3>
+<p>Although we will not take the numeric interpretation further, for now, we can at least have a look at some plots to understand what the 3-way interaction means. Using the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package, we can generate some useful plots to understand this effect.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">effect</span><span class="p">(</span><span class="s">&#39;gender:risk:drug&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">mod</span><span class="o">=</span><span class="n">mod.3way</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/dd001aec4ed480bae7b531b2a1ebced07ae70c43a88f5aaf0658889697360b9f.png"><img alt="_images/dd001aec4ed480bae7b531b2a1ebced07ae70c43a88f5aaf0658889697360b9f.png" src="_images/dd001aec4ed480bae7b531b2a1ebced07ae70c43a88f5aaf0658889697360b9f.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>The easiest way to understand a 3-way interaction is by interpreting it as testing whether a 2-way interaction differs depending upon the levels of a third factor. In the plot above, we can think of this as testing whether the Drug x Gender effect is different depending upon the level of Risk. The <em>top</em> row shows Drug x Gender when the level of Risk is <em>low</em>, and the <em>bottom</em> row shows Drug x Gender when the level of Risk is <em>high</em>. As we can see, it appears as if the effect is being driven by the difference in high-risk males on drug A compared to high-risk females on drug A.</p>
+<p>There are a few different options to control the ordering of the factors in terms of these plots. The first is to explicitly dictate which factor is drawn along the <span class="math notranslate nohighlight">\(x\)</span>-axis using the <code class="docutils literal notranslate"><span class="pre">x.var</span></code> argument.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="nf">effect</span><span class="p">(</span><span class="s">&#39;gender:risk:drug&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">mod</span><span class="o">=</span><span class="n">mod.3way</span><span class="p">),</span><span class="w"> </span><span class="n">x.var</span><span class="o">=</span><span class="s">&#39;gender&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/c5fc484b0b9542b66b37326503cc9bb968bcac4d509408e0a33072d54ccc8c9e.png"><img alt="_images/c5fc484b0b9542b66b37326503cc9bb968bcac4d509408e0a33072d54ccc8c9e.png" src="_images/c5fc484b0b9542b66b37326503cc9bb968bcac4d509408e0a33072d54ccc8c9e.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>However, we can see that the resultant plot makes a bit of a mess of the factor structure. A better method is to draw the third factor as multiple lines within each panel. We can dictate which factor we want using the <code class="docutils literal notranslate"><span class="pre">lines=list(...)</span></code> option. Note that we have to explicitly add the confidence intervals back in, if we want them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="nf">effect</span><span class="p">(</span><span class="s">&#39;gender:risk:drug&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">mod</span><span class="o">=</span><span class="n">mod.3way</span><span class="p">),</span><span class="w">   </span><span class="c1"># the 3-way effect</span>
+<span class="w">     </span><span class="n">x.var</span><span class="o">=</span><span class="s">&#39;drug&#39;</span><span class="p">,</span><span class="w">                               </span><span class="c1"># put drug on the x-axis</span>
+<span class="w">     </span><span class="n">lines</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">z.var</span><span class="o">=</span><span class="s">&#39;gender&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">multiline</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="c1"># set gender as different lines within each panel </span>
+<span class="w">     </span><span class="n">confint</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s">&#39;bars&#39;</span><span class="p">))</span><span class="w">                 </span><span class="c1"># add the 95% CIs back in</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/4ccccc936044737a31a4e5dd1c782a595ca6aad620c428ed0bd4277020e60133.png"><img alt="_images/4ccccc936044737a31a4e5dd1c782a595ca6aad620c428ed0bd4277020e60133.png" src="_images/4ccccc936044737a31a4e5dd1c782a595ca6aad620c428ed0bd4277020e60133.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>Now we can much more clearly see that the interaction is being driven by the difference between <code class="docutils literal notranslate"><span class="pre">male</span></code> and <code class="docutils literal notranslate"><span class="pre">female</span></code> within the <code class="docutils literal notranslate"><span class="pre">high</span></code> risk category when taking drug <code class="docutils literal notranslate"><span class="pre">A</span></code>.</p>
+<div class="alert alert-block alert-info"> 
+<b>ACTIVITY ...</b> Can you redraw the effects plot above with <code>gender</code> on the <i>x</i>-axis and <code>drug</code> as different lines? What other orderings can you come up with? Which one is more intuitive to you in terms of interpreting the interaction?
+</div></section>
+</section>
+<section id="other-model-comparison-methods">
+<h2>Other Model Comparison Methods<a class="headerlink" href="#other-model-comparison-methods" title="Link to this heading">#</a></h2>
+<section id="r-2">
+<h3><span class="math notranslate nohighlight">\(R^{2}\)</span><a class="headerlink" href="#r-2" title="Link to this heading">#</a></h3>
+</section>
+<section id="aic-and-bic">
+<h3>AIC and BIC<a class="headerlink" href="#aic-and-bic" title="Link to this heading">#</a></h3>
 </section>
 </section>
 <section id="the-regression-anova-f-test">
@@ -792,18 +964,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 <p>Notice that the very last line says:</p>
 <p><code class="docutils literal notranslate"><span class="pre">F-statistic:</span>&#160;&#160; <span class="pre">7.8</span> <span class="pre">on</span> <span class="pre">2</span> <span class="pre">and</span> <span class="pre">29</span> <span class="pre">DF,</span>&#160; <span class="pre">p-value:</span> <span class="pre">0.001947</span></code></p>
 <p>which is exactly the results from the ANOVA table. In general, it is customary to always provide an omnibus test of the <em>whole</em> regression model, by comparing the full model to a model containing only an intercept. Because this model only contains a single predictor, this is then equivalent to the one-way ANOVA. In general, if there are multiple predictor variables, this will not be the same. However, the omnibus regression test is useful as a single way of asking the question “is our model actually doing anything?” or “is our model any better than just fitting an intercept?”</p>
-</section>
-<section id="way-anova-and-beyond">
-<h2>3-way ANOVA and Beyond<a class="headerlink" href="#way-anova-and-beyond" title="Link to this heading">#</a></h2>
-</section>
-<section id="other-model-comparison-methods">
-<h2>Other Model Comparison Methods<a class="headerlink" href="#other-model-comparison-methods" title="Link to this heading">#</a></h2>
-<section id="r-2">
-<h3><span class="math notranslate nohighlight">\(R^{2}\)</span><a class="headerlink" href="#r-2" title="Link to this heading">#</a></h3>
-</section>
-<section id="aic-and-bic">
-<h3>AIC and BIC<a class="headerlink" href="#aic-and-bic" title="Link to this heading">#</a></h3>
-</section>
 </section>
 </section>
 
@@ -866,13 +1026,18 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-and-violations-in-an-anova">Assumptions and Violations in an ANOVA</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-and-beyond">3-way ANOVA and Beyond</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-and-beyond">3-way ANOVA and Beyond</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3-way-dataset">Example 3-way Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#way-anova-model">3-way ANOVA Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-a-3-way-anova">Plotting a 3-way ANOVA</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-model-comparison-methods">Other Model Comparison Methods</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-2"><span class="math notranslate nohighlight">\(R^{2}\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aic-and-bic">AIC and BIC</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-anova-f-test">The Regression ANOVA <span class="math notranslate nohighlight">\(F\)</span>-test</a></li>
 </ul>
   </nav></div>
 
