@@ -16,20 +16,22 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-  
-  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
@@ -37,10 +39,11 @@
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/test.css?v=90b7ad94" />
   
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
@@ -67,6 +70,7 @@
     <link rel="prev" title="Higher-order ANOVA I: The Additive Model" href="4.higher-order-ANOVA-I.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -82,19 +86,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -102,7 +95,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -110,8 +102,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -127,7 +119,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -157,21 +150,17 @@
     
     
     <img src="_static/logo.png" class="logo__image only-light" alt="Linear Models IV: Model Comparisons and the ANOVA - Home"/>
-    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Linear Models IV: Model Comparisons and the ANOVA - Home"/>`);</script>
+    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Linear Models IV: Model Comparisons and the ANOVA - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -197,9 +186,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -343,24 +337,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -416,7 +402,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="higher-order-anova-ii-the-full-factorial-model">
 <h1>Higher-order ANOVA II: The Full Factorial Model<a class="headerlink" href="#higher-order-anova-ii-the-full-factorial-model" title="Link to this heading">#</a></h1>
-<p>So far, we have looked at the additive model that assumes a constant row and column difference between the cell means. However, as alluded to earlier, this additive assumption may not always hold. Indeed, in many real-world examples, we <em>expect</em> the factors in the model to influence each other. We saw an example earlier of <em>depression</em> and <em>anxiety</em>. Another example would be a basic <span class="math notranslate nohighlight">\(2 \times 2\)</span> model of a clinical trial. If Factor A is <em>diagnosis</em> (<em>patient</em>, <em>control</em>) and Factor B is <em>drug</em> (<em>placebo</em>, <em>medication</em>), then the expectation might be that the effect of the drug (i.e. <em>medication vs placebo</em>) is different depending upon whether you are a <em>control</em> or a <em>patient</em>. For instance, if the drug is very targeted then there may only be a difference between the medication and a placebo if you are patient, but not if you are a control. In this example, the effect of <em>drug</em> depends upon <em>diagnosis</em>. When <em>diagnosis = control</em> there is no effect, but when <em>diagnosis = patient</em> there is an effect. This form of dependence between the levels of multiple factors is known as an <em>interaction</em>.</p>
+<p>So far, we have looked at the additive model that assumes a constant row and column difference between the cell means. However, as alluded to earlier, this additive assumption may not always hold. Indeed, in many real-world examples, we <em>expect</em> the factors in the model to influence each other. We saw an example earlier of <em>depression</em> and <em>anxiety</em>. Another example would be a basic <span class="math notranslate nohighlight">\(2 \times 2\)</span> model of a clinical trial. If Factor A is <em>diagnosis</em> (<em>patient</em>, <em>control</em>) and Factor B is <em>drug</em> (<em>placebo</em>, <em>medication</em>), then the expectation might be that the effect of the drug (i.e. <em>medication vs placebo</em>) is different depending upon whether you are a <em>control</em> or a <em>patient</em>. For instance, if the drug is very targeted then there may only be a difference between the medication and a placebo if you are a patient, but not if you are a control. In this example, the effect of <em>drug</em> depends upon <em>diagnosis</em>. When <em>diagnosis = control</em> there is no effect, but when <em>diagnosis = patient</em> there is an effect. This form of dependence between the levels of multiple factors is known as an <em>interaction</em>.</p>
 <div class="tip admonition">
 <p class="admonition-title">Interaction Definition</p>
 <p>Within the context of an ANOVA, the <em>interaction</em> between two categorical predictor is defined as the degree to which the effect of one factor changes depending upon the levels of another factor. This can also be thought of as the degree to which the additivity assumption does <em>not</em> hold, capturing the difference between the estimated means from an additive model and the true sample means.</p>
@@ -488,7 +474,7 @@ document.write(`
 <a class="reference internal image-reference" href="_images/7bc089982151a2a66b3ded29d048e92e2b4e108a7740d699aaff92f4959be4c4.png"><img alt="_images/7bc089982151a2a66b3ded29d048e92e2b4e108a7740d699aaff92f4959be4c4.png" src="_images/7bc089982151a2a66b3ded29d048e92e2b4e108a7740d699aaff92f4959be4c4.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>In the final plot, we see a <em>crossover interaction</em>, so-called because the lines create an x-shape. This form of interaction can be more unusal as it implies a complete reversal of the effect of one factor at different levels of another. In our clinical trial example, this could imply that the patients <em>improve</em> when taking the drug, whereas the controls get <em>worse</em>. This is not implausible. Perhaps without any clinical benefit, the side-effects of the drug are more pronounced in the control group. Of note is that we are better powered to detect cross-over interactions compared to non-crossover. This is because the <em>difference</em> of <em>differences</em> is always larger for a crossover than a non-crossover interaction<a class="footnote-reference brackets" href="#crosspower-foot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
+<p>In the final plot, we see a <em>crossover interaction</em>, so-called because the lines create an x-shape. This form of interaction can be more unusual as it implies a complete reversal of the effect of one factor at different levels of another. In our clinical trial example, this could imply that the patients <em>improve</em> when taking the drug, whereas the controls get <em>worse</em>. This is not implausible. Perhaps without any clinical benefit, the side-effects of the drug are more pronounced in the control group. Of note is that we are better powered to detect cross-over interactions compared to non-crossover. This is because the <em>difference</em> of <em>differences</em> is always larger for a crossover than a non-crossover interaction<a class="footnote-reference brackets" href="#crosspower-foot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
 <a class="reference internal image-reference" href="_images/a83918bd6ce9b661fff0a08aa54a4b2413bab3ee4b9ddd4336b1c980b971460d.png"><img alt="_images/a83918bd6ce9b661fff0a08aa54a4b2413bab3ee4b9ddd4336b1c980b971460d.png" src="_images/a83918bd6ce9b661fff0a08aa54a4b2413bab3ee4b9ddd4336b1c980b971460d.png" style="width: 420px; height: 420px;" /></a>
@@ -567,7 +553,7 @@ origin*vs 0 0 0 0 1 0 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 1 1 1 1 0 0 0 1 0 0 0
     \mu_{22} &amp;= \beta_{0} + \underbrace{(\beta_{1} \times \mathbf{1})}_{\texttt{origin}} + \underbrace{(\beta_{2} \times \mathbf{1})}_{\texttt{vs}} &amp;&amp;+ \underbrace{(\beta_{3} \times \mathbf{1})}_{\texttt{origin * vs}} &amp;&amp;= \beta_{0} + \beta_{1} + \beta_{2} + \beta_{3} &amp;&amp;\quad\texttt{(USA,V-shaped)}\\
 \end{alignat*}
 \end{split}\]</div>
-<p>Here it is clear that the interaction effect itself is only added to the definition of <span class="math notranslate nohighlight">\(\mu_{22}\)</span>. The general intution is that that adding some extra flexibility to the definition of <span class="math notranslate nohighlight">\(\mu_{22}\)</span> is all that is needed to lift the restrictions of the additive model. Adding another parameter here means that the constant row and column effects of the additive model are no longer necessary and the means can become whatever the fitting procedure wants them to be. In the case of least-squares/maximum likelihood, this will be the sample cell means. A more complete exploration for this is given in the drop-down below, if you are interested.</p>
+<p>Here it is clear that the interaction effect itself is only added to the definition of <span class="math notranslate nohighlight">\(\mu_{22}\)</span>. The general intuition is that that adding some extra flexibility to the definition of <span class="math notranslate nohighlight">\(\mu_{22}\)</span> is all that is needed to lift the restrictions of the additive model. Adding another parameter here means that the constant row and column effects of the additive model are no longer necessary and the means can become whatever the fitting procedure wants them to be. In the case of least-squares/maximum likelihood, this will be the sample cell means. A more complete exploration for this is given in the drop-down below, if you are interested.</p>
 <div class="dropdown admonition">
 <p class="admonition-title">Connecting Interactions, Cell Means and Multiplying Dummy Variables</p>
 <p>Having a more complete picture of the cell means in both the additive and full factorial models allows us to make a more explicit connection between the interaction effect as a comparison of cell means and the interaction effect as the multiplication of two dummy variables. This gets a bit complicated, hence why this information is <em>optional</em>. However, working through the logic below carefully will provide you with a more complete picture of how all this information fits together.</p>
@@ -629,7 +615,7 @@ F-statistic: 11.84 on 3 and 28 DF,  p-value: 3.466e-05
 </div>
 </div>
 </div>
-<p>Alternatively, we can use the <code class="docutils literal notranslate"><span class="pre">*</span></code> syntax to tell <code class="docutils literal notranslate"><span class="pre">R</span></code> to fit a full factorial model between multiple predictor variables. For instance, specifiying <code class="docutils literal notranslate"><span class="pre">origin*vs</span></code> will automatically expanded the model specification to include all main effects and interactions. This can be especially helpful when you have a big model and want to include eveything, though knowing how to specify all effects explicitly is important because there may be times where you want to <em>exclude</em> some interactions, but not all. As an example, the full factorial shorthand for this model would be</p>
+<p>Alternatively, we can use the <code class="docutils literal notranslate"><span class="pre">*</span></code> syntax to tell <code class="docutils literal notranslate"><span class="pre">R</span></code> to fit a full factorial model between multiple predictor variables. For instance, specifying <code class="docutils literal notranslate"><span class="pre">origin*vs</span></code> will automatically expanded the model specification to include all main effects and interactions. This can be especially helpful when you have a big model and want to include everything, though knowing how to specify all effects explicitly is important because there may be times where you want to <em>exclude</em> some interactions, but not all. As an example, the full factorial shorthand for this model would be</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">fullfac.model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">origin</span><span class="o">*</span><span class="n">vs</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
@@ -769,7 +755,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 <a class="reference internal image-reference" href="_images/6bdc59bddc0a746c983394af516b535100f1650e9cb0513e60bf0464ae8959ec.png"><img alt="_images/6bdc59bddc0a746c983394af516b535100f1650e9cb0513e60bf0464ae8959ec.png" src="_images/6bdc59bddc0a746c983394af516b535100f1650e9cb0513e60bf0464ae8959ec.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>where it is clear that the two lines are basically parallel, for all practical purposes. As such, we would likely conclude that there is nothing about engine shape that informs where a car is manufactured, nor anything about where a car is manufacturered that influences the shape of its engine. In this case, it seems that the additive model is perfectly justified.</p>
+<p>where it is clear that the two lines are basically parallel, for all practical purposes. As such, we would likely conclude that there is nothing about engine shape that informs where a car is manufactured, nor anything about where a car is manufactured that influences the shape of its engine. In this case, it seems that the additive model is perfectly justified.</p>
 <div class="tip admonition">
 <p class="admonition-title">Removing the Interaction</p>
 <p>It is worth noting that many statisticians would recommend removing non-significant interaction effects from the model before proceeding. This is not typically done in Psychology. Instead, due to the prevalence of NHST, these effects are simply assessed based on their significance and interpreted accordingly. This is largely because the focus of many statisticians is building the best model they can, whereas the focus in Psychology is largely about hypothesis tests. Indeed, as we have made clear across these various lessons, few Psychologists even think about ANOVAs in terms of models. So, with the result above, the statistician would go back to the additive model as the best representation of the data, whereas the psychologist would stick with the full factorial model and just interpret the hypothesis tests. Although the statistician’s approach is generally a better exercise in <em>model building</em> (and a better approach generally), this distinction is important to know when looking at the psychological literature and working with psychologists who typically do not engage with such practices (particularly in the context of an ANOVA).</p>
@@ -974,8 +960,8 @@ origin.margin     25.77045   17.75833  21.76439
 </div>
 </div>
 <p>Clearly, these are not the same value, as we should be expecting. For <code class="docutils literal notranslate"><span class="pre">other</span></code> countries the difference between <code class="docutils literal notranslate"><span class="pre">straight</span></code> and <code class="docutils literal notranslate"><span class="pre">v-shaped</span></code> engines is a change in 13.64 MPG, whereas for the <code class="docutils literal notranslate"><span class="pre">USA</span></code> the difference between <code class="docutils literal notranslate"><span class="pre">straight</span></code> and <code class="docutils literal notranslate"><span class="pre">v-shaped</span></code> engines is a change in 6.02 MPG. So this tells us that differences in MPG between engine shapes depends upon where the car was manufactured.</p>
-<p>However, if we ignore this and just average the cell means and compare the marginal means, we conclude a difference in MPG of 9.83 MPG. Yet, there is no difference between any of the cell means that equals 9.83. This is not an effect that exists in the data. Instead, it is an effect created by calculating a ficticious country that is half-way between <code class="docutils literal notranslate"><span class="pre">other</span></code> and <code class="docutils literal notranslate"><span class="pre">USA</span></code>. A ficticious country that manufactures engines in such a way that the difference in MPG that engine shape creates is exactly half-way between that seen in the <code class="docutils literal notranslate"><span class="pre">USA</span></code> and that seen in <code class="docutils literal notranslate"><span class="pre">other</span></code>. It is answering the question “If we ignore country, what is the difference in MPG between <code class="docutils literal notranslate"><span class="pre">straight</span></code> and <code class="docutils literal notranslate"><span class="pre">v-shaped</span></code>?” Yet we know from the interaction that country <em>does</em> matter. As such, this is a <em>meaningless</em> question.</p>
-<p>Another example can be illustrative here. If we go back to our drug and diagnosis <span class="math notranslate nohighlight">\(2 \times 2\)</span> example, if we know that the effectiveness of the drug depends on diagnosis, such that there is an effect in <em>patients</em> but not in <em>controls</em>, what would a main effect of drug mean? It is asking the question “ignoring diagnosis, how effective is the drug?” But this is a menaingless question because the effectiveness depends entirely on diagnosis. Sure, we can average the cell means and get some sort of measure of effectiveness halfway between controls and patients, but what does that tell us? The effectiveness of the drug for someone who has some sort of half-diagnosis and happens to sit at a point exactly halfway between the two groups?</p>
+<p>However, if we ignore this and just average the cell means and compare the marginal means, we conclude a difference in MPG of 9.83 MPG. Yet, there is no difference between any of the cell means that equals 9.83. This is not an effect that exists in the data. Instead, it is an effect created by calculating a fictitious country that is half-way between <code class="docutils literal notranslate"><span class="pre">other</span></code> and <code class="docutils literal notranslate"><span class="pre">USA</span></code>. A fictitious country that manufactures engines in such a way that the difference in MPG that engine shape creates is exactly half-way between that seen in the <code class="docutils literal notranslate"><span class="pre">USA</span></code> and that seen in <code class="docutils literal notranslate"><span class="pre">other</span></code>. It is answering the question “If we ignore country, what is the difference in MPG between <code class="docutils literal notranslate"><span class="pre">straight</span></code> and <code class="docutils literal notranslate"><span class="pre">v-shaped</span></code>?” Yet we know from the interaction that country <em>does</em> matter. As such, this is a <em>meaningless</em> question.</p>
+<p>Another example can be illustrative here. If we go back to our drug and diagnosis <span class="math notranslate nohighlight">\(2 \times 2\)</span> example, if we know that the effectiveness of the drug depends on diagnosis, such that there is an effect in <em>patients</em> but not in <em>controls</em>, what would a main effect of drug mean? It is asking the question “ignoring diagnosis, how effective is the drug?” But this is a meaningless question because the effectiveness depends entirely on diagnosis. Sure, we can average the cell means and get some sort of measure of effectiveness halfway between controls and patients, but what does that tell us? The effectiveness of the drug for someone who has some sort of half-diagnosis and happens to sit at a point exactly halfway between the two groups?</p>
 <p>The most dramatic example of how marginal means can produce meaningless values is a perfect crossover interaction. In this situation, the main effect would equal 0 because the marginal means would be identical<a class="footnote-reference brackets" href="#margin-foot" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>. So, if we had a perfect reversal of the effectiveness of the drug between patients and controls, our conclusion would then be that the overall effectiveness of the drug is 0. This would lead us to conclude that, ignoring diagnosis, the drug does nothing, which is clearly not true. This really hammers home the point that the values produced by marginal means in the presence of interactions can be very misleading.</p>
 </section>
 </section>
@@ -1072,7 +1058,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </aside>
 <aside class="footnote brackets" id="crosspower-foot" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
-<p>This is simply because one of the mean differences is negative and one is postitive. If we subtract a positive and negative number, the signs cancel and the effects <em>sum</em>. So, a perfect crossover would be something like <span class="math notranslate nohighlight">\((10 - 5) - (5 - 10) = 5 - (-5) = 5 + 5 = 10\)</span>. A non-crossover would then be something like <span class="math notranslate nohighlight">\((10 - 5) - (6 - 5) = 5 - 1 = 4\)</span>. So the effect is much smaller.</p>
+<p>This is simply because one of the mean differences is negative and one is positive. If we subtract a positive and negative number, the signs cancel and the effects <em>sum</em>. So, a perfect crossover would be something like <span class="math notranslate nohighlight">\((10 - 5) - (5 - 10) = 5 - (-5) = 5 + 5 = 10\)</span>. A non-crossover would then be something like <span class="math notranslate nohighlight">\((10 - 5) - (6 - 5) = 5 - 1 = 4\)</span>. So the effect is much smaller.</p>
 </aside>
 <aside class="footnote brackets" id="fsqrt-foot" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
@@ -1146,7 +1132,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -1222,8 +1209,8 @@ By Dr Martyn McFarquhar & Dr George Farmer
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>
