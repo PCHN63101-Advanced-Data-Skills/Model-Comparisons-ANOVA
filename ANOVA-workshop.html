@@ -8356,7 +8356,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-r"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">'datarium'</span><span class="p">)</span>
@@ -8415,7 +8415,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-r"><pre><span></span><span class="n">mod.3way</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">cholesterol</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">gender</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">risk</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">drug</span><span class="w"> </span><span class="o">+</span><span class="w">                   </span><span class="c1"># main effects</span>
@@ -8443,7 +8443,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-r"><pre><span></span><span class="n">mod.3way</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">cholesterol</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">gender</span><span class="o">*</span><span class="n">risk</span><span class="o">*</span><span class="n">drug</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">heartattack</span><span class="p">)</span>
@@ -8509,7 +8509,7 @@ F-statistic: 13.33 on 11 and 60 DF,  p-value: 2.214e-12
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-r"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">Anova</span><span class="p">(</span><span class="n">mod.3way</span><span class="p">))</span>
@@ -8556,6 +8556,19 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 </div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=73211c82">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="alert alert-block alert-info">
+<b>ACTIVITY ...</b> Can you use <code>gls()</code> to build a 3-way ANOVA model that allows for different variances for each cell of the design?
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ce689dff">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -8571,10 +8584,10 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [41]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-r"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">)</span>
+<div class="highlight hl-r"><pre><span></span><span class="nf">suppressMessages</span><span class="p">(</span><span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">))</span>
 <span class="nf">plot</span><span class="p">(</span><span class="nf">effect</span><span class="p">(</span><span class="s">'gender:risk:drug'</span><span class="p">,</span><span class="w"> </span><span class="n">mod</span><span class="o">=</span><span class="n">mod.3way</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -8620,7 +8633,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [47]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-r"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="nf">effect</span><span class="p">(</span><span class="s">'gender:risk:drug'</span><span class="p">,</span><span class="w"> </span><span class="n">mod</span><span class="o">=</span><span class="n">mod.3way</span><span class="p">),</span><span class="w"> </span><span class="n">x.var</span><span class="o">=</span><span class="s">'gender'</span><span class="p">)</span>
@@ -8657,7 +8670,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [50]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-r"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="nf">effect</span><span class="p">(</span><span class="s">'gender:risk:drug'</span><span class="p">,</span><span class="w"> </span><span class="n">mod</span><span class="o">=</span><span class="n">mod.3way</span><span class="p">),</span><span class="w">   </span><span class="c1"># the 3-way effect</span>
@@ -8712,30 +8725,109 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Other-Model-Comparison-Methods">Other Model Comparison Methods<a class="anchor-link" href="#Other-Model-Comparison-Methods">¶</a></h2><h3 id="$R%5E%7B2%7D$">$R^{2}$<a class="anchor-link" href="#$R%5E%7B2%7D$">¶</a></h3><h3 id="AIC-and-BIC">AIC and BIC<a class="anchor-link" href="#AIC-and-BIC">¶</a></h3>
+<h2 id="Other-Model-Comparison-Methods">Other Model Comparison Methods<a class="anchor-link" href="#Other-Model-Comparison-Methods">¶</a></h2><p>Within the lesson, our focus was very much on the ANOVA as a <em>model comparison</em> procedure. However, as we saw, the $F$-statistic and subsequent tests are not always the easiest or most straight-forward methods for comparing models. Indeed, modern statistics would use different metrics for this purpose and would not rely on the ANOVA tests or $p$-values when building the most suitable model.</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d85879cd">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=aa0982cb">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="The-Regression-ANOVA-$F$-test">The Regression ANOVA $F$-test<a class="anchor-link" href="#The-Regression-ANOVA-$F$-test">¶</a></h2><p>As a final point, it is interesting to note that we did not actually need to do any of the calculations above, because the results were provided all along at the bottom of the summary table for the full model.</p>
+<h3 id="$R%5E%7B2%7D$,-AIC-and-BIC">$R^{2}$, AIC and BIC<a class="anchor-link" href="#$R%5E%7B2%7D$,-AIC-and-BIC">¶</a></h3><p>Although many model comparison metrics exist, the most common ones that get used are $R^{2}$, the Akaike ("Ah-kah-ee-keh") Information Criterion (AIC) and the Bayesian Information Criterion (BIC). Although there is much more to be learned about these, the brief summary below should suffice for now</p>
+<ul>
+<li>$R^2$ = how much variance the model explains<ul>
+<li>Measures the proportion of variance in the outcome explained by the predictors.</li>
+<li>Ranges from 0 to 1.</li>
+<li>Higher is “better,” but only in a descriptive sense.</li>
+<li>Always increases when you add more parameters (adjusted-$R^2$ corrects for this).</li>
+<li>Not always well-defined beyond OLS models.</li>
+</ul>
+</li>
+<li>AIC = how well the model predicts new data<ul>
+<li>Lower AIC means <em>better</em> expected predictions.</li>
+<li>Balances fit and complexity by:<ul>
+<li><em>Rewarding</em> models that fit well.</li>
+<li><em>Penalising</em> models that add too many parameters.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>BIC = approximate model evidence from a Bayesian perspective<ul>
+<li>Balances fit and complexity, like the AIC.</li>
+<li>Much stronger penalty for extra parameters than AIC.</li>
+<li>Lower BIC means “better supported” model, given the data.</li>
+</ul>
+</li>
+</ul>
+<p>In terms of interpretation, for adjusted-$R^{2}$ we need to have a sense of how much change in explanatory variance we would consider meaningful. For both AIC and BIC, there are heuristics we can use to assess the degree of change. For AIC, the canonical reference is <a href="https://link.springer.com/book/10.1007/b97636">Burnham &amp; Anderson (2002)</a>, and for BIC it is <a href="https://www.jstor.org/stable/271063">Raftery (1995)</a>. The criteria are given below</p>
+<table>
+<thead>
+<tr>
+<th>Score Change</th>
+<th><strong>AIC Interpretation</strong></th>
+<th><strong>BIC Interpretation</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0–2</strong></td>
+<td>Higher-AIC model has <strong>no meaningful predictive disadvantage</strong></td>
+<td><strong>Weak evidence</strong> against the higher-BIC model</td>
+</tr>
+<tr>
+<td><strong>2–4</strong></td>
+<td>Higher-AIC model shows a <strong>small drop</strong> in predictive ability</td>
+<td><strong>Weak-to-Positive evidence</strong> against the higher-BIC model</td>
+</tr>
+<tr>
+<td><strong>4–6</strong></td>
+<td>Higher-AIC model shows a <strong>clear predictive disadvantage</strong></td>
+<td><strong>Positive evidence</strong> favouring the lower-BIC model</td>
+</tr>
+<tr>
+<td><strong>6–10</strong></td>
+<td>Higher-AIC model is <strong>substantially poorer</strong> in prediction</td>
+<td><strong>Strong evidence</strong> favouring the lower-BIC model</td>
+</tr>
+<tr>
+<td><strong>&gt;10</strong></td>
+<td>Higher-AIC model is <strong>dramatically poorer</strong> in prediction</td>
+<td><strong>Very strong evidence</strong> favouring the lower-BIC model</td>
+</tr>
+</tbody>
+</table>
+<p>Because BIC has a stronger penalty for larger models, the interpretation is graded slightly differently for BIC compared to AIC, though they are very similar. In addition, the metrics focus on different elements. The AIC is very much about <em>predictive performance</em> of the better model (smaller AIC) compared to the worse model (larger AIC). The BIC is focussed on the evidence for each model from the data, balanced with parsimony (i.e. preferring simpler models). In general, changes around 4 start to favour the model with a higher AIC/BIC, though this is weaker evidence for BIC compared to AIC.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=21a372a4">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=dd2fb7f4">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Comparing-models-in-R">Comparing models in <code>R</code><a class="anchor-link" href="#Comparing-models-in-R">¶</a></h3><p>We can calculate $R^2$, adjusted-$R^2$, AIC and BIC through base <code>R</code>, though we have to collate all this information together if we want to compare it. The <code>performance</code> package does this for us and so is a handy utility to have. As an example, we can again use the <code>heartattack</code> data and compare the models with and without the 3-way interaction. In the example below, we make use of the <code>^</code> forumla syntax to indicate the higest-order interaction we want in each model (which is why we cannot use this to raise a variable to a power).</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=7be5b469">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-r"><pre><span></span><span class="nf">summary</span><span class="p">(</span><span class="n">full.mod</span><span class="p">)</span>
+<div class="highlight hl-r"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">'performance'</span><span class="p">)</span>
+
+<span class="n">mod.null</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">cholesterol</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="p">(</span><span class="n">gender</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">risk</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">drug</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">heartattack</span><span class="p">)</span>
+<span class="n">mod.full</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">cholesterol</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="p">(</span><span class="n">gender</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">risk</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">drug</span><span class="p">)</span><span class="o">^</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">heartattack</span><span class="p">)</span><span class="w"> </span><span class="c1"># equivalent to gender*risk*drug</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nf">compare_performance</span><span class="p">(</span><span class="n">mod.null</span><span class="p">,</span><span class="w"> </span><span class="n">mod.full</span><span class="p">,</span><span class="w"> </span><span class="n">metrics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">'R2'</span><span class="p">,</span><span class="s">'R2_adj'</span><span class="p">,</span><span class="s">'AIC'</span><span class="p">,</span><span class="s">'BIC'</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
@@ -8747,26 +8839,151 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>
-Error in eval(expr, envir, enclos): object 'full.mod' not found
-Traceback:
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre><span class="ansi-blue-fg"># Comparison of Model Performance Indices</span>
 
-1. summary(full.mod)</pre>
+Name     | Model | AIC (weights) | BIC (weights) |    R2 | R2 (adj.)
+--------------------------------------------------------------------
+mod.null |    lm |  51.1 (0.003) |  76.1 (0.025) | 0.638 |     0.585
+mod.full |    lm |  39.2 (0.997) |  68.8 (0.975) | 0.710 |     0.656
+</pre>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=60428680">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=104c9705">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Notice that the very last line says:</p>
-<p><code>F-statistic: 7.8 on 2 and 29 DF, p-value: 0.001947</code></p>
-<p>which is exactly the results from the ANOVA table. In general, it is customary to always provide an omnibus test of the <em>whole</em> regression model, by comparing the full model to a model containing only an intercept. Because this model only contains a single predictor, this is then equivalent to the one-way ANOVA. In general, if there are multiple predictor variables, this will not be the same. However, the omnibus regression test is useful as a single way of asking the question "is our model actually doing anything?" or "is our model any better than just fitting an intercept?"</p>
+<p>Working through the metrics, we can see that the model <em>with</em> the 3-way interaction explains 65.6% of the variance in <code>cholesterol</code>, whereas the model <em>without</em> only explains 58.5%. On its own, this would seem a meaningful change, but we can see what AIC and BIC say. The change in AIC is</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=56657e60">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [23]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-r"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="m">51.1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">39.2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>[1] 11.9
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8ceed5ad">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>which sits happily in the "dramatically poorer prediction" range, in terms of the larger-AIC model. In this example, the model <em>without</em> the 3-way interaction is the much worse performer. Similarly, the change in BIC is</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=20c37a12">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-r"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="m">76.1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">68.8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>[1] 7.3
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5de63635">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>which confers "strong evidence" against the non-3-way interaction model. The BIC is more conservative here because the 3-way interaction model needs more parameters and thus is the less parsimonious choice.</p>
+<p>On balance, all these metric seems to agree that the 3-way interaction is necessary for a better model prediction, has good evidential support from the data and substantially increases the amount of variance explained. Notice that this was all concluded <em>without</em> a $p$-value or the use of the word "significant".</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=ffe3932b">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [25]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-r"><pre><span></span><span class="n">mod.null</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gls</span><span class="p">(</span><span class="n">cholesterol</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="p">(</span><span class="n">gender</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">risk</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">drug</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">heartattack</span><span class="p">,</span><span class="w"> </span><span class="n">weights</span><span class="o">=</span><span class="nf">varIdent</span><span class="p">(</span><span class="n">form</span><span class="o">=~</span><span class="m">1</span><span class="o">|</span><span class="n">gender</span><span class="o">*</span><span class="n">risk</span><span class="o">*</span><span class="n">drug</span><span class="p">))</span><span class="w"> </span>
+<span class="n">mod.full</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gls</span><span class="p">(</span><span class="n">cholesterol</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="p">(</span><span class="n">gender</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">risk</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">drug</span><span class="p">)</span><span class="o">^</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">heartattack</span><span class="p">,</span><span class="w"> </span><span class="n">weights</span><span class="o">=</span><span class="nf">varIdent</span><span class="p">(</span><span class="n">form</span><span class="o">=~</span><span class="m">1</span><span class="o">|</span><span class="n">gender</span><span class="o">*</span><span class="n">risk</span><span class="o">*</span><span class="n">drug</span><span class="p">))</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nf">compare_performance</span><span class="p">(</span><span class="n">mod.null</span><span class="p">,</span><span class="w"> </span><span class="n">mod.full</span><span class="p">,</span><span class="w"> </span><span class="n">metrics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">'R2'</span><span class="p">,</span><span class="s">'R2_adj'</span><span class="p">,</span><span class="s">'AIC'</span><span class="p">,</span><span class="s">'BIC'</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre><span class="ansi-blue-fg"># Comparison of Model Performance Indices</span>
+
+Name     | Model | AIC (weights) | BIC (weights) |    R2
+--------------------------------------------------------
+mod.null |   gls |  67.1 (0.007) | 117.1 (0.063) | 0.577
+mod.full |   gls |  57.1 (0.993) | 111.8 (0.937) | 0.710
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c2c12294">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="alert alert-block alert-info">
+<b>ACTIVITY ...</b> Can you create these model comparison metrics for the <code>gls()</code> 3-way model? <b>NOTE</b> For similar reasons to degrees of freedom, both <code>'R2'</code> and <code>'R2_adj'</code> are ill-defined for GLS models. Just try and interpret using AIC and BIC instead.
+</div>
 </div>
 </div>
 </div>
