@@ -8762,11 +8762,11 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </ul>
 </li>
 </ul>
-<p>In terms of interpretation, for adjusted-$R^{2}$ we need to have a sense of how much change in explanatory variance we would consider meaningful. For both AIC and BIC, there are heuristics we can use to assess the degree of change. For AIC, the canonical reference is <a href="https://link.springer.com/book/10.1007/b97636">Burnham &amp; Anderson (2002)</a>, and for BIC it is <a href="https://www.jstor.org/stable/271063">Raftery (1995)</a>. The criteria are given below</p>
+<p>In terms of interpretation, for both $R^{2}$ and adjusted-$R^{2}$ we need to have a sense of how much change in explanatory variance we would consider meaningful. For both AIC and BIC, there are heuristics we can use to assess the degree of change. For AIC, the canonical reference is <a href="https://link.springer.com/book/10.1007/b97636">Burnham &amp; Anderson (2002)</a>, and for BIC it is <a href="https://www.jstor.org/stable/271063">Raftery (1995)</a>. The criteria are given below</p>
 <table>
 <thead>
 <tr>
-<th>Score Change</th>
+<th><strong>Change</strong></th>
 <th><strong>AIC Interpretation</strong></th>
 <th><strong>BIC Interpretation</strong></th>
 </tr>
@@ -8799,7 +8799,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </tr>
 </tbody>
 </table>
-<p>Because BIC has a stronger penalty for larger models, the interpretation is graded slightly differently for BIC compared to AIC, though they are very similar. In addition, the metrics focus on different elements. The AIC is very much about <em>predictive performance</em> of the better model (smaller AIC) compared to the worse model (larger AIC). The BIC is focussed on the evidence for each model from the data, balanced with parsimony (i.e. preferring simpler models). In general, changes around 4 start to favour the model with a higher AIC/BIC, though this is weaker evidence for BIC compared to AIC.</p>
+<p>Because BIC has a stronger penalty for larger models, the interpretation is graded slightly differently for BIC compared to AIC, though they are very similar. In addition, the metrics focus on different elements. The AIC is very much about <em>predictive performance</em> of the better model (smaller AIC) compared to the worse model (larger AIC). The BIC is focussed on the evidence for each model from the data, balanced with parsimony (i.e. preferring simpler models). In general, changes around 4 start to favour the model with a <em>lower</em> AIC/BIC, though this is weaker evidence when using BIC compared to AIC.</p>
 </div>
 </div>
 </div>
@@ -8948,6 +8948,21 @@ mod.full |    lm |  39.2 (0.997) |  68.8 (0.975) | 0.710 |     0.656
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <div class="alert alert-block alert-info">
 <b>ACTIVITY ...</b> Can you create the model comparison metrics for this 3-way interaction using a <code>gls()</code> model? <b>NOTE</b> For similar reasons to degrees of freedom, both <code>'R2'</code> and <code>'R2_adj'</code> are ill-defined for GLS models, so just use AIC and BIC instead.
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c51e3806">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="alert alert-block alert-warning">
+<b>TEST QUESTIONS</b>
+<p>Use the questions below to check your understanding of all the materials from this week.</p>
+<p>1....</p>
 </div>
 </div>
 </div>
