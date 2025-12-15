@@ -7893,7 +7893,7 @@ mean in group V-shaped mean in group Straight
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <div class="alert alert-block alert-info">
-<b>ACTIVITY 4</b> Try using <code>lmperm</code> and <code>lmrob</code> with this example to accommodate non-normality and outliers.
+<b>ACTIVITY 4</b> Try using <code>lmp()</code> and <code>lmrob()</code> with this example to accommodate non-normality and outliers.
 </div>
 </div>
 </div>
@@ -8509,7 +8509,7 @@ F-statistic: 13.33 on 11 and 60 DF,  p-value: 2.214e-12
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-r"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">Anova</span><span class="p">(</span><span class="n">mod.3way</span><span class="p">))</span>
@@ -8524,12 +8524,22 @@ F-statistic: 13.33 on 11 and 60 DF,  p-value: 2.214e-12
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>
-Error in Anova(mod.3way): could not find function "Anova"
-Traceback:
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Anova Table (Type II tests)
 
-1. print(Anova(mod.3way))</pre>
+Response: cholesterol
+                 Sum Sq Df F value    Pr(&gt;F)    
+gender           1.3672  1 16.1957 0.0001625 ***
+risk             7.8251  1 92.6988   8.8e-14 ***
+drug             1.2354  2  7.3177 0.0014328 ** 
+gender:risk      0.0119  1  0.1411 0.7084867    
+gender:drug      0.5636  2  3.3384 0.0422001 *  
+risk:drug        0.1204  2  0.7131 0.4942214    
+gender:risk:drug 1.2504  2  7.4063 0.0013345 ** 
+Residuals        5.0649 60                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+</pre>
 </div>
 </div>
 </div>
@@ -8809,7 +8819,7 @@ Traceback:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-r"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">'performance'</span><span class="p">)</span>
