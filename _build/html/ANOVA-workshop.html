@@ -486,7 +486,7 @@ mean in group V-shaped mean in group Straight
 </div>
 </div>
 <div class="alert alert-block alert-info"> 
-<b>ACTIVITY ...</b> Before reading on, refer back to the interpretation of these plots from last week. Think about what they mean in the context of a $t$-test model and whether you think they are all still relevant?
+<b>ACTIVITY 1</b> Before reading on, refer back to the interpretation of these plots from last week. Think about what they mean in the context of a $t$-test model and whether you think they are all still relevant?
 </div><p>In terms of interpreting these, we have the following guidance:</p>
 <section id="residuals-vs-fitted">
 <h4>Residuals vs Fitted<a class="headerlink" href="#residuals-vs-fitted" title="Link to this heading">#</a></h4>
@@ -496,13 +496,13 @@ mean in group V-shaped mean in group Straight
 <h4>Q-Q Residuals<a class="headerlink" href="#q-q-residuals" title="Link to this heading">#</a></h4>
 <p>Moving on to the <em>Q-Q Residuals</em> plot, this one <em>is</em> relevant for our simple <span class="math notranslate nohighlight">\(t\)</span>-test model. Remember, the normality assumption can also be thought of as the normality of the outcome variable <em>conditional</em> on the values of the predictor. When we have a dummy variable, the predictor only has <em>two</em> values, meaning that the assumption is that the data is normally distributed for each value of the dummy variable. In other words, normality is assumed <em>within each group</em>. In context, this means that the <code class="docutils literal notranslate"><span class="pre">Straight</span></code> engine group is normally distributed and the <code class="docutils literal notranslate"><span class="pre">V-shaped</span></code> engine group is normally distributed. This is a natural simplification of what we have seen before and means that this is one of the rarer cases where we could actually split the raw data into the two groups and then assess normality using the <em>outcome variable</em>. However, this is unnecessary when we can just stick to looking at the standardised residuals as usual.</p>
 <div class="alert alert-block alert-info"> 
-<b>ACTIVITY ...</b> Imagine you are working with a researcher who has not had the benefit of a very thorough statistical education. They decide to assess the normality assumption by producing a single histogram of the whole outcome variable. Why is this wrong and how would you try and explain this to them? 
+<b>ACTIVITY 2</b> Imagine you are working with a researcher who has not had the benefit of a very thorough statistical education. They decide to assess the normality assumption by producing a single histogram of the whole outcome variable. Why is this wrong and how would you try and explain this to them? 
 </div></section>
 <section id="scale-location">
 <h4>Scale-Location<a class="headerlink" href="#scale-location" title="Link to this heading">#</a></h4>
 <p>In terms of the <em>Scale-Location</em> plot, this is also of importance because the traditional <span class="math notranslate nohighlight">\(t\)</span>-test assumes homogeneity of variance. In other words, that the variance of the population distribution that each group is sampled from is identical. This can be assessed in the same fashion as any other regression model, where we look for an equal scattering of points around the horizontal line.</p>
 <div class="alert alert-block alert-info"> 
-<b>ACTIVITY ...</b> Can you remember from last week what method we could use to accommodate heterogeneity of variance in a regression model?
+<b>ACTIVITY 3</b> Can you remember from last week what method we could use to accommodate heterogeneity of variance in a regression model?
 </div></section>
 <section id="residuals-vs-leverage">
 <h4>Residuals vs Leverage<a class="headerlink" href="#residuals-vs-leverage" title="Link to this heading">#</a></h4>
@@ -578,7 +578,7 @@ mean in group V-shaped mean in group Straight
 </div>
 <p>We can see here that, apart from the degrees of freedom, these two results match. So, we can use GLS in this instance as a general-purpose tool for accommodating heterogeneity of variance that subsumes Welch’s <span class="math notranslate nohighlight">\(t\)</span>-test.</p>
 <div class="alert alert-block alert-info"> 
-<b>ACTIVITY ...</b> Try using <code>lmperm</code> and <code>lmrob</code> with this example to accommodate non-normality and outliers.
+<b>ACTIVITY 4</b> Try using <code>lmperm</code> and <code>lmrob</code> with this example to accommodate non-normality and outliers.
 </div></section>
 <section id="assumptions-and-violations-in-an-anova">
 <h3>Assumptions and Violations in an ANOVA<a class="headerlink" href="#assumptions-and-violations-in-an-anova" title="Link to this heading">#</a></h3>
@@ -650,7 +650,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 <p>Based on these plots, normality seems OK and there are no obvious outliers (using <span class="math notranslate nohighlight">\(|t_{i}| &gt; 3\)</span>). However, the variance looks like it differs across the different cells of the design.</p>
 <div class="alert alert-block alert-info"> 
-<b>ACTIVITY ...</b> Why is it that the cells of the design are visible as vertical stacks of points in a visualisation such as the Residuals vs Fitted plot? <b>HINT</b>: Think about the <i>x</i>-axis in this plot and what it means for data to share the same value on this axis.  
+<b>ACTIVITY 5</b> Why is it that the cells of the design are visible as vertical stacks of points in a visualisation such as the Residuals vs Fitted plot? <b>HINT</b> Think about the <i>x</i>-axis in this plot and what it means for data to share the same value on this axis.  
 </div><p>In order to accommodate different variances for each factor, we can use the <code class="docutils literal notranslate"><span class="pre">varIdent()</span></code> function, but specify the grouping factor as the <em>interaction</em> between <code class="docutils literal notranslate"><span class="pre">vs</span></code> and <code class="docutils literal notranslate"><span class="pre">origin</span></code>. This will result in a separate variance term for each cell of the design.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -772,9 +772,9 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 </div>
-<p>and now we have more traditional ANOVA tests. However, do not discount the fact that these are <em>very approximate</em>. As we can see NHST continues to cause problems as our methods gets more complex and sophisticated.</p>
+<p>and now we have more traditional ANOVA tests. However, do not discount the fact that these are <em>very approximate</em>.</p>
 <div class="alert alert-block alert-info"> 
-<b>ACTIVITY ...</b> At this point in time, which approach do you feel more comfortable using? The method with approximate degrees of freedom, or the method with asymptotic tests?  
+<b>ACTIVITY 6</b> At this point in time, which approach do you feel more comfortable using? The method with approximate degrees of freedom, or the method with asymptotic tests?  
 </div></section>
 </section>
 <section id="way-anova-and-beyond">
@@ -806,7 +806,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 </div>
 </div>
-<p>As we can see, the data is already organised and ready to go as a 3-way ANOVA model. This is the nice thing about the data from <code class="docutils literal notranslate"><span class="pre">datarium</span></code> (though it does not provide a very realistic picture of real-world data).</p>
+<p>As we can see, the data is already organised and ready-to-go as a 3-way ANOVA model. This is the nice thing about the data from <code class="docutils literal notranslate"><span class="pre">datarium</span></code> (though it does not provide a very realistic picture of real-world data).</p>
 </section>
 <section id="way-anova-model">
 <h3>3-way ANOVA Model<a class="headerlink" href="#way-anova-model" title="Link to this heading">#</a></h3>
@@ -869,31 +869,21 @@ F-statistic: 13.33 on 11 and 60 DF,  p-value: 2.214e-12
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Anova Table (Type II tests)
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="n">Anova</span><span class="p">(</span><span class="n">mod</span><span class="mf">.3</span><span class="n">way</span><span class="p">):</span> <span class="n">could</span> <span class="ow">not</span> <span class="n">find</span> <span class="n">function</span> <span class="s2">&quot;Anova&quot;</span>
+<span class="ne">Traceback</span>:
 
-Response: cholesterol
-                 Sum Sq Df F value    Pr(&gt;F)    
-gender           1.3672  1 16.1957 0.0001625 ***
-risk             7.8251  1 92.6988   8.8e-14 ***
-drug             1.2354  2  7.3177 0.0014328 ** 
-gender:risk      0.0119  1  0.1411 0.7084867    
-gender:drug      0.5636  2  3.3384 0.0422001 *  
-risk:drug        0.1204  2  0.7131 0.4942214    
-gender:risk:drug 1.2504  2  7.4063 0.0013345 ** 
-Residuals        5.0649 60                      
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+<span class="mi">1</span><span class="o">.</span> <span class="nb">print</span><span class="p">(</span><span class="n">Anova</span><span class="p">(</span><span class="n">mod</span><span class="mf">.3</span><span class="n">way</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>So, from this, we can see that the 3-way interaction is significant. In terms of following this up (which we will cover in the asynchronous materials this week), we would therefore look at the 3-way interaction <em>only</em> and ignore everything else. If the 3-way interaction was <em>not</em> significant, we would interpret the 2-way interactions <em>only</em> and ignore everything else. If all the 2-way interactions were <em>not</em> significant, we would interpret the main effects. This interpretational hierarchy respects something called the <em>principle of marginality</em>, which we will discuss later.</p>
+<p>So, from this, we can see that the 3-way interaction is significant. In terms of following this up (which we will cover in the asynchronous materials this week), we would therefore look at the 3-way interaction <em>only</em> and ignore everything else. If the 3-way interaction was <em>not</em> significant, we would interpret the 2-way interactions <em>only</em> and ignore everything else. If all the 2-way interactions were <em>not</em> significant, we would interpret the main effects. This interpretational hierarchy respects something called the <em>principle of marginality</em>, which we will discuss in the materials this week.</p>
 <div class="alert alert-block alert-info"> 
-<b>ACTIVITY ...</b> Can you use <code>gls()</code> to build a 3-way ANOVA model that allows for different variances for each cell of the design?
+<b>ACTIVITY 7</b> Can you use <code>gls()</code> to build a 3-way ANOVA model for the <code>heartattack</code> data that allows for different variances in each cell of the design?
 </div></section>
 <section id="plotting-a-3-way-anova">
 <h3>Plotting a 3-way ANOVA<a class="headerlink" href="#plotting-a-3-way-anova" title="Link to this heading">#</a></h3>
-<p>Although we will not take the numeric interpretation further, for now, we can at least have a look at some plots to understand what the 3-way interaction means. Using the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package, we can generate some useful plots to understand this effect.</p>
+<p>Although we will not take the numeric interpretation any further for now, we can at least have a look at some plots to understand what the 3-way interaction means. Using the <code class="docutils literal notranslate"><span class="pre">effects</span></code> package, we can generate some useful plots to understand this effect.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">suppressMessages</span><span class="p">(</span><span class="nf">library</span><span class="p">(</span><span class="n">effects</span><span class="p">))</span>
@@ -905,7 +895,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 <a class="reference internal image-reference" href="_images/dd001aec4ed480bae7b531b2a1ebced07ae70c43a88f5aaf0658889697360b9f.png"><img alt="_images/dd001aec4ed480bae7b531b2a1ebced07ae70c43a88f5aaf0658889697360b9f.png" src="_images/dd001aec4ed480bae7b531b2a1ebced07ae70c43a88f5aaf0658889697360b9f.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>The easiest way to understand a 3-way interaction is by interpreting it as testing whether a 2-way interaction differs depending upon the levels of a third factor. In the plot above, we can think of this as testing whether the Drug x Gender effect is different depending upon the level of Risk. The <em>top</em> row shows Drug x Gender when the level of Risk is <em>low</em>, and the <em>bottom</em> row shows Drug x Gender when the level of Risk is <em>high</em>. As we can see, it appears as if the effect is being driven by the difference in high-risk males on drug A compared to high-risk females on drug A.</p>
+<p>The easiest way to understand a 3-way interaction is by interpreting it as a test of whether a 2-way interaction differs depending upon the levels of a third factor. In the plot above, we can think of this as testing whether the Drug x Gender effect is different depending upon the level of Risk. The <em>top</em> row shows Drug x Gender when the level of Risk is <em>low</em>, and the <em>bottom</em> row shows Drug x Gender when the level of Risk is <em>high</em>. As we can see, it appears as if the effect is being driven by the difference in high-risk males on drug A compared to high-risk females on drug A.</p>
 <p>There are a few different options to control the ordering of the factors in terms of these plots. The first is to explicitly dictate which factor is drawn along the <span class="math notranslate nohighlight">\(x\)</span>-axis using the <code class="docutils literal notranslate"><span class="pre">x.var</span></code> argument.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -917,7 +907,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 <a class="reference internal image-reference" href="_images/c5fc484b0b9542b66b37326503cc9bb968bcac4d509408e0a33072d54ccc8c9e.png"><img alt="_images/c5fc484b0b9542b66b37326503cc9bb968bcac4d509408e0a33072d54ccc8c9e.png" src="_images/c5fc484b0b9542b66b37326503cc9bb968bcac4d509408e0a33072d54ccc8c9e.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>However, we can see that the resultant plot makes a bit of a mess of the factor structure. A better method is to draw the third factor as multiple lines within each panel. We can dictate which factor we want using the <code class="docutils literal notranslate"><span class="pre">lines=list(...)</span></code> option. Note that we have to explicitly add the confidence intervals back in, if we want them.</p>
+<p>However, we can see that the resultant plot makes a bit of a mess of the factor structure. A better method is to draw the third factor as multiple lines within each panel. We can dictate which factor we want using the <code class="docutils literal notranslate"><span class="pre">lines=</span></code> option. Note that we have to explicitly add the confidence intervals back in, if we want them.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="nf">effect</span><span class="p">(</span><span class="s">&#39;gender:risk:drug&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">mod</span><span class="o">=</span><span class="n">mod.3way</span><span class="p">),</span><span class="w">   </span><span class="c1"># the 3-way effect</span>
@@ -933,12 +923,12 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </div>
 <p>Now we can much more clearly see that the interaction is being driven by the difference between <code class="docutils literal notranslate"><span class="pre">male</span></code> and <code class="docutils literal notranslate"><span class="pre">female</span></code> within the <code class="docutils literal notranslate"><span class="pre">high</span></code> risk category when taking drug <code class="docutils literal notranslate"><span class="pre">A</span></code>.</p>
 <div class="alert alert-block alert-info"> 
-<b>ACTIVITY ...</b> Can you redraw the effects plot above with <code>gender</code> on the <i>x</i>-axis and <code>drug</code> as different lines? What other orderings can you come up with? Which one is more intuitive to you in terms of interpreting the interaction?
+<b>ACTIVITY 8</b> Can you redraw the effects plot above with <code>gender</code> on the <i>x</i>-axis and <code>drug</code> as different lines? What other orderings can you come up with? Which one is more intuitive to you in terms of interpreting the interaction?
 </div></section>
 </section>
 <section id="other-model-comparison-methods">
 <h2>Other Model Comparison Methods<a class="headerlink" href="#other-model-comparison-methods" title="Link to this heading">#</a></h2>
-<p>Within the lesson, our focus was very much on the ANOVA as a <em>model comparison</em> procedure. However, as we saw, the <span class="math notranslate nohighlight">\(F\)</span>-statistic and subsequent tests are not always the easiest or most straight-forward methods for comparing models. Indeed, modern statistics would use different metrics for this purpose and would not rely on the ANOVA tests or <span class="math notranslate nohighlight">\(p\)</span>-values when building the most suitable model.</p>
+<p>Within the lesson, our focus was very much on the ANOVA as a <em>model comparison</em> procedure. However, as we saw, the <span class="math notranslate nohighlight">\(F\)</span>-statistic and subsequent tests are not always the easiest or most straight-forward methods for comparing models. Indeed, more modern statistics would use different metrics for this purpose and would not rely on the ANOVA tests or <span class="math notranslate nohighlight">\(p\)</span>-values when building the most suitable model.</p>
 <section id="r-2-aic-and-bic">
 <h3><span class="math notranslate nohighlight">\(R^{2}\)</span>, AIC and BIC<a class="headerlink" href="#r-2-aic-and-bic" title="Link to this heading">#</a></h3>
 <p>Although many model comparison metrics exist, the most common ones that get used are <span class="math notranslate nohighlight">\(R^{2}\)</span>, the Akaike (“Ah-kah-ee-keh”) Information Criterion (AIC) and the Bayesian Information Criterion (BIC). Although there is much more to be learned about these, the brief summary below should suffice for now</p>
@@ -1059,11 +1049,22 @@ mod.full |    lm |  39.2 (0.997) |  68.8 (0.975) | 0.710 |     0.656
 <p>which confers “strong evidence” against the non-3-way interaction model. The BIC is more conservative here because the 3-way interaction model needs more parameters and thus is the less parsimonious choice.</p>
 <p>On balance, all these metric seems to agree that the 3-way interaction is necessary for a better model prediction, has good evidential support from the data and substantially increases the amount of variance explained. Notice that this was all concluded <em>without</em> a <span class="math notranslate nohighlight">\(p\)</span>-value or the use of the word “significant”.</p>
 <div class="alert alert-block alert-info"> 
-<b>ACTIVITY ...</b> Can you create the model comparison metrics for this 3-way interaction using a <code>gls()</code> model? <b>NOTE</b> For similar reasons to degrees of freedom, both <code>'R2'</code> and <code>'R2_adj'</code> are ill-defined for GLS models, so just use AIC and BIC instead.
+<b>ACTIVITY 9</b> Can you create the model comparison metrics for this 3-way interaction using a <code>gls()</code> model? <b>NOTE</b> For similar reasons to degrees of freedom, both <code>'R2'</code> and <code>'R2_adj'</code> are ill-defined for GLS models, so just use AIC and BIC instead.
 </div><div class="alert alert-block alert-warning"> 
 <b>TEST QUESTIONS</b> 
 <p>Use the questions below to check your understanding of all the materials from this week.</p>
-<p>1….</p>
+<ol class="arabic simple">
+<li><p>What is a dummy variable?</p></li>
+<li><p>What are the interpretations of the parameters in a <i>simple regression</i> model that contains a single dummy variable?</p></li>
+<li><p>What element of the regression output is equivalent to a <i>t</i>-test, when including a single dummy variable?</p></li>
+<li><p>How are factors with more than 2 levels accommodated into a regression model with dummy variables?</p></li>
+<li><p>How would the parameters be interpreted in a regression model containing a single factor with 3 levels?</p></li>
+<li><p>What is an omnibus test and what is its justification?</p></li>
+<li><p>How is the <i>F</i>-statistic used within the context of an omnibus test and how does this relate to model comparisons?</p></li>
+<li><p>What are the two functions we can use to generate ANOVA tables in <code>R</code>?</p></li>
+<li><p>What is the core assumption made by an additive ANOVA model and how does this affect the parameter estimates?</p></li>
+<li><p>What is an interaction and how does it relate to a full-factorial ANOVA model versus an additive ANOVA model?</p></li>
+</ol>
 </div></section>
 </section>
 </section>
